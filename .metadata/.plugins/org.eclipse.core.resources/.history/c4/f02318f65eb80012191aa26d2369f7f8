@@ -12,9 +12,9 @@ import java.net.Socket;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 
-public class ArduinoConnection extends Thread {
+public class DalekServerConnect extends Thread {
 	
-	public static ArduinoConnection live_connect=null;
+	public static DalekServerConnect live_connect=null;
 	
 	
 	ConnectionState state_v=ConnectionState.Uninitiated;
@@ -26,7 +26,7 @@ public class ArduinoConnection extends Thread {
 	private OutputStream out = null;
 	private BufferedReader in = null;
 	
-    public ArduinoConnection(String address) {
+    public DalekServerConnect(String address) {
     	s_address=address;
     }
 
@@ -42,7 +42,7 @@ public class ArduinoConnection extends Thread {
 			
 			out.write(1);
 			String s=in.readLine();
-  		  	Log.v("ArduinoMSG", "Response: "+s);
+  		  	Log.v("DCU_MSG", "Response: "+s);
  
   		  state_v=ConnectionState.Connected;
   		  message="Succesfully Connected";
@@ -52,7 +52,8 @@ public class ArduinoConnection extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
             try {
-                socket.close();
+
+            	socket.close();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -96,7 +97,7 @@ public class ArduinoConnection extends Thread {
 		  out.flush();
 		  
 		  int respone=in.read();
-		  Log.v("ArduinoMSG", "Response: "+respone);
+		  Log.v("DCU_MSG", "Response: "+respone);
 		  
 		  if(respone != 1){
 			  Log.e("ConnectionError", "Error Signal returned from control unit.");
@@ -115,6 +116,20 @@ public class ArduinoConnection extends Thread {
     	
     	  return true;
     }
+
+	public void close_connection() {
+		try {
+			socket.close();
+		} catch (IOException e) {
+			Log.e("ConnectionError", "Failed to close socket."+e.getMessage());
+  		  message=("Failed to close socket"+e.getMessage());
+  		  state_v=ConnectionState.Error;
+  		  e.printStackTrace();
+		}
+		
+		live_connect=null;
+		
+	}
     
 
 }

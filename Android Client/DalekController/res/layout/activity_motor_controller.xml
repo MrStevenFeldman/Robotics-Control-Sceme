@@ -61,15 +61,25 @@
             android:layout_weight="0.81"
             android:background="@color/gold" >
 
-            <com.example.dalekcontroller.VerticalSeekBar
-                android:id="@+id/powerBar"
-                android:layout_width="50dp"
-                android:layout_height="450dp"
+            <Button
+                android:id="@+id/speedUpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/speedDownButton"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:max="255"
-                android:progressDrawable="@drawable/progress_vertical"
-                android:thumb="@drawable/seek_thumb_wide" />
+                android:layout_marginBottom="111dp"
+                android:onClick="speedUpFunc"
+                android:text="Speed Up" />
+
+            <Button
+                android:id="@+id/speedDownButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/stopButton"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="141dp"
+                android:onClick="speedDownFunc"
+                android:text="Speed Down" />
 
             <Button
                 android:id="@+id/stopButton"
@@ -77,8 +87,19 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="80dp"
                 android:onClick="stopFunc"
                 android:text="STOP" />
+
+            <TextView
+                android:id="@+id/power_level_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/speedDownButton"
+                android:layout_alignRight="@+id/speedDownButton"
+                android:layout_marginBottom="36dp"
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -189,6 +210,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/frameLayout1"
@@ -204,7 +226,16 @@
             android:layout_marginRight="60dp"
             android:onClick="motorToggle"
             android:text="Enable/Disable Motors" />
-
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/disconnect_but"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayout1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="27dp"
+        android:text="Disconnect" 
+          android:onClick="disconnect_func"/>
 
 </RelativeLayout>
