@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	private ArduinoConnection arduinoCon;
+	private DalekServerConnect dcu_con;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,8 +33,8 @@ public class MainActivity extends Activity {
 		Button button_con=(Button)findViewById(R.id.connectToHost_button);
     	button_con.setEnabled(false);
     	
-    	arduinoCon = new ArduinoConnection(ip);
-    	arduinoCon.start();
+    	dcu_con = new DalekServerConnect(ip);
+    	dcu_con.start();
     	
 		update_conneciton_display();
 	}
@@ -49,12 +49,12 @@ public class MainActivity extends Activity {
     	
 		ConnectionState state_v;
     	while(true){
-    		if(arduinoCon==null){
+    		if(dcu_con==null){
     			state_v=ConnectionState.Disconnected;
     			connection_error_field.setText("No Errors");
     		}else{
-    			state_v=arduinoCon.state_v;
-    			connection_error_field.setText(arduinoCon.message);
+    			state_v=dcu_con.state_v;
+    			connection_error_field.setText(dcu_con.message);
     		}
     		
     		if(state_v == ConnectionState.Uninitiated ||state_v == ConnectionState.Connecting){
