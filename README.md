@@ -5,22 +5,20 @@ Designed for a Dalek, but code for extendability
 
 
 Todos:
+Code a network driver class that functions in the same manner as the serial driver class
+Check Code TOODs
 
 
-Control Unit code
-Rename driver files to signify any serial device
-Add network driver file (telnet)
+Generate XML scheme
 
-Misc:
-Finish Todos
+Add Stepper Devices Class
+Add Servo Device Class
+Add IC2 interface
+  Plan to add an adafruit 16 PWM Expansion on it to control motors.
+    So it should be its own ControlUnit, and each other control unit should have an IC2 function.
+      
 
-
-To Use:
-
-Edit the two files to suite your needs
-
-The Device List file:
-Each Device is an entire line of signle spaced sepeated integers
-BidirectionalMotor: DeviceID-ControlUnitID-enablepin-pwmA-pwmB-currentSenseA-currentSenseB
-UnidirectionalMotor: DeviceID-controlUnitid-enablepin-pwm-currentsense
-
+Known Issues:
+Communication with arduino can be come deadlocked, need to ideentify what causes it.
+  Seems the Server is waiting for a message from arduino, but arduino is also waiting...
+  
