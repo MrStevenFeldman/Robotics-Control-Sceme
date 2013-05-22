@@ -8,6 +8,8 @@ Todos:
 Code a network driver class that functions in the same manner as the serial driver class
 Check Code TOODs
 
+Generate a setup guide and insturctions
+
 
 Generate XML scheme
 
