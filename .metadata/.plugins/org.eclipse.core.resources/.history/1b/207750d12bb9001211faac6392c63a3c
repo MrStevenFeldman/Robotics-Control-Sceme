@@ -1,0 +1,138 @@
+
+package com.example.dalekcontroller;
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
+
+
+import android.os.NetworkOnMainThreadException;
+import android.util.Log;
+
+public class DalekServerConnect extends Thread {
+	
+	public static DalekServerConnect live_connect=null;
+	
+	
+	ConnectionState state_v=ConnectionState.Uninitiated;
+	public String message="No Error";
+	
+	private int port =9000;
+	private String s_address;
+	private Socket socket;
+	private OutputStream out = null;
+	private BufferedReader in = null;
+	
+    public DalekServerConnect(String address) {
+    	s_address=address;
+    }
+
+    @Override
+    public void run() {
+        try {
+        	state_v=ConnectionState.Connecting;
+        	socket = new Socket();
+        	socket.setSoTimeout(3000);
+        	socket.connect(new InetSocketAddress(s_addresss,port), 3000);
+        	
+			out =socket.getOutputStream();
+			in = new BufferedReader(new InputStreamReader(
+					socket.getInputStream()));
+			
+			
+			out.write(1);
+			String s=in.readLine();
+  		  	Log.v("DCU_MSG", "Response: "+s);
+ 
+  		  state_v=ConnectionState.Connected;
+  		  message="Succesfully Connected";
+  		
+  		  live_connect=this;
+  		  
+        } catch (IOException e) {
+            e.printStackTrace();
+            try {
+            	if(socket.isConnected())
+            		socket.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            
+            state_v=ConnectionState.Error;
+          
+        }
+        
+        
+    }
+    public boolean sendCommand(int [] commands){
+    	
+    	if(state_v==ConnectionState.Connecting){
+    		Log.e("ConnectionError", "Attempting to command while still trying to connect");
+
+    		message=("Already Connecting");
+    		return false;
+    		
+    	}
+    	if(state_v==ConnectionState.Uninitiated){
+    		Log.e("ConnectionError", "Attempting to command while Socket is Unitiated.");
+    		return false;
+    	}
+    	else if(state_v==ConnectionState.Disconnected){
+    		Log.e("ConnectionError", "Attempting to command while Socket is  Disconnected.");
+    		return false;
+    	}
+    
+    	try {
+		  if(!socket.isConnected()){
+    		  Log.e("ConnectionError", "Attempting to command while Socket is not connected.");
+    		  message=("Connection Terminated");
+    		  
+    		  state_v=ConnectionState.Disconnected;
+    		  return false;
+		  }
+
+		  for(int i=0; i<commands.length; i++){
+			  out.write(commands[i]);
+		  }
+		  out.flush();
+		  
+		  int respone=in.read();
+		  Log.v("DCU_MSG", "Response: "+respone);
+		  
+		  if(respone != 1){
+			  Log.e("ConnectionError", "Error Signal returned from control unit.");
+    		  message=("Error Signal returned from control unit.");
+    		  state_v=ConnectionState.Error;
+    		  return false;
+		  }
+    	} catch(NetworkOnMainThreadException e1){
+			  
+    	}  catch (Exception e) {
+    		  Log.e("ConnectionError", "Failed to write command to dalek control unit."+e.getMessage());
+    		  message=("Failed to write command to dalek control unit."+e.getMessage());
+    		  state_v=ConnectionState.Error;
+    		  return false;
+          }
+    	
+    	  return true;
+    }
+
+	public void close_connection() {
+		try {
+			socket.close();
+		} catch (IOException e) {
+			Log.e("ConnectionError", "Failed to close socket."+e.getMessage());
+  		  message=("Failed to close socket"+e.getMessage());
+  		  state_v=ConnectionState.Error;
+  		  e.printStackTrace();
+		}
+		
+		live_connect=null;
+		
+	}
+    
+
+}
