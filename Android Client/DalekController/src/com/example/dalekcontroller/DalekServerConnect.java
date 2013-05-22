@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 
@@ -19,8 +20,8 @@ public class DalekServerConnect extends Thread {
 	
 	ConnectionState state_v=ConnectionState.Uninitiated;
 	public String message="No Error";
-	
-	
+	private final int timeout=10000;
+	private int port =9000;
 	private String s_address;
 	private Socket socket;
 	private OutputStream out = null;
@@ -34,32 +35,43 @@ public class DalekServerConnect extends Thread {
     public void run() {
         try {
         	state_v=ConnectionState.Connecting;
-        	socket = new Socket(s_address, 9000);
-			out =socket.getOutputStream();
-			in = new BufferedReader(new InputStreamReader(
-					socket.getInputStream()));
-			
-			
-			out.write(1);
-			String s=in.readLine();
-  		  	Log.v("DCU_MSG", "Response: "+s);
- 
-  		  state_v=ConnectionState.Connected;
-  		  message="Succesfully Connected";
+        	socket = new Socket();
+        	socket.setSoTimeout(timeout);
+        	socket.connect(new InetSocketAddress(s_address,port), timeout);
+        	
+        	if(!socket.isConnected()){
+        		state_v=ConnectionState.Error;
+        		 message="Unable to reach host after timout of "+timeout+"ms";
+        		return;
+        	}
+        	else{
+				out =socket.getOutputStream();
+				in = new BufferedReader(new InputStreamReader(
+						socket.getInputStream()));
+				
+				
+				out.write(1);
+				String s=in.readLine();
+	  		  	Log.v("DCU_MSG", "Response: "+s);
+	 
+		  		 state_v=ConnectionState.Connected;
+		  		 message="Succesfully Connected";
+		  		live_connect=this;
+        	}
   		
-  		  live_connect=this;
+  		  
   		  
         } catch (IOException e) {
             e.printStackTrace();
             try {
-
-            	socket.close();
+            	if(socket.isConnected())
+            		socket.close();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
             
             state_v=ConnectionState.Error;
-            return;
+            message="Unable to reach host after timout of "+timeout+"ms"+e.getMessage();
         }
         
         

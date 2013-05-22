@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme" >
         
         <activity
+            android:screenOrientation="landscape"
             android:name="com.example.dalekcontroller.MotorController"
             android:label="@string/app_name" >
             <intent-filter>
@@ -28,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="landscape"
             android:name="com.example.dalekcontroller.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>

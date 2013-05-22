@@ -89,3 +89,19 @@ org.eclipse.core.internal.resources.ResourceException: A resource already exists
 	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:121)
 !SUBENTRY 1 org.eclipse.core.resources 4 272 2013-05-09 00:12:48.272
 !MESSAGE A resource already exists on disk '/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/.settings'.
+!SESSION 2013-05-10 00:07:35.564 -----------------------------------------------
+eclipse.buildId=v21.0.1-543035
+java.version=1.6.0_45
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.product -keyring /Users/stevenfeldman/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.product -keyring /Users/stevenfeldman/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.resources 2 10035 2013-05-10 00:09:21.543
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.net 1 0 2013-05-10 00:09:23.799
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui 4 4 2013-05-10 00:11:19.716
+!MESSAGE Referenced part does not exist yet: org.eclipse.ui.views.ProblemView.

@@ -24,8 +24,8 @@ const int MAX_DUTY=255;
 boolean enabled=false;
 int duty_left;
 int duty_target_left=0;
-int EnablePin_left = 8;
-int PWMPin1_left = 6;  // Timer2
+int EnablePin_left = 2;
+int PWMPin1_left = 11;  // Timer2
 int PWMPin2_left = 3;
 int Active_left = PWMPin1_left;
 
@@ -33,8 +33,8 @@ int duty_target_right=0;
 int duty_right;
 
 int EnablePin_right = 8;
-int PWMPin1_right = 5;  // Timer2
-int PWMPin2_right = 9;
+int PWMPin1_right = 9;  // Timer2
+int PWMPin2_right = 10;
 int Active_right = PWMPin1_right;
 
 const byte CPin = 0;  // analog input channel

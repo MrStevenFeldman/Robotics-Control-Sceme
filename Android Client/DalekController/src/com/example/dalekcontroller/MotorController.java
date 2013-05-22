@@ -121,12 +121,12 @@ public class MotorController extends Activity {
     	stopFunc(view);
     	dcu_con.close_connection();
     	dcu_con=null;
-    	
-    	Button but1=(Button)findViewById(R.id.connectToHost_button);
-    	but1.setEnabled(true);
-    	
-    	but1=(Button)findViewById(R.id.man_control_button);
-    	but1.setEnabled(false);
+//    	
+//    	Button but1=(Button)findViewById(R.id.connectToHost_button);
+//    	but1.setEnabled(true);
+//    	
+//    	but1=(Button)findViewById(R.id.man_control_button);
+//    	but1.setEnabled(false);
     	
     	Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
@@ -279,7 +279,9 @@ public class MotorController extends Activity {
 //    		com.example.dalekcontroller.VerticalSeekBar vsb=(com.example.dalekcontroller.VerticalSeekBar) findViewById(R.id.powerBar);
 //    		vsb.setProgress(0);
     		power_level=0;
-    		
+    		TextView power_level_indicator_v=(TextView)findViewById(R.id.power_level_indicator);
+        	power_level_indicator_v.setText("Current Speed: "+power_level);
+        	
     		motorDirection=0;
     		//Set power level to 0
     		if(dir==1){

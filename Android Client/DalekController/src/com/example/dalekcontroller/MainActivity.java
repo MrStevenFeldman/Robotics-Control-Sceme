@@ -52,12 +52,14 @@ public class MainActivity extends Activity {
     		if(dcu_con==null){
     			state_v=ConnectionState.Disconnected;
     			connection_error_field.setText("No Errors");
-    		}else{
-    			state_v=dcu_con.state_v;
-    			connection_error_field.setText(dcu_con.message);
+    			return ;
     		}
-    		
+
+    		state_v=dcu_con.state_v;
+  
     		if(state_v == ConnectionState.Uninitiated ||state_v == ConnectionState.Connecting){
+    	    	connection_error_field.setText("Connecting...");
+
     			continue;
     		}
     		else if(state_v == ConnectionState.Connected){
@@ -78,7 +80,7 @@ public class MainActivity extends Activity {
     		
     		
     	}
-    	
+    	connection_error_field.setText(dcu_con.message);
     	
     	return;
 	

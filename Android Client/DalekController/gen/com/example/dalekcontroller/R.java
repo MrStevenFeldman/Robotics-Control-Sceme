@@ -53,7 +53,7 @@ containing a value of this type.
         public static final int centerForwardButton=0x7f080010;
         public static final int centerReverseButton=0x7f080013;
         public static final int connectToHost_button=0x7f080005;
-        public static final int connection_error_field=0x7f080003;
+        public static final int connection_error_field=0x7f080002;
         public static final int disconnect_but=0x7f08001a;
         public static final int forward_dir_control=0x7f08000e;
         public static final int frameLayout1=0x7f080007;
@@ -77,7 +77,7 @@ containing a value of this type.
         public static final int stopButton=0x7f08000c;
         public static final int tableRow1=0x7f080000;
         public static final int textView1=0x7f080001;
-        public static final int textView2=0x7f080002;
+        public static final int textView2=0x7f080003;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

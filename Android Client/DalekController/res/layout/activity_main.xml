@@ -13,27 +13,16 @@
         android:layout_marginLeft="42dp"
         android:layout_marginTop="101dp" >
 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="34dp"
+            android:layout_weight="0.22"
+            android:text="@string/ipaddresslable"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
     </TableRow>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="39dp"
-        android:layout_weight="0.22"
-        android:text="@string/ipaddresslable"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tableRow1"
-        android:layout_toRightOf="@+id/tableRow1"
-        android:text="Error Messages:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/connection_error_field"
@@ -49,17 +38,13 @@
         android:id="@+id/ipTextArea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/connection_error_field"
+        android:layout_alignTop="@+id/tableRow1"
+        android:layout_marginLeft="45dp"
+        android:layout_toRightOf="@+id/tableRow1"
         android:layout_weight="1"
         android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="@string/ipaddress" >
-
-        <requestFocus />
-    </EditText>
+        android:inputType="text"
+        android:text="@string/ipaddress" />
 
     <Button
         android:id="@+id/connectToHost_button"
@@ -67,21 +52,31 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/ipTextArea"
         android:layout_alignBottom="@+id/ipTextArea"
-        android:layout_marginLeft="44dp"
-        android:layout_toRightOf="@+id/ipTextArea"
-        android:text="Connect" 
-        android:onClick="connectToggle"/>
+        android:layout_marginRight="66dp"
+        android:layout_toLeftOf="@+id/man_control_button"
+        android:onClick="connectToggle"
+        android:text="Connect" />
 
     <Button
         android:id="@+id/man_control_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/connectToHost_button"
-        android:layout_alignBottom="@+id/connectToHost_button"
-        android:layout_marginLeft="76dp"
-        android:layout_toRightOf="@+id/connectToHost_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/ipTextArea"
+        android:layout_marginRight="134dp"
         android:enabled="false"
-        android:text="Manual Control"
-        android:onClick="switchToManualControlPage" />
+        android:onClick="switchToManualControlPage"
+        android:text="Manual Control" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tableRow1"
+        android:layout_below="@+id/man_control_button"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="231dp"
+        android:text="Error Messages:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
