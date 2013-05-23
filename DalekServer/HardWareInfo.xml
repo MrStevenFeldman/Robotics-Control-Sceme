@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HardWareINfo>
+
+	<ControlDevices>
+		<!-- First Device is Host Device -->
+		<ControlDevice>
+			
+			
+			<ID>1</ID>
+			<ConnectionType>HostDevice</ConnectionType>
+			<name>BeagleBoardBlack</name>
+			<!-- For BeagleBoard the 
+				PIN numbers are negative for P8 (left side) 
+							and Positive for P9 (right side) 
+				Pins are numbered by there row postion*2 + column postion+1. 
+						ie left to right, top to bottom
+				
+							-->
+							
+			<devicetype>BeagleBoardBlack</devicetype>
+			<magicCapeId>9</magicCapeId>
+			<pwm_period>500000</pwm_period>
+		</ControlDevice>
+	<!--
+		<ControlDevice>
+			<ID>2</ID>
+			<ConnectionType PORT="/dev/tty.usbmodem1411" BAUD_RATE="9600">SerialDevice</ConnectionType>
+			<name>ArduinoMotor</name>
+			<devicetype>ArduinoUno</devicetype>
+			
+		</ControlDevice>
+	 -->
+		
+	
+	</ControlDevices>
+	
+	<DeviceList>
+	<Device type="MotorDevice">
+		<Name>leftmotor</Name>
+		<ID>1</ID>
+		<ControlDeviceID>1</ControlDeviceID>
+		
+		<Type>BiDirectional</Type>
+		<PWMA_PIN>13</PWMA_PIN>
+		<PWMB_PIN>19</PWMB_PIN>
+		<ENABLE_PIN>11</ENABLE_PIN>
+		<CURRENTA>-1</CURRENTA>
+		<CURRENTB>-1</CURRENTB>
+	</Device>
+	
+	<Device type="MotorDevice">
+		<Name>rightmotor</Name>
+		<ID>2</ID>
+		<ControlDeviceID>1</ControlDeviceID>
+		<Type>BiDirectional</Type>
+		<PWMA_PIN>-14</PWMA_PIN>
+		<PWMB_PIN>-16</PWMB_PIN>
+		<ENABLE_PIN>12</ENABLE_PIN>
+		<CURRENTA>-1</CURRENTA>
+		<CURRENTB>-1</CURRENTB>
+	
+	</Device>
+	
+	</DeviceList>
+	
+	
+</HardWareINfo>

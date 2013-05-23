@@ -3,35 +3,44 @@ package dalek.server.contolunits;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
+/**
+ * This was tested using an aruino unit, but should work with any device that accepts serial communication over usb.
+ * @author stevenfeldman
+ *
+ */
 
-public class ArduinoUSBDriver implements ControlUnit {
+//TODO: Could be an issue with the serial communication/reaing of bytes in this or the arduino script.
+public class SerialUSBDriver implements ControlUnit {
 	SerialPort serialPort;
-	/** The port we're normally going to use
+	String portname;
+	int BAUD_RATE;
+	
+	/** The port we could use
 	private static final String PORT_NAMES[] = { 
 			"/dev/tty.usbserial-A9007UX1", // Mac OS X
 			"/dev/ttyUSB0", // Linux
 			"COM3", // Windows
-			"/dev/tty.usbmodem1411", // mine
-			"/dev/tty.usbmodem1421", // mine2
+			"/dev/tty.usbmodem1411", // Mac
+			"/dev/tty.usbmodem1421", // Mac
 	};
 	. 
 	 * @throws Exception */
 	
 	public void initialize() throws Exception {
 		
-		serialPort = new SerialPort("/dev/tty.usbmodem1421");
+		serialPort = new SerialPort(portname);
         try {
             serialPort.openPort();//Open serial port
-            serialPort.setParams(SerialPort.BAUDRATE_9600, 
+            serialPort.setParams(BAUD_RATE, 
                                  SerialPort.DATABITS_8,
                                  SerialPort.STOPBITS_1,
                                  SerialPort.PARITY_NONE);//Set params. Also you can set params by this string: serialPort.setParams(9600, 8, 1, 0);
-            byte [] res=serialPort.readBytes(1);
+            byte [] res=serialPort.readBytes(1,3000);
             if(res[0]==1){
             	return;
             }
             else{
-            	throw new Exception("Arduino Return non 1 value\n");
+            	throw new Exception("Serial Device Return non 1 value\n");
             }
         }
         catch (SerialPortException ex) {
@@ -58,7 +67,9 @@ public class ArduinoUSBDriver implements ControlUnit {
 
 		
 	
-	public ArduinoUSBDriver() throws Exception{
+	public SerialUSBDriver(String portname, int BAUD_RATE) throws Exception{
+		this.BAUD_RATE=BAUD_RATE;
+		this.portname=portname;
 		this.initialize();
 	}
 	
@@ -73,57 +84,39 @@ public class ArduinoUSBDriver implements ControlUnit {
 			//(1)analogRead(pin
 			
 	public void init_pwm(int pinA, int pinB) throws Exception{
-		serialPort.writeByte((byte)4);
-		serialPort.writeByte((byte)pinA);
-		serialPort.writeByte((byte)3);
-		
-		byte [] res=serialPort.readBytes(1);
-		int res1=res[0];
-		if(res1== -1){
-			throw new Exception(String.format("Error Updating PWM for %d pin on ArduinoUSBDriver\n",pinA));
-		}
-//		
-		serialPort.writeByte((byte)4);
-		serialPort.writeByte((byte)pinB);
-		serialPort.writeByte((byte)3);
-		
-		byte [] res2=serialPort.readBytes(1);
-		int res12=res2[0];
-		if(res12== -1){
-			throw new Exception(String.format("Error Updating PWM for %d pin on ArduinoUSBDriver\n",pinB));
-		}
+		init_pwm(pinA);
+		init_pwm(pinB);
 		
 		return;
 
 	}
 
-	public void init_pwm(int pinA) throws Exception{
+	public void init_pwm(int pin) throws Exception{
 		serialPort.writeByte((byte)4);
-		serialPort.writeByte((byte)pinA);
+		serialPort.writeByte((byte)pin);
 		serialPort.writeByte((byte)3);
 		
-		byte [] res=serialPort.readBytes(1);
+		byte [] res=serialPort.readBytes(1,3000);
 		int res1=res[0];
 		if(res1== -1){
-			throw new Exception(String.format("Error Updating PWM for %d pin on ArduinoUSBDriver\n",pinA));
+			throw new Exception(String.format("Error Updating PWM for %d pin on SerialUSBDriver\n",pin));
 		}
 		
 
 	}
-	public void set_pwm_duty(int pinA, int pinB, int duty) throws Exception{
+	public void set_pwm_duty(int pin, int duty) throws Exception{
 		
 		if(duty < 0 || duty > 255){
-			throw new Exception(String.format("Error  PWM duty[%d] for %d [and %d] pin on ArduinoUSBDriver is not a proper value\n",duty, pinA,pinB));
+			throw new Exception(String.format("Error  PWM duty[%d] for %d  pin on SerialUSBDriver is not a proper value\n",duty, pin));
 
 		}
 		serialPort.writeByte((byte)0);
-		serialPort.writeByte((byte)pinA);
+		serialPort.writeByte((byte)pin);
 		serialPort.writeByte((byte)duty);
-		
-		byte [] res=serialPort.readBytes(1);
+		byte [] res=serialPort.readBytes(1,3000);
 		int res1=res[0];
 		if(res1== -1){
-			throw new Exception(String.format("Error Updating PWM duty[%d] for %d [and %d] pin on ArduinoUSBDriver\n",duty, pinA,pinB));
+			throw new Exception(String.format("Error Updating PWM duty[%d] for %d pin on SerialUSBDriver\n",duty, pin));
 		}
 		
 
@@ -134,10 +127,10 @@ public class ArduinoUSBDriver implements ControlUnit {
 		serialPort.writeByte((byte)pin);
 		serialPort.writeByte((byte)1);
 		
-		byte [] res=serialPort.readBytes(1);
+		byte [] res=serialPort.readBytes(1,3000);
 		int res1=res[0];
 		if(res1== -1){
-			throw new Exception(String.format("Error Updating Pin %d for output on ArduinoUSBDriver\n",pin));
+			throw new Exception(String.format("Error Updating Pin %d for output on SerialUSBDriver\n",pin));
 		}
 		
 		
@@ -149,10 +142,10 @@ public class ArduinoUSBDriver implements ControlUnit {
 		serialPort.writeByte((byte)pin);
 		serialPort.writeByte((byte)0);
 		
-		byte [] res=serialPort.readBytes(1);
+		byte [] res=serialPort.readBytes(1,3000);
 		int res1=res[0];
 		if(res1== -1){
-			throw new Exception(String.format("Error Updating Pin %d for input on ArduinoUSBDriver\n",pin));
+			throw new Exception(String.format("Error Updating Pin %d for input on SerialUSBDriver\n",pin));
 		}
 		
 
@@ -161,7 +154,7 @@ public class ArduinoUSBDriver implements ControlUnit {
 		serialPort.writeByte((byte)1);
 		serialPort.writeByte((byte)pin);
 		
-		byte [] res=serialPort.readBytes(1);
+		byte [] res=serialPort.readBytes(1,3000);
 		
 		return res[0];
 		
@@ -171,7 +164,7 @@ public class ArduinoUSBDriver implements ControlUnit {
 		serialPort.writeByte((byte)2);
 		serialPort.writeByte((byte)pin);
 
-		byte [] res=serialPort.readBytes(1);
+		byte [] res=serialPort.readBytes(1,3000);
 		return res[0];
 		
 
@@ -183,10 +176,10 @@ public class ArduinoUSBDriver implements ControlUnit {
 		serialPort.writeByte((byte)pin);
 		serialPort.writeByte((byte)value);
 		
-		byte [] res=serialPort.readBytes(1);
+		byte [] res=serialPort.readBytes(1,3000);
 		int res1=res[0];
 		if(res1== -1){
-			throw new Exception(String.format("Error Analog Write Pin %d [value %d] for input on ArduinoUSBDriver\n",pin,value));
+			throw new Exception(String.format("Error Analog Write Pin %d [value %d] for input on SerialUSBDriver\n",pin,value));
 		}
 
 	}
@@ -197,10 +190,10 @@ public class ArduinoUSBDriver implements ControlUnit {
 		serialPort.writeByte((byte)pin);
 		serialPort.writeByte((byte)value);
 		
-		byte [] res=serialPort.readBytes(1);
+		byte [] res=serialPort.readBytes(1,3000);
 		int res1=res[0];
 		if(res1== -1){
-			throw new Exception(String.format("Error digital Write Pin %d [value %d] for input on ArduinoUSBDriver\n",pin,value));
+			throw new Exception(String.format("Error digital Write Pin %d [value %d] for input on SerialUSBDriver\n",pin,value));
 		}
 
 	}

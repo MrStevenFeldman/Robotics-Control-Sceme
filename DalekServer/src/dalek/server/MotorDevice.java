@@ -1,8 +1,9 @@
+package dalek.server;
+
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Scanner;
-
 import dalek.server.contolunits.ControlUnit;
 
 
@@ -57,7 +58,7 @@ public class MotorDevice {
 	public void disconnect_stop(){
 		this.target_speed=0;
 		try{
-			this.cu.set_pwm_duty(this.PWM_A, this.PWM_B, 0);
+			this.cu.set_pwm_duty(this.PWM_A, 0);
 			this.cu.digital_write_pin(this.enablePin, DISABLED);
 			this.isEnabled=DISABLED;
 		} catch (Exception e) {
@@ -67,7 +68,7 @@ public class MotorDevice {
 		this.current_speed=0;
 
 	}
-	static int process_motor_command(InputStream is){
+	public static int process_motor_command(InputStream is){
 		int count, operation;
 		try {
 			count = is.read();
@@ -110,7 +111,7 @@ public class MotorDevice {
 				for(int i=0; i<count; i++){
 					list[i].target_speed=0;
 					try {
-						list[i].cu.set_pwm_duty(list[i].PWM_A, list[i].PWM_B, 0);
+						list[i].cu.set_pwm_duty(list[i].PWM_A,  0);
 					} catch (Exception e) {
 						System.err.printf("Error Updating PWM!\n");
 						e.printStackTrace();
@@ -160,7 +161,7 @@ public class MotorDevice {
 						if(new_speed < 0) new_speed=0;
 						
 						try {
-							list[i].cu.set_pwm_duty(list[i].PWM_A, list[i].PWM_B, new_speed);
+							list[i].cu.set_pwm_duty(list[i].PWM_A,  new_speed);
 						} catch (Exception e) {
 							System.err.printf("Error Updating PWM!\n");
 							e.printStackTrace();
@@ -240,7 +241,7 @@ public class MotorDevice {
 						}
 						
 						try {
-							list[i].cu.set_pwm_duty(list[i].PWM_A, list[i].PWM_B, new_speed);
+							list[i].cu.set_pwm_duty(list[i].PWM_A, new_speed);
 						} catch (Exception e) {
 							System.err.printf("Error Updating PWM!\n");
 							e.printStackTrace();
@@ -280,26 +281,6 @@ public class MotorDevice {
 	}
 	
 	
-	public static MotorDevice init_motor_device(Scanner in) throws Exception{
-		int cu_id=in.nextInt();
-		
-		int i;
-		int [] params=new int[6];
-		for(i=0; i<6  && in.hasNextInt(); i++){
-			params[i]=in.nextInt();
-		}
-		if(i==6){
-			return new MotorDevice(params[0], params[1], params[2], params[3], params[4], params[5],cu_id);
-		}
-		else if(i==4){
-			return new MotorDevice(params[0], params[1], params[2], params[3],cu_id);
-		}
-		else{
-			String error=String.format("MotorDevice Line is improperly formatted Found %d paramerts, expected 4 or 6\n\t %d %d %d %d %d %d %d",i, params[0], params[1], params[2], params[3], params[4], params[5],cu_id);
-			throw new Exception(error);
-			
-		}
-	}
 	public MotorDevice(int id, int enablePin, int PWM_A, int PWM_B, int currentSenseA, int currentSenseB, int cu_id ) throws Exception{
 		this.id=id;
 		this.enablePin=enablePin;
@@ -319,8 +300,10 @@ public class MotorDevice {
 		
 		this.cu.init_pwm(this.PWM_A, this.PWM_B);
 		this.cu.init_gpio_pin_input(this.enablePin );
-		this.cu.init_gpio_pin_output(this.currentSenseA );
-		this.cu.init_gpio_pin_output(this.currentSenseB );
+		if(currentSenseA >=0)
+			this.cu.init_gpio_pin_output(this.currentSenseA );
+		if(currentSenseB >=0 )
+			this.cu.init_gpio_pin_output(this.currentSenseB );
 		
 		this.cu.digital_write_pin(this.enablePin, DISABLED);
 	
@@ -340,7 +323,8 @@ public class MotorDevice {
 		
 		this.cu.init_pwm(this.PWM_A);
 		this.cu.init_gpio_pin_input(this.enablePin );
-		this.cu.init_gpio_pin_output(this.currentSenseA );
+		if(currentSenseA >=0)
+			this.cu.init_gpio_pin_output(this.currentSenseA );
 		this.cu.digital_write_pin(this.enablePin, DISABLED);
 
 		
@@ -350,7 +334,7 @@ public class MotorDevice {
 		}
 		cache.put(id, this);
 		
-		//TODO: enable pins/setup pini/o
+	
 	}
 	public static void LOG_Device_States() {
 		DalekServlet.LOGGER.info("======Begin Motor Devices==================");
