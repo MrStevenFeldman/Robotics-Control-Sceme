@@ -18,7 +18,7 @@ public class DalekServerConnect extends Thread {
 	public static DalekServerConnect live_connect=null;
 	
 	
-	ConnectionState state_v=ConnectionState.Uninitiated;
+	public ConnectionState state_v=ConnectionState.Uninitiated;
 	public String message="No Error";
 	private final int timeout=10000;
 	private int port =9000;
