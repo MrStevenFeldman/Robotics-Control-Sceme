@@ -1,0 +1,12 @@
+package com.example.dalekcontroller;
+
+import android.app.Activity;
+
+public abstract class MotorDevice extends Activity {
+	static int MOTOR_DEVICE=1;
+	final int MAX_MOTOR_DUTY=255;
+	final int DUTY_INCREMENT=5;
+	final int FORWARD=1;
+	final int REVERSE=0;
+	
+}
