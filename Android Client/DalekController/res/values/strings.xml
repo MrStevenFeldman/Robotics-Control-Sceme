@@ -18,5 +18,6 @@
     <color name="red">#FF0000</color>
 
     <string name="title_activity_main">Connection</string>
+    <string name="title_activity_control">ControlActivity</string>
 
 </resources>

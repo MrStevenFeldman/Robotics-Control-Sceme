@@ -6,5 +6,7 @@
 <fullyQualifiedTypeName name="com.example.dalekcontroller.DalekServerConnect"/>
 <fullyQualifiedTypeName name="com.example.dalekcontroller.R"/>
 <fullyQualifiedTypeName name="com.example.dalekcontroller.MainActivity"/>
+<fullyQualifiedTypeName name="android.widget.RelativeLayout"/>
+<fullyQualifiedTypeName name="android.widget.Button"/>
 <fullyQualifiedTypeName name="com.example.dalekcontroller.R.id"/>
 </qualifiedTypeNameHistroy>

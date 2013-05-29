@@ -32,7 +32,7 @@ public class DalekServerConnect extends Thread {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         try {
         	state_v=ConnectionState.Connecting;
         	socket = new Socket();
@@ -59,6 +59,9 @@ public class DalekServerConnect extends Thread {
 		  		live_connect=this;
         	}
   		
+        	
+        	//TODO use this thread to read input from the dalek.
+        	//Should be syncronized with the syncrhonization below
   		  
   		  
         } catch (IOException e) {
@@ -76,7 +79,7 @@ public class DalekServerConnect extends Thread {
         
         
     }
-    public boolean sendCommand(int [] commands){
+    public synchronized boolean sendCommand(int [] commands){
     	
     	if(state_v==ConnectionState.Connecting){
     		Log.e("ConnectionError", "Attempting to command while still trying to connect");
@@ -129,7 +132,7 @@ public class DalekServerConnect extends Thread {
     	  return true;
     }
 
-	public void close_connection() {
+	public synchronized void close_connection() {
 		try {
 			socket.close();
 		} catch (IOException e) {

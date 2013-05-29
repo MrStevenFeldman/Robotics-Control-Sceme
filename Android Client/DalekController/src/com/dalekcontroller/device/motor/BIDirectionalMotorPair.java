@@ -1,10 +1,10 @@
 package com.dalekcontroller.device.motor;
 
-import com.example.dalekcontroller.CircularSeekBar; 
+import com.dalekcontroller.gui.CircularSeekBar;
+import com.dalekcontroller.gui.CircularSeekBar.OnSeekChangeListener;
 import com.example.dalekcontroller.DalekServerConnect;
 import com.example.dalekcontroller.MainActivity;
 import com.example.dalekcontroller.R;
-import com.example.dalekcontroller.CircularSeekBar.OnSeekChangeListener;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
@@ -16,6 +16,10 @@ public class BIDirectionalMotorPair extends MotorDevice {
 	private int deviceID_A=-1;
 	private int deviceID_B=-1;
 	
+	//TODO: Generate a layout that includes all buttons
+	//Then have that added dynamically
+	
+	
 	public void init(int deviceA, int deviceB){
 		deviceID_A=deviceA;
 		deviceID_B=deviceB;
@@ -25,17 +29,22 @@ public class BIDirectionalMotorPair extends MotorDevice {
 	private int motorDirection=1;
 	private int power_level=0;
 	
+	private com.dalekcontroller.gui.CircularSeekBar forwardArc;
+	private com.dalekcontroller.gui.CircularSeekBar reverseArc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_motor_controller);
+        
+        init(1,2);
         dcu_con=DalekServerConnect.live_connect;
         
-        setContentView(R.layout.activity_motor_controller);
-       
-    	com.example.dalekcontroller.CircularSeekBar dc_f=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.forward_dir_control);
-    	com.example.dalekcontroller.CircularSeekBar dc_r=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.reverse_dir_control);
+      
+        
+        forwardArc=(com.dalekcontroller.gui.CircularSeekBar) findViewById(R.id.forward_dir_control);
+        reverseArc=(com.dalekcontroller.gui.CircularSeekBar) findViewById(R.id.reverse_dir_control);
 	
-    	dc_f.setSeekBarChangeListener(new OnSeekChangeListener(){
+        forwardArc.setSeekBarChangeListener(new OnSeekChangeListener(){
 
 			@Override
 			public void onProgressChange(CircularSeekBar view, int newProgress) {
@@ -46,7 +55,7 @@ public class BIDirectionalMotorPair extends MotorDevice {
 			}
     		
     	});
-    	dc_r.setSeekBarChangeListener(new OnSeekChangeListener(){
+    	reverseArc.setSeekBarChangeListener(new OnSeekChangeListener(){
 
 			@Override
 			public void onProgressChange(CircularSeekBar view, int newProgress) {
@@ -63,9 +72,7 @@ public class BIDirectionalMotorPair extends MotorDevice {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_motor_controller, menu);
-        
-        
+        getMenuInflater().inflate(R.menu.activity_motor_controller, menu);  
         return true;
     }
     
@@ -77,10 +84,11 @@ public class BIDirectionalMotorPair extends MotorDevice {
 		sendCommand(command);
 
 		
-		com.example.dalekcontroller.CircularSeekBar dc=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.forward_dir_control);
-    	dc.setProgressPercent(0);
-    	dc.setProgress(0);
-    	dc.refreshDrawableState();
+		forwardArc.setProgressPercent(0);
+		reverseArc.setProgressPercent(0);;
+		
+		reverseArc.refreshDrawableState();
+    	forwardArc.refreshDrawableState();
     	
     	TextView power_level_indicator_v=(TextView)findViewById(R.id.power_level_indicator);
     	power_level_indicator_v.setText("Current Speed: "+power_level);
@@ -92,13 +100,10 @@ public class BIDirectionalMotorPair extends MotorDevice {
     	if(np > MAX_MOTOR_DUTY) 
     		np=MAX_MOTOR_DUTY;
     	updateMotors(np);
-
-    	
     }
     
     public void speedDownFunc(View view){
-    	int np=power_level-DUTY_INCREMENT;
-    	
+    	int np=power_level-DUTY_INCREMENT;  	
     	if(np <0) 
     		np=0;
     	updateMotors(np);
@@ -116,7 +121,11 @@ public class BIDirectionalMotorPair extends MotorDevice {
    
     public void motorToggle(View view) {
     	
+    	//Insure Default State
+    	forwardArc.setProgressPercent(0);
+    	reverseArc.setProgressPercent(0);
     	updateMotors(0);
+    	
     	if(both_enabled){
     		
     		int[] command={MOTOR_DEVICE,NUM_DEVICES,ENABLE_COMMAND,deviceID_A,0,deviceID_B,0};
@@ -132,10 +141,6 @@ public class BIDirectionalMotorPair extends MotorDevice {
     		enable_disable_button.setText("Motors are Enabled, Click to Disable");
     	}
     	both_enabled=!both_enabled;
-		
-    	com.example.dalekcontroller.CircularSeekBar dc=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.forward_dir_control);
-    	dc.setProgressPercent(0);
-    	
 
     }
     
@@ -147,55 +152,44 @@ public class BIDirectionalMotorPair extends MotorDevice {
     }
     
     public void setCenterReverseFunc(View view){
-    	updateReverseSeekBar(0);
+    	reverseArc.updateAngle(0);
     	
     	if(motorDirection!=0){
 			updateDir(-1);
 		}
     }
     public void setRightReverseFunc(View view){
-    	updateReverseSeekBar( 270);
+    	reverseArc.updateAngle(270);
     }
     public void setLeftReverseFunc(View view){
-    	updateReverseSeekBar(90);
+    	reverseArc.updateAngle(90);
     }
     
     public void setCenterForwardFunc(View view){
-    	updateForwardSeekBar(0);
-    	
+    	forwardArc.updateAngle(0);
+
     	if(motorDirection!=0){
 			updateDir(1);
 		}
     }
     public void setRightForwardFunc(View view){
-    	updateForwardSeekBar(90);
+    	forwardArc.updateAngle(90);
+
     }
     public void setLeftForwardFunc(View view){
-    	updateForwardSeekBar(270);
+    	forwardArc.updateAngle(270);
     }
 
-    public void updateForwardSeekBar(int position){
-    	com.example.dalekcontroller.CircularSeekBar dc=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.forward_dir_control);
-    	dc.updateAngle(position);
-    }
-    public void updateReverseSeekBar( int position){
-    	com.example.dalekcontroller.CircularSeekBar dc=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.reverse_dir_control);
-    	dc.updateAngle(position);
-    	
-    }
-    
-    public void updateMotors(int pl){
+    public synchronized void updateMotors(int pl){
     	power_level=pl;
     			
     	float power_dist, percent_to_left, percent_to_right;
     	
     	if(motorDirection==1){
-        	com.example.dalekcontroller.CircularSeekBar dc=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.forward_dir_control);
-        	power_dist=dc.getProgressPercent();
+        	power_dist=forwardArc.getProgressPercent();
     	}
     	else if(motorDirection==-1){
-        	com.example.dalekcontroller.CircularSeekBar dc=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.reverse_dir_control);
-        	power_dist=dc.getProgressPercent();
+        	power_dist=reverseArc.getProgressPercent();
     	}
     	else{
     		power_dist= 0;
@@ -235,7 +229,7 @@ public class BIDirectionalMotorPair extends MotorDevice {
     	power_level_indicator_v.setText("Current Speed: "+power_level);
     }
     
-    public void updateDir(int dir){
+    public synchronized void updateDir(int dir){
     	if(motorDirection==dir){
     		return;
     	}
@@ -246,43 +240,28 @@ public class BIDirectionalMotorPair extends MotorDevice {
     		int dirA;
     		int dirB;
     		if(dir==1){
-    			updateReverseSeekBar(0);
-    			dirA=FORWARD;
-    			dirB=FORWARD;
-    			//sendCommand('D','F','F');
-
+    			dirA=dirB=FORWARD;
     		}
     		else if(dir==-1){
-    			updateForwardSeekBar(0);
-    			dirA=REVERSE;
-    			dirB=REVERSE;
-
+    			dirA=dirB=REVERSE;
     		}
     		else if(dir==2){
-    			updateReverseSeekBar(0);
-    			updateForwardSeekBar(0);
     			dirA=FORWARD;
     			dirB=REVERSE;
     		}
     		else if(dir==-2){
-    			updateReverseSeekBar(0);
-    			updateForwardSeekBar(0);
     			dirA=REVERSE;
     			dirB=FORWARD;
     		}
     		else{
-    			updateReverseSeekBar(0);
-    			dirA=FORWARD;
-    			dirB=FORWARD;
+    			dirA=dirB=FORWARD;
     		}
+    		reverseArc.setProgressPercent(0);
+    		forwardArc.setProgressPercent(0);
     		
 			int[] command={MOTOR_DEVICE,NUM_DEVICES,DIRECTION_COMMAND,deviceID_A,dirA,deviceID_B,dirB};
 			sendCommand(command);
     		motorDirection=dir;
-    		//Set both directions to  center
-    		
-    		com.example.dalekcontroller.CircularSeekBar dc=(com.example.dalekcontroller.CircularSeekBar) findViewById(R.id.forward_dir_control);
-        	dc.setProgressPercent(0);
     	}
     }
 
