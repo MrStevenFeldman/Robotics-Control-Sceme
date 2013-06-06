@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Enable/" key="selection"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
+			<item value="land"/>
+			<item value="port"/>
+			<item value="updateDir"/>
+			<item value="forwardArc"/>
+			<item value="forwardDirfunc"/>
 			<item value="Enable/"/>
 			<item value="rot"/>
 			<item value="power_level"/>
-			<item value="update_motors"/>
-			<item value="updateDir"/>
-			<item value="command"/>
-			<item value="BiDirectionalMotor"/>
-			<item value="arduino"/>
 		</list>
 		<list key="replacehistory">
 			<item value="DCU_MSG"/>

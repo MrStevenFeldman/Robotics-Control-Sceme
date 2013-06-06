@@ -48,10 +48,10 @@ public class BIDirectionalMotorPair extends MotorDevice {
 
 			@Override
 			public void onProgressChange(CircularSeekBar view, int newProgress) {
-				if(motorDirection!=0){
-					updateMotors(0);
-					updateDir(1);
-				}
+				updateDir(1);
+				updateMotors();
+				
+				
 			}
     		
     	});
@@ -59,11 +59,10 @@ public class BIDirectionalMotorPair extends MotorDevice {
 
 			@Override
 			public void onProgressChange(CircularSeekBar view, int newProgress) {
-				if(motorDirection!=0){
-					updateMotors(0);
-					updateDir(-1);
-					
-				}			
+				updateDir(-1);
+				updateMotors();
+				
+						
 			}
     		
     	});
@@ -180,9 +179,14 @@ public class BIDirectionalMotorPair extends MotorDevice {
     	forwardArc.updateAngle(270);
     }
 
+   
+
     public synchronized void updateMotors(int pl){
     	power_level=pl;
-    			
+    	updateMotors();
+    }
+    public synchronized void updateMotors(){
+    		
     	float power_dist, percent_to_left, percent_to_right;
     	
     	if(motorDirection==1){
@@ -234,9 +238,6 @@ public class BIDirectionalMotorPair extends MotorDevice {
     		return;
     	}
     	else{
-    		
-    		motorDirection=0;
-    		//Set power level to 0
     		int dirA;
     		int dirB;
     		if(dir==1){
@@ -261,7 +262,6 @@ public class BIDirectionalMotorPair extends MotorDevice {
     		
 			int[] command={MOTOR_DEVICE,NUM_DEVICES,DIRECTION_COMMAND,deviceID_A,dirA,deviceID_B,dirB};
 			sendCommand(command);
-    		motorDirection=dir;
     	}
     }
 
