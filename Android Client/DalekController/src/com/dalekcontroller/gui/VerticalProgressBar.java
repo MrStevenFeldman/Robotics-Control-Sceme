@@ -1,8 +1,6 @@
 package com.dalekcontroller.gui;
 
 import com.example.dalekcontroller.R;
-import com.example.dalekcontroller.R.styleable;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -17,7 +15,6 @@ import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewDebug;

@@ -10,6 +10,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 
@@ -82,7 +84,7 @@ public class DalekServerConnect extends Thread {
     public synchronized boolean sendCommand(int [] commands){
     	
     	if(state_v==ConnectionState.Connecting){
-    		Log.e("ConnectionError", "Attempting to command while still trying to connect");
+    		Log.e("ConnectionError", "Attempting to send command while still trying to connect");
 
     		message=("Already Connecting");
     		return false;
@@ -143,6 +145,33 @@ public class DalekServerConnect extends Thread {
 		}
 		
 		live_connect=null;
+		
+	}
+
+	public static void static_sendCommand(Activity activity, int[] commands) {
+		
+		
+		String log_str="Command Char: ";
+
+		for(int i=0; i<commands.length; i++){
+			log_str+=" "+(int)commands[i];
+		}
+		Log.d("DCU_MSG",log_str);
+		
+		boolean res=false;
+		if(live_connect==null){
+			return;
+		}
+		if(live_connect.state_v == ConnectionState.Connected){
+			res= live_connect.sendCommand(commands);
+		}
+		
+		
+		if(!res){
+			Intent intent = new Intent(activity, MainActivity.class);
+			activity.startActivity(intent);
+			
+		}
 		
 	}
     

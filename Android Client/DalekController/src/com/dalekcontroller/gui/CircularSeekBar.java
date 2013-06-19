@@ -1,5 +1,5 @@
 /**
- * @author Raghav Sood
+ * @author Raghav Sood, Modified by Steven Feldman
  * @version 1
  * @date 26 January, 2013
  * 
@@ -15,9 +15,6 @@ package com.dalekcontroller.gui;
 
 
 import com.example.dalekcontroller.R;
-import com.example.dalekcontroller.R.drawable;
-import com.example.dalekcontroller.R.styleable;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="30" version="2.0">
+<workbench progressCount="23" version="2.0">
 <workbenchAdvisor/>
-<window height="874" maximized="true" width="1440" x="16" y="22">
+<window height="874" width="1417" x="0" y="22">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="250"/>
@@ -16,21 +16,21 @@
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="100" y="22"/>
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="62" y="22"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="62" y="22"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="54" y="22"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="98" y="22"/>
 <coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="54" y="22"/>
+<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="32" y="22"/>
 <coolItem id="org.eclipse.debug.ui.launch.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.debug.ui.main.toolbar" itemType="typeToolBarContribution" x="242" y="22"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="152" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
-<page aggregateWorkingSetId="Aggregate for window 1368072744659" focus="true" label="Workspace - Java">
+<page aggregateWorkingSetId="Aggregate for window 1368072744659" focus="true" label="Workspace - Debug">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
@@ -42,28 +42,37 @@
 <part id="3"/>
 <part id="4"/>
 <part id="5"/>
+<part id="6"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BIDirectionalMotorPair.java" partName="BIDirectionalMotorPair.java" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java" title="BIDirectionalMotorPair.java" tooltip="MainActivity/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4149" selectionTopPixel="1594"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainActivity.java" partName="MainActivity.java" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/src/com/example/dalekcontroller/MainActivity.java" title="MainActivity.java" tooltip="MainActivity/src/com/example/dalekcontroller/MainActivity.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/src/com/example/dalekcontroller/MainActivity.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="69" selectionOffset="919" selectionTopPixel="807"/>
 </editor>
-<editor id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_motor_controller.xml" partName="activity_motor_controller.xml" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/res/layout/activity_motor_controller.xml" title="activity_motor_controller.xml" tooltip="MainActivity/res/layout/activity_motor_controller.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/res/layout/activity_motor_controller.xml"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ControlActivity.java" partName="ControlActivity.java" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/src/com/example/dalekcontroller/ControlActivity.java" title="ControlActivity.java" tooltip="MainActivity/src/com/example/dalekcontroller/ControlActivity.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/src/com/example/dalekcontroller/ControlActivity.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2807" selectionTopPixel="758"/>
 </editor>
-<editor id="com.android.ide.eclipse.editors.CommonXmlEditor" name="strings.xml" partName="strings.xml" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/res/values/strings.xml" title="strings.xml" tooltip="MainActivity/res/values/strings.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/res/values/strings.xml"/>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ServoPair.java" partName="ServoPair.java" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/src/com/dalekcontroller/device/ServoPair.java" title="ServoPair.java" tooltip="MainActivity/src/com/dalekcontroller/device/ServoPair.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/src/com/dalekcontroller/device/ServoPair.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1687" selectionTopPixel="1578"/>
 </editor>
-<editor id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_motor_controller.xml" partName="normal/activity_motor_controller.xml" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/res/layout-normal/activity_motor_controller.xml" title="normal/activity_motor_controller.xml" tooltip="MainActivity/res/layout-normal/activity_motor_controller.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/res/layout-normal/activity_motor_controller.xml"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DotInCircle.java" partName="DotInCircle.java" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/src/com/dalekcontroller/gui/DotInCircle.java" title="DotInCircle.java" tooltip="MainActivity/src/com/dalekcontroller/gui/DotInCircle.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/src/com/dalekcontroller/gui/DotInCircle.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3383" selectionTopPixel="2342"/>
 </editor>
-<editor id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" partName="normal/activity_main.xml" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/res/layout-normal/activity_main.xml" title="normal/activity_main.xml" tooltip="MainActivity/res/layout-normal/activity_main.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/res/layout-normal/activity_main.xml"/>
+<editor id="com.android.ide.eclipse.editors.CommonXmlEditor" name="layout_servopair.xml" partName="layout_servopair.xml" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/res/layout/layout_servopair.xml" title="layout_servopair.xml" tooltip="MainActivity/res/layout/layout_servopair.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/res/layout/layout_servopair.xml"/>
 </editor>
-<editor activePart="true" focus="true" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" partName="MainActivity Manifest" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/AndroidManifest.xml" title="MainActivity Manifest" tooltip="MainActivity/AndroidManifest.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/AndroidManifest.xml"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CircularSeekBar.java" partName="CircularSeekBar.java" path="/Users/stevenfeldman/Xcode Projects/DalekController/Android Client/DalekController/src/com/dalekcontroller/gui/CircularSeekBar.java" title="CircularSeekBar.java" tooltip="MainActivity/src/com/dalekcontroller/gui/CircularSeekBar.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/MainActivity/src/com/dalekcontroller/gui/CircularSeekBar.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="2" selectionOffset="8448" selectionTopPixel="4515"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.ClassFileEditor" name="DexFile.class" partName="DexFile.class" title="DexFile.class" tooltip="dalvik.system.DexFile" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;dalvik.system(DexFile.class"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -78,8 +87,22 @@
 <viewState/>
 </view>
 <view id="com.android.ide.eclipse.ddms.views.ThreadView" partName="Threads"/>
+<view id="org.eclipse.cdt.debug.ui.executablesView" partName="Executables"/>
 <view id="org.eclipse.pde.runtime.LogView" partName="Error Log">
 <viewState activate="true" allSessions="true" column2="300" column3="150" column4="150" error="true" groupBy="0" info="true" limit="50" ok="true" orderType="1" orderValue="1" show_filter_text="true" useLimit="true" warning="true"/>
+</view>
+<view id="org.eclipse.debug.ui.BreakpointView" partName="Breakpoints">
+<viewState/>
+</view>
+<view id="org.eclipse.debug.ui.VariableView" partName="Variables">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks"/>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+<view id="org.eclipse.debug.ui.ExpressionView" partName="Expressions">
+<viewState/>
 </view>
 <view id="com.android.ide.eclipse.ddms.views.HeapView" partName="Heap"/>
 <view id="com.android.ide.eclipse.ddms.views.LogCatView" partName="LogCat">
@@ -89,6 +112,9 @@
 <view id="com.android.ide.eclipse.ddms.views.NetworkStatsView" partName="Network Statistics"/>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Warnings (42 items)"/>
+</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="417"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -132,7 +158,7 @@
 <view id="com.android.ide.eclipse.ddms.views.AllocTrackerView" partName="Allocation Tracker"/>
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 </views>
-<perspectives activePart="com.android.ide.eclipse.editors.manifest.ManifestEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.debug.ui.DebugPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="0" fixed="0" version="0.016">
 <descriptor class="com.android.ide.eclipse.ddms.Perspective" id="com.android.ide.eclipse.ddms.Perspective" label="DDMS"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -290,9 +316,9 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="254" ratioRight="762" relationship="2" relative="left"/>
+<info part="org.eclipse.ui.editorss" ratio="0.26662" ratioLeft="381" ratioRight="1048" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.65267175" ratioLeft="513" ratioRight="273" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
 <page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
@@ -327,7 +353,7 @@
 </mainWindow>
 </layout>
 </perspective>
-<perspective editorAreaTrimState="1" editorAreaVisible="1" fixed="0" version="0.016">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.debug.internal.ui.DebugPerspectiveFactory" id="org.eclipse.debug.ui.DebugPerspective" label="Debug"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
 <alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
@@ -372,68 +398,90 @@
 <hide_toolbar_item_id id="org.eclipse.debug.ui.commands.RunToLine"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<fastViewBars>&#x0A;<fastViewBar fastViewLocation="131072" id="org.eclipse.debug.internal.ui.ToolsFolderView" orientation="256" selectedTabId="org.eclipse.debug.ui.VariableView" style="1">&#x0A;<fastViews>&#x0A;<view id="org.eclipse.debug.ui.VariableView" ratio="0.3"/>
-<view id="org.eclipse.debug.ui.BreakpointView" ratio="0.3"/>
-</fastViews>
-</fastViewBar>
-<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@5d6b3f00" orientation="256" selectedTabId="com.android.ide.eclipse.ddms.views.LogCatView" style="1">&#x0A;<fastViews>&#x0A;<view id="com.android.ide.eclipse.ddms.views.LogCatView" ratio="0.3"/>
-</fastViews>
-</fastViewBar>
-<fastViewBar fastViewLocation="1024" id="org.eclipse.debug.internal.ui.ConsoleFolderView" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="1">&#x0A;<fastViews>&#x0A;<view id="org.eclipse.ui.console.ConsoleView" ratio="0.3"/>
-<view id="org.eclipse.ui.views.TaskList" ratio="0.3"/>
-<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
-<view id="org.eclipse.cdt.debug.ui.executablesView" ratio="0.3"/>
-</fastViews>
-</fastViewBar>
-<fastViewBar fastViewLocation="16384" id="org.eclipse.debug.internal.ui.NavigatorFolderView" orientation="256" selectedTabId="org.eclipse.debug.ui.DebugView" style="1">&#x0A;<fastViews>&#x0A;<view id="org.eclipse.debug.ui.DebugView" ratio="0.3"/>
-</fastViews>
-</fastViewBar>
-<fastViewBar fastViewLocation="131072" id="org.eclipse.debug.internal.ui.OutlineFolderView" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="1">&#x0A;<fastViews>&#x0A;<view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.ui.views.TaskList"/>
+<view id="org.eclipse.ui.views.ProblemView"/>
+<view id="org.eclipse.cdt.debug.ui.executablesView"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="org.eclipse.debug.ui.VariableView"/>
+<view id="org.eclipse.debug.ui.BreakpointView"/>
+<view id="org.eclipse.debug.ui.DebugView"/>
+<view id="org.eclipse.debug.ui.ExpressionView"/>
+<fastViewBars>
+<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@5d6b3f00" orientation="256" selectedTabId="com.android.ide.eclipse.ddms.views.LogCatView" style="0">
+<fastViews>
+<view id="com.android.ide.eclipse.ddms.views.LogCatView" ratio="0.792142"/>
 </fastViews>
 </fastViewBar>
 </fastViewBars>
-<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.eclipse.debug.ui.DebugView" label="LabelNotFound"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="762" ratioRight="254" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="762" ratioRight="254" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.74963397" ratioLeft="512" ratioRight="171" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
-<page content="org.eclipse.ui.views.TaskList" label="LabelNotFound"/>
-<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
-<page content="org.eclipse.cdt.debug.ui.executablesView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.78244275" ratioLeft="615" ratioRight="171" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
+<page content="org.eclipse.cdt.debug.ui.executablesView" label="Executables"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
 <page content="org.eclipse.search.SearchResultView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+</presentation>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.44921875" ratioLeft="230" ratioRight="282" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
-<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="762" ratioRight="254" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
+<info part="org.eclipse.ui.editorss" ratio="0.375817" ratioLeft="230" ratioRight="382" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="762" ratioRight="254" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.gdb.ui.tracecontrol.view" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@5d6b3f00" ratio="0.3641161" ratioLeft="138" ratioRight="241" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="0">
+<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@5d6b3f00" ratio="0.8733509" ratioLeft="331" ratioRight="48" relationship="4" relative="org.eclipse.ui.editorss">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
-</folder>
-</info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="508" ratioRight="508" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.eclipse.debug.ui.VariableView" label="LabelNotFound"/>
-<page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
-<page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="508" ratioRight="508" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
+<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
+<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<page content="org.eclipse.debug.ui.ExpressionView" label="Expressions"/>
 <page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.debug.ui.SignalsView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.ModuleView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+</presentation>
 </folder>
 </info>
 </mainWindow>
@@ -443,81 +491,173 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/layout-normal/activity_motor_controller.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="" path="/MainActivity/res/layout-normal/activity_motor_controller.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/MainActivity/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/layout/activity_motor_controller.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="" path="/MainActivity/res/layout/activity_motor_controller.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/menu/activity_control.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/values/strings.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="" path="/MainActivity/res/values/strings.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/MainActivity/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/layout/activity_motor_controller.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/layout-normal/activity_motor_controller.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/menu/activity_control.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/layout-normal/activity_main.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/MainActivity/AndroidManifest.xml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/MainActivity/src/com/dalekcontroller/device/ServoPair.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/MainActivity/src/com/dalekcontroller/gui/DotInCircle.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/MainActivity/res/layout/layout_servopair.xml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/MainActivity/src/com/example/dalekcontroller/ControlActivity.java"/>
+<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Users\/stevenfeldman\/Xcode Projects\/DalekController\/Android Client\/DalekController\/libs\/android-support-v4.jar&lt;android.support.v4.app(Fragment.class"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/MainActivity/src/com/example/dalekcontroller/MainActivity.java"/>
+<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;dalvik.system(DexFile.class"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/MainActivity/src/com/dalekcontroller/gui/CircularSeekBar.java"/>
 </editors>
-<item historyLabel="normal/activity_motor_controller.xml" index="0"/>
-<item historyLabel="normal/activity_motor_controller.xml" index="0">
-<position info="not_deleted" x="606" y="0"/>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1644" y="0"/>
 </item>
-<item historyLabel="normal/activity_motor_controller.xml" index="1">
-<position info="not_deleted" x="3598" y="0"/>
+<item historyLabel="layout_servopair.xml" index="2"/>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1644" y="0"/>
 </item>
-<item historyLabel="BIDirectionalMotorPair.java" index="2">
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="2665" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="3183" y="0"/>
+</item>
+<item historyLabel="Fragment.class" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="normal/activity_motor_controller.xml" index="0"/>
-<item historyLabel="BIDirectionalMotorPair.java" index="2">
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="3343" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1710" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="2665" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="3343" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1644" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1664" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1687" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1980" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1663" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="2012" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="2080" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="2109" y="0"/>
+</item>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="4233" y="2"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="3343" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1644" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1694" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1687" y="0"/>
+</item>
+<item historyLabel="ControlActivity.java" index="3">
+<position info="not_deleted" x="2807" y="0"/>
+</item>
+<item historyLabel="MainActivity.java" index="5">
+<position info="not_deleted" x="919" y="69"/>
+</item>
+<item historyLabel="ControlActivity.java" index="3">
+<position info="not_deleted" x="2807" y="0"/>
+</item>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="4233" y="2"/>
+</item>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="3798" y="55"/>
+</item>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="5515" y="0"/>
+</item>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="5511" y="0"/>
+</item>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="5487" y="0"/>
+</item>
+<item historyLabel="layout_servopair.xml" index="2"/>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="5487" y="0"/>
+</item>
+<item historyLabel="DexFile.class" index="6">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="normal/activity_motor_controller.xml" index="0"/>
-<item historyLabel="BIDirectionalMotorPair.java" index="2">
-<position/>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1687" y="0"/>
 </item>
-<item historyLabel="normal/activity_motor_controller.xml" index="0"/>
-<item historyLabel="BIDirectionalMotorPair.java" index="2">
-<position info="not_deleted" x="5439" y="0"/>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="5511" y="0"/>
 </item>
-<item historyLabel="activity_motor_controller.xml" index="3"/>
-<item historyLabel="normal/activity_motor_controller.xml" index="0"/>
-<item historyLabel="activity_motor_controller.xml" index="3">
-<position info="not_deleted" x="7875" y="0"/>
+<item historyLabel="CircularSeekBar.java" index="7">
+<position info="not_deleted" x="16338" y="13"/>
 </item>
-<item historyLabel="activity_motor_controller.xml" index="4">
-<position info="not_deleted" x="3714" y="0"/>
+<item historyLabel="DexFile.class" index="6">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="normal/activity_motor_controller.xml" index="0">
-<position info="not_deleted" x="8409" y="0"/>
+<item historyLabel="CircularSeekBar.java" index="7">
+<position info="not_deleted" x="16338" y="13"/>
 </item>
-<item historyLabel="normal/activity_motor_controller.xml" index="1">
-<position info="not_deleted" x="606" y="0"/>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1687" y="0"/>
 </item>
-<item historyLabel="activity_control.xml" index="5"/>
-<item historyLabel="strings.xml" index="6">
-<position info="not_deleted" x="276" y="0"/>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="5693" y="0"/>
 </item>
-<item historyLabel="strings.xml" index="7">
-<position/>
+<item historyLabel="CircularSeekBar.java" index="7">
+<position info="not_deleted" x="8448" y="2"/>
 </item>
-<item historyLabel="normal/activity_motor_controller.xml" index="0"/>
-<item historyLabel="BIDirectionalMotorPair.java" index="8">
-<position info="not_deleted" x="5439" y="0"/>
+<item historyLabel="layout_servopair.xml" index="2"/>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="4717" y="6"/>
 </item>
-<item historyLabel="activity_motor_controller.xml" index="9"/>
-<item historyLabel="normal/activity_motor_controller.xml" index="10"/>
-<item historyLabel="activity_control.xml" index="11"/>
-<item historyLabel="normal/activity_motor_controller.xml" index="10"/>
-<item historyLabel="normal/activity_main.xml" index="12"/>
-<item historyLabel="normal/activity_motor_controller.xml" index="10"/>
-<item active="true" historyLabel="MainActivity Manifest" index="13"/>
+<item historyLabel="DexFile.class" index="6">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1687" y="0"/>
+</item>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="5155" y="0"/>
+</item>
+<item historyLabel="DotInCircle.java" index="1">
+<position info="not_deleted" x="3383" y="0"/>
+</item>
+<item historyLabel="DexFile.class" index="6">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="ServoPair.java" index="0">
+<position info="not_deleted" x="1687" y="0"/>
+</item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@5d6b3f00"/>
+</trimArea>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.OutlineFolderView"/>
+<trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.ToolsFolderView"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.editorss"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -526,54 +666,55 @@
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.HeapStatus"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+<trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.ConsoleFolderView"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" tooltip="MainActivity/AndroidManifest.xml">
-<persistable path="/MainActivity/AndroidManifest.xml"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" tooltip="MainActivity/res/layout-normal/activity_main.xml">
-<persistable path="/MainActivity/res/layout-normal/activity_main.xml"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_motor_controller.xml" tooltip="MainActivity/res/layout-normal/activity_motor_controller.xml">
-<persistable path="/MainActivity/res/layout-normal/activity_motor_controller.xml"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="joystickregion.png" tooltip="MainActivity/res/drawable-hdpi/joystickregion.png">
-<persistable path="/MainActivity/res/drawable-hdpi/joystickregion.png"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="strings.xml" tooltip="MainActivity/res/values/strings.xml">
-<persistable path="/MainActivity/res/values/strings.xml"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_control.xml" tooltip="MainActivity/res/menu/activity_control.xml">
-<persistable path="/MainActivity/res/menu/activity_control.xml"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_motor_controller.xml" tooltip="MainActivity/res/layout/activity_motor_controller.xml">
-<persistable path="/MainActivity/res/layout/activity_motor_controller.xml"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BIDirectionalMotorPair.java" tooltip="MainActivity/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java">
-<persistable path="/MainActivity/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" tooltip="MainActivity/res/layout/activity_main.xml">
-<persistable path="/MainActivity/res/layout/activity_main.xml"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ThreadGroup.class" tooltip="java.lang.ThreadGroup">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;java.lang(ThreadGroup.class"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Handler.class" tooltip="android.os.Handler">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;android.os(Handler.class"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Instrumentation.class" tooltip="android.app.Instrumentation">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;android.app(Instrumentation.class"/>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="DexFile.class" tooltip="dalvik.system.DexFile">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;dalvik.system(DexFile.class"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CircularSeekBar.java" tooltip="MainActivity/src/com/dalekcontroller/gui/CircularSeekBar.java">
 <persistable path="/MainActivity/src/com/dalekcontroller/gui/CircularSeekBar.java"/>
 </file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="RelativeLayout.class" tooltip="android.widget.RelativeLayout">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;android.widget(RelativeLayout.class"/>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Fragment.class" tooltip="android.support.v4.app.Fragment">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Users\/stevenfeldman\/Xcode Projects\/DalekController\/Android Client\/DalekController\/libs\/android-support-v4.jar&lt;android.support.v4.app(Fragment.class"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DalekServerConnect.java" tooltip="MainActivity/src/com/example/dalekcontroller/DalekServerConnect.java">
-<persistable path="/MainActivity/src/com/example/dalekcontroller/DalekServerConnect.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="layout_servopair.xml" tooltip="MainActivity/res/layout/layout_servopair.xml">
+<persistable path="/MainActivity/res/layout/layout_servopair.xml"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DotInCircle.java" tooltip="MainActivity/src/com/dalekcontroller/gui/DotInCircle.java">
+<persistable path="/MainActivity/src/com/dalekcontroller/gui/DotInCircle.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ServoPair.java" tooltip="MainActivity/src/com/dalekcontroller/device/ServoPair.java">
+<persistable path="/MainActivity/src/com/dalekcontroller/device/ServoPair.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="layout_bimotorpair.xml" tooltip="MainActivity/res/layout/layout_bimotorpair.xml">
+<persistable path="/MainActivity/res/layout/layout_bimotorpair.xml"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ThreadGroup.class" tooltip="java.lang.ThreadGroup">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;java.lang(ThreadGroup.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Method.class" tooltip="java.lang.reflect.Method">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;java.lang.reflect(Method.class"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BiDirectionalMotor.java" tooltip="MainActivity/src/com/dalekcontroller/device/motor/BiDirectionalMotor.java">
+<persistable path="/MainActivity/src/com/dalekcontroller/device/motor/BiDirectionalMotor.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BIDirectionalMotorPair.java" tooltip="MainActivity/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java">
+<persistable path="/MainActivity/src/com/dalekcontroller/device/motor/BIDirectionalMotorPair.java"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Binder.class" tooltip="android.os.Binder">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;android.os(Binder.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="InvocationTargetException.class" tooltip="java.lang.reflect.InvocationTargetException">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;java.lang.reflect(InvocationTargetException.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Handler.class" tooltip="android.os.Handler">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Applications\/android-sdk\/sdk\/platforms\/android-17\/android.jar&lt;android.os(Handler.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="FragmentManager.class" tooltip="android.support.v4.app.FragmentManager">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=MainActivity/\/Users\/stevenfeldman\/Xcode Projects\/DalekController\/Android Client\/DalekController\/libs\/android-support-v4.jar&lt;android.support.v4.app(FragmentManager.class"/>
 </file>
 </mruList>
 </workbench>

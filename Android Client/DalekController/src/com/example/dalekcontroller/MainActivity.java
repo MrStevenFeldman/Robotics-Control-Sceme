@@ -1,23 +1,22 @@
 package com.example.dalekcontroller;
 
-import com.dalekcontroller.device.motor.BIDirectionalMotorPair;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity  {
 	private DalekServerConnect dcu_con;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		update_conneciton_display();
+		update_connection_display();
 		
 	}
 
@@ -38,9 +37,9 @@ public class MainActivity extends Activity {
     	dcu_con = new DalekServerConnect(ip);
     	dcu_con.start();
     	
-		update_conneciton_display();
+		update_connection_display();
 	}
-	public void update_conneciton_display(){
+	public void update_connection_display(){
     	
     	Button man_control_button=(Button)findViewById(R.id.man_control_button);
     	
@@ -89,7 +88,7 @@ public class MainActivity extends Activity {
     }
 	
 	public void switchToManualControlPage(View view){
-		Intent intent = new Intent(this, BIDirectionalMotorPair.class);
+		Intent intent = new Intent(this, ControlActivity.class);
 		startActivity(intent);
 		
 	}

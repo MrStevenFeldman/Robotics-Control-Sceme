@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.dalekcontroller.device.motor.BIDirectionalMotorPair" >
 
-    <LinearLayout
+    <!-- <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                 android:text="Right Spin" />
 
         </RelativeLayout>
-    </LinearLayout>
+    </LinearLayout> -->
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"

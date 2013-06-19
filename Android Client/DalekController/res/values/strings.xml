@@ -10,5 +10,12 @@
     <color name="lightgold">#BDB76B</color>
 
     <string name="title_activity_main">Connection</string>
-
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_control">ControlActivity</string>
+	<string name="button_s">button</string>
+	<string name="STOP">STOP</string>
+	<string name="Slower">Slower</string>
+	<string name="Faster">Faster</string>
+	<string name="Enable">Enable</string>
+	<string name="Reverse">Reverse</string>
 </resources>

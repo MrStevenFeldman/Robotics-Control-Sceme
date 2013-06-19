@@ -1,15 +1,8 @@
 package com.dalekcontroller.device.motor;
 
-import com.example.dalekcontroller.ConnectionState;
-import com.example.dalekcontroller.DalekServerConnect;
-import com.example.dalekcontroller.MainActivity;
+import android.support.v4.app.Fragment;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
-
-public abstract class MotorDevice extends Activity {
-	static DalekServerConnect dcu_con;
+public abstract class MotorDevice extends Fragment {
 	
 	static int MOTOR_DEVICE=1;
 	final int MAX_MOTOR_DUTY=255;
@@ -22,30 +15,8 @@ public abstract class MotorDevice extends Activity {
 	
 	 /**This function sends commands to the dalek control unit **/
 
-	public void sendCommand(int [] commands) {
-			
-			
-			String log_str="Command Char: ";
-			
-		
-			
-			for(int i=0; i<commands.length; i++){
-				log_str+=" "+(int)commands[i];
-			}
-			Log.d("DCU_MSG",log_str);
-			
-			if(dcu_con==null || (dcu_con.state_v != ConnectionState.Connected) ){
-				Intent intent = new Intent(this, MainActivity.class);
-				startActivity(intent);
-				
-			}
-			boolean res=dcu_con.sendCommand(commands);
-			
-			if(!res){
-				Intent intent = new Intent(this, MainActivity.class);
-				startActivity(intent);
-				
-			}
-		}
+	public static void StopAll(){
+		//TODO iterator over all motor device instances and call stop
+	}
 	
 }

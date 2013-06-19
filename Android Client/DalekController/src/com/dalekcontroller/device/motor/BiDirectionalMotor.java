@@ -1,73 +1,141 @@
 package com.dalekcontroller.device.motor;
 
-
 import com.example.dalekcontroller.DalekServerConnect;
-import com.example.dalekcontroller.MainActivity;
 import com.example.dalekcontroller.R;
 
 import android.os.Bundle;
-import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 public class BiDirectionalMotor extends MotorDevice {
-	private int deviceID=-1;
-	private boolean enabled=false;
-	private int motorDirection=FORWARD;
-	private int power_level;
+	private int deviceID=-1; public static String deviceID_s="deviceID";
+	private boolean enabled=false; public static String enabled_s="enabled";
+	private int motorDirection=FORWARD;  public static String motorDirection_s="motorDirection";
+	private int power_level; public static String power_level_s="power_level";
 	
-	//Button ID
-	
-	int stop_button;
-	int speed_inc_button;
-	int speed_dec_button;
-	int reverse_button;
-	int enable_button;
-	
+
 	//Info Objects
 	int current_speed_tv;
+	private TextView power_level_indicator_v;
+	private Button enable_disable_button;
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
 
-	public void init(int did){
-		deviceID=did;
-		enabled=false;
-		motorDirection=FORWARD;
-	}
-	public void init(int did, boolean enable){
-		deviceID=did;
-		enabled=enable;
-		motorDirection=FORWARD;
-	}
-	public void init(int did, int md){
-		deviceID=did;
-		enabled=false;
-		if(md<1)
-			motorDirection=	REVERSE;
-		else
-			motorDirection= FORWARD; 
+		// Save the current article selection in case we need to recreate the fragment
+		outState.putInt(deviceID_s, deviceID);
+		outState.putInt(motorDirection_s, motorDirection);
+		outState.putInt(power_level_s, power_level);
+		outState.putBoolean(enabled_s, enabled);
 	}
 	
+	@Override
+	public void onStart() {
+		super.onStart();
 
-	
-	
-	
-	
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        dcu_con=DalekServerConnect.live_connect;     
-        setContentView(R.layout.activity_motor_controller);
-    }
+		// During startup, check if there are arguments passed to the fragment.
+		// onStart is a good place to do this because the layout has already been
+		// applied to the fragment at this point so we can safely call the method
+		// below that sets the article text.
+		Bundle args = getArguments();
+		if (args != null) {
+			// Set article based on argument passed in
+			deviceID=args.getInt(deviceID_s);
+			
+		} else {
+			throw new ClassCastException("Need Arguements for BiDirectional Motor!");
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_motor_controller, menu);
-        return true;
-    }
+		}
+	}
+
+	 @Override
+	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		 if (savedInstanceState != null) {
+			 deviceID=savedInstanceState.getInt(deviceID_s);
+				motorDirection=savedInstanceState.getInt(motorDirection_s);
+				power_level=savedInstanceState.getInt(power_level_s);
+				enabled= savedInstanceState.getBoolean(enabled_s);
+		 }
+		 else{
+			
+		 }
+			
+		 return inflater.inflate(R.layout.layout_bimotor, container, false);
+		
+	}
+	 
+	 @Override
+	public void onViewCreated(View view, Bundle savedInstanceState){
+		 
+		if (savedInstanceState != null) {
+			deviceID=savedInstanceState.getInt(deviceID_s);
+			motorDirection=savedInstanceState.getInt(motorDirection_s);
+			power_level=savedInstanceState.getInt(power_level_s);
+			enabled= savedInstanceState.getBoolean(enabled_s);
+		}
+		else{
+			
+		}
+
+		Button speedUp=(Button)view.findViewById(R.id.speedUpButton);
+			
+		speedUp.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View view){
+				speedUpFunc(view);
+			}
+		});
+		Button speedDown=(Button)view.findViewById(R.id.speedDownButton);
+		speedDown.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View view){
+				speedDownFunc(view);
+			}
+		});
+		Button stopButton=(Button)view.findViewById(R.id.stopButton);
+		stopButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View view){
+				stopFunc(view);
+			}
+		});
+		
+		Button reverse=(Button)view.findViewById(R.id.reverseButton);
+		reverse.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View view){
+				directionToggle(view);
+			}
+		});
+		
+		
+		enable_disable_button=(Button)view.findViewById(R.id.enable_button);
+		if(enabled){
+			enable_disable_button.setText("Disable");
+		}
+		else{
+			enable_disable_button.setText("Enable");
+		}
+		enable_disable_button.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View view){
+				motorToggle(view);
+			}
+		});
+			
+		power_level_indicator_v=(TextView)getView().findViewById(R.id.power_level_indicator);
+				
+			
+	}
+	
     
-    
-    public void stopFunc(View view) {
+	public void stopFunc(View view) { stopFunc();}
+		public void stopFunc() {
     	power_level=0;
     	
     	updateMotor();
@@ -90,7 +158,6 @@ public class BiDirectionalMotor extends MotorDevice {
     	
     	if(power_level <0) 
     		power_level=0;
-    		//sendCommand('U',left_duty,right_duty);
     	
     	updateMotor();
     }
@@ -98,44 +165,29 @@ public class BiDirectionalMotor extends MotorDevice {
     public void updateMotor(){
     	Log.d("PDS","BiDirectional Motor "+deviceID+"  Power Level["+power_level+"]");
 
-    	//sendCommand('U',left_duty,right_duty);
-    	int[] command={MOTOR_DEVICE,1,SPEED_COMMAND,1,power_level};
-		sendCommand(command);
+    	int[] command={MOTOR_DEVICE,1,SPEED_COMMAND,deviceID,power_level};
+    	DalekServerConnect.static_sendCommand(getActivity(),command);
 		
-		TextView power_level_indicator_v=(TextView)findViewById(current_speed_tv);
-    	power_level_indicator_v.setText("Current Speed: "+power_level);
+		power_level_indicator_v.setText("Current Speed: "+power_level);
     }
     
-    public void disconnect_func(View view){
-    	stopFunc(view);
-    	dcu_con.close_connection();
-    	dcu_con=null;
-    	
-    	Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
-		
-    	
-    }
     
    
     public void motorToggle(View view) {
-		TextView enable_disable_button=(TextView)findViewById(enable_button);
-
-		
-    	power_level=0;
+		power_level=0;
 		updateMotor();
 		
     	if(enabled){
     		int[] command={MOTOR_DEVICE,1,ENABLE_COMMAND,deviceID,0};
-    		sendCommand(command);
+    		DalekServerConnect.static_sendCommand(getActivity(),command);
     		
-    		enable_disable_button.setText("Motors are Disabled, Click to Enable");
+    		enable_disable_button.setText("Enable");
     	}
     	else{
-    		int[] command={MOTOR_DEVICE,1,0,deviceID,1};
-    		sendCommand(command);
+    		int[] command={MOTOR_DEVICE,1,ENABLE_COMMAND,deviceID,1};
+    		DalekServerConnect.static_sendCommand(getActivity(),command);
     		
-    		enable_disable_button.setText("Motors are Enabled, Click to Disable");
+    		enable_disable_button.setText("Disable");
     	}
     	enabled=!enabled;
     }
@@ -147,13 +199,13 @@ public class BiDirectionalMotor extends MotorDevice {
 		updateMotor();
 		
     	if(motorDirection==FORWARD){
-			int[] command={MOTOR_DEVICE,1,DIRECTION_COMMAND,1,REVERSE};
-			sendCommand(command);
+			int[] command={MOTOR_DEVICE,1,DIRECTION_COMMAND,deviceID,REVERSE};
+			DalekServerConnect.static_sendCommand(getActivity(),command);
     		motorDirection=REVERSE;
     	}
     	else{
-			int[] command={MOTOR_DEVICE,1,DIRECTION_COMMAND,1,FORWARD};
-			sendCommand(command);
+			int[] command={MOTOR_DEVICE,1,DIRECTION_COMMAND,deviceID,FORWARD};
+			DalekServerConnect.static_sendCommand(getActivity(),command);
     		motorDirection=FORWARD;
     	}
     }
