@@ -187,8 +187,8 @@ public class DotInCircle extends View {
 														// height to make a
 														// square
 
-		cx = width / 2; // Center X for circle
-		cy = height / 2; // Center Y for circle
+		dx=cx = width / 2; // Center X for circle
+		dy=cy = height / 2; // Center Y for circle
 		outerRadius = (size / 2) - 15;  // Radius of the outer circle
 
 		innerRadius = outerRadius - barWidth ; // Radius of the inner circle
@@ -224,10 +224,12 @@ public class DotInCircle extends View {
 	 *            the canvas
 	 */
 	public void drawMarkerAtProgress(Canvas canvas) {
+		int tx=(int)(dx-(progressMark.getWidth()/2.0));
+		int ty=(int)(dy-(progressMark.getHeight()/2.0));
 		if (IS_PRESSED) {
-			canvas.drawBitmap(progressMarkPressed, dx, dy, null);
+			canvas.drawBitmap(progressMarkPressed, tx, ty, null);
 		} else {
-			canvas.drawBitmap(progressMark, dx, dy, null);
+			canvas.drawBitmap(progressMark, tx, ty, null);
 		}
 	}
 
@@ -240,10 +242,17 @@ public class DotInCircle extends View {
 	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		dx = event.getX();
-		dy = event.getY();
+		float tx = event.getX();
+		float ty = event.getY();
 		
 		
+		double distance=Math.sqrt(	Math.pow(	(tx-cx), 2)	+	Math.pow(	(ty-cy), 2)	);
+		
+		if(distance < outerRadius)
+		{
+			dx=tx;
+			dy=ty;
+		}
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				

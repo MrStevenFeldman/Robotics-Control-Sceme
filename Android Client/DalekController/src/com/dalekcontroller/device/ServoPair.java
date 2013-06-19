@@ -79,6 +79,7 @@ public class ServoPair  extends Servo{
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
 		if (savedInstanceState != null) {
 			id_A=savedInstanceState.getInt(id_A_s);
 			currentAngle_A=savedInstanceState.getInt(currentAngle_s, 0);
