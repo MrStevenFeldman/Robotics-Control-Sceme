@@ -1,5 +1,7 @@
 package com.dalekcontroller.device;
 
+import java.nio.ByteBuffer;
+
 import com.dalekcontroller.gui.CircularSeekBar;
 import com.dalekcontroller.gui.CircularSeekBar.OnSeekChangeListener;
 import com.example.dalekcontroller.DalekServerConnect;
@@ -16,8 +18,8 @@ import android.widget.ImageButton;
 public class Servo  extends Fragment{
 	protected static final int SERVO_DEVICE=2;
 	//Has an ID
-	private int id; public final static String id_s="id";
-	private int currentAngle=0; public final static String currentAngle_s="currentAngle";
+	private byte id; public final static String id_s="id";
+	private float currentAngle=0; public final static String currentAngle_s="currentAngle";
 	private int maxAngle=90; public final static String maxAngle_s="maxAngle";
 	private int minAngle=-90; public final static String minAngle_s="minAngle";
 	
@@ -30,7 +32,7 @@ public class Servo  extends Fragment{
 
 		// Save the current article selection in case we need to recreate the fragment
 		outState.putInt(id_s, id);
-		outState.putInt(currentAngle_s, currentAngle);
+		outState.putFloat(currentAngle_s, currentAngle);
 		outState.putInt(maxAngle_s, maxAngle);
 		outState.putInt(minAngle_s, minAngle);
 
@@ -47,8 +49,8 @@ public class Servo  extends Fragment{
 		Bundle args = getArguments();
 		if (args != null) {
 			// Set article based on argument passed in
-			id=args.getInt(id_s);
-			currentAngle=args.getInt(currentAngle_s, 0);
+			id=args.getByte(id_s);
+			currentAngle=args.getFloat(currentAngle_s, 0);
 			maxAngle=args.getInt(maxAngle_s, 90);
 			minAngle=args.getInt(minAngle_s, -90);
 			
@@ -61,7 +63,7 @@ public class Servo  extends Fragment{
 		servoArch=(CircularSeekBar) getView().findViewById(R.id.servoArchC);
 		servoArch.setSeekBarChangeListener(new OnSeekChangeListener(){
 			@Override
-			public void onProgressChange(CircularSeekBar view, int newProgress) {
+			public void onProgressChange(CircularSeekBar view, float newProgress) {
 				updateServo();
 			}
 
@@ -75,8 +77,8 @@ public class Servo  extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			id=savedInstanceState.getInt(id_s);
-			currentAngle=savedInstanceState.getInt(currentAngle_s, 0);
+			id=savedInstanceState.getByte(id_s);
+			currentAngle=savedInstanceState.getFloat(currentAngle_s, (short)0);
 			maxAngle=savedInstanceState.getInt(maxAngle_s, 90);
 			minAngle=savedInstanceState.getInt(minAngle_s, -90);
 		}
@@ -92,8 +94,8 @@ public class Servo  extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState){
 		
 		if (savedInstanceState != null) {
-			id=savedInstanceState.getInt(id_s);
-			currentAngle=savedInstanceState.getInt(currentAngle_s, 0);
+			id=savedInstanceState.getByte(id_s);
+			currentAngle=savedInstanceState.getFloat(currentAngle_s, (short)0);
 			maxAngle=savedInstanceState.getInt(maxAngle_s, 90);
 			minAngle=savedInstanceState.getInt(minAngle_s, -90);
 		}
@@ -105,7 +107,7 @@ try{
 	CircularSeekBar servoArch2=(CircularSeekBar) view.findViewById(R.id.servoArchC);
 		servoArch2.setSeekBarChangeListener(new OnSeekChangeListener(){
 			@Override
-			public void onProgressChange(CircularSeekBar view, int newProgress) {
+			public void onProgressChange(CircularSeekBar view, float newProgress) {
 				updateServo();
 			}
 
@@ -144,7 +146,13 @@ try{
 	
 	public void updateServo() {
 		currentAngle=servoArch.getAngle();
-		int[] command={SERVO_DEVICE,1,id,currentAngle};
+		
+		byte [] command = new byte [5];
+    	ByteBuffer bos = ByteBuffer.wrap(command);
+		bos.put(id);
+		bos.putFloat(currentAngle);
+		
+		
 		DalekServerConnect.static_sendCommand(getActivity(),command);
 
 	}	

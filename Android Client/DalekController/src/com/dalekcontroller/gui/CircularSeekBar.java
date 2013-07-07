@@ -74,7 +74,7 @@ public class CircularSeekBar extends View {
 	private Paint circleRing;
 
 	/** The angle of progress */
-	private int angle = 0;
+	private float angle = 0;
 
 	/** The start angle (12 O'clock */
 	
@@ -91,13 +91,13 @@ public class CircularSeekBar extends View {
 	private int height;
 
 	/** The maximum progress amount */
-	private int maxProgress = 100;
+	private float maxProgress = 100;
 
 	/** The current progress */
-	private int progress;
+	private float progress;
 
 	/** The progress percent */
-	private int progressPercent;
+	private float progressPercent;
 
 	/** The radius of the inner circle */
 	private float innerRadius;
@@ -176,7 +176,7 @@ public class CircularSeekBar extends View {
 		mListener = new OnSeekChangeListener() {
 
 			@Override
-			public void onProgressChange(CircularSeekBar view, int newProgress) {
+			public void onProgressChange(CircularSeekBar view, float newProgress) {
 
 			}
 		};
@@ -461,17 +461,16 @@ public class CircularSeekBar extends View {
 	 * 
 	 * @return the angle
 	 */
-	public int getAngle() {
+	public float getAngle() {
 		return angle;
 	}
-
 	/**
 	 * Set the angle.
 	 * 
 	 * @param angle
 	 *            the new angle
 	 */
-	public void setAngle(int angle) {
+	public void setAngle(float angle) {
 		this.angle = angle;
 		float donePercent = (((float) this.angle) / 360) * 100;
 		float progress = (donePercent / 100) * getMaxProgress();
@@ -480,7 +479,7 @@ public class CircularSeekBar extends View {
 		setProgress(Math.round(progress));
 	}
 	
-	public void updateAngle(int a){
+	public void updateAngle(float a){
 		float x =  (cx + innerRadius * (float)Math.cos((a-90)* Math.PI / 180F));
 		float y =  (cy + innerRadius * (float)Math.sin((a-90)* Math.PI / 180F));
 		markPointX = x;
@@ -551,7 +550,7 @@ public class CircularSeekBar extends View {
 
 		 */
 		
-		public void onProgressChange(CircularSeekBar view, int newProgress);
+		public void onProgressChange(CircularSeekBar view, float newProgress);
 	}
 
 	/**
@@ -559,7 +558,7 @@ public class CircularSeekBar extends View {
 	 * 
 	 * @return the max progress
 	 */
-	public int getMaxProgress() {
+	public float getMaxProgress() {
 		return maxProgress;
 	}
 
@@ -578,7 +577,7 @@ public class CircularSeekBar extends View {
 	 * 
 	 * @return the progress
 	 */
-	public int getProgress() {
+	public float getProgress() {
 		return progress;
 	}
 
@@ -592,8 +591,8 @@ public class CircularSeekBar extends View {
 		if (this.progress != progress) {
 			this.progress = progress;
 			if (!CALLED_FROM_ANGLE) {
-				int newPercent = (this.progress / this.maxProgress) * 100;
-				int newAngle = (newPercent / 100) * 360;
+				float newPercent = (float) ((this.progress / this.maxProgress) * 100.00);
+				float newAngle = (float) ((newPercent / 100.00) * 360.00);
 				this.setAngle(newAngle);
 				this.setProgressPercent(newPercent);
 			}
@@ -607,7 +606,7 @@ public class CircularSeekBar extends View {
 	 * 
 	 * @return the progress percent
 	 */
-	public int getProgressPercent() {
+	public float getProgressPercent() {
 		return progressPercent;
 	}
 
@@ -617,7 +616,7 @@ public class CircularSeekBar extends View {
 	 * @param progressPercent
 	 *            the new progress percent
 	 */
-	public void setProgressPercent(int progressPercent) {
+	public void setProgressPercent(float progressPercent) {
 		this.progressPercent = progressPercent;
 	}
 
@@ -706,7 +705,7 @@ public class CircularSeekBar extends View {
 				degrees += 2 * Math.PI;
 			}
 
-			setAngle(Math.round(degrees));
+			setAngle(degrees);
 			invalidate();
 
 		} else {

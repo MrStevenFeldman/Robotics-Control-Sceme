@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/linearLayout1"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentBottom="true"
+	android:layout_alignParentRight="true"
+	android:gravity="bottom|left" android:baselineAligned="false" xmlns:app="http://schemas.android.com/apk/res/com.example.dalekcontroller">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="388dp"
+        android:background="@color/gold" >
+
+        <com.dalekcontroller.gui.DotInCircle
+            android:id="@+id/joystick"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="25dp"
+            app:usehalfcircle="true" />
+
+        <TextView
+            android:id="@+id/power_level_indicator_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="LM: 0" />
+
+        <TextView
+            android:id="@+id/power_level_indicator_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="RM: 0" />
+
+        <Button
+            android:id="@+id/enable_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/Enable" />
+
+    </RelativeLayout>
+     
+	</LinearLayout>
+    

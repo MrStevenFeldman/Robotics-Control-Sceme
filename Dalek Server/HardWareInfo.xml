@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HardWareInfo>	
+	<DeviceList>
+		
+	 
+		<Device type="MotorPair">
+			<NAME>DriveMotors</NAME>
+			<ID>1</ID>
+			
+			<Motor1>
+				<NAME>leftmotor</NAME>
+		
+				<PWMA_PIN>P9_14</PWMA_PIN>
+				<PWMB_PIN>P9_16</PWMB_PIN>
+				<ENABLE_PIN>P8_7</ENABLE_PIN>
+				<CURRENTA>P9_39</CURRENTA>
+			</Motor1>
+	
+			<Motor2>
+				<NAME>rightmotor</NAME>
+			
+				<PWMA_PIN>P8_19</PWMA_PIN>
+				<PWMB_PIN>P8_13</PWMB_PIN>
+				<ENABLE_PIN>P8_7</ENABLE_PIN>
+				<CURRENTA>P9_40</CURRENTA>
+	
+			</Motor2>
+			
+		</Device>
+		
+	</DeviceList>
+	
+	
+</HardWareInfo>

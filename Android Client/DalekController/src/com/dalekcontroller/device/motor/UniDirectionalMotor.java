@@ -1,6 +1,8 @@
 package com.dalekcontroller.device.motor;
 
 
+import java.nio.ByteBuffer;
+
 import com.example.dalekcontroller.DalekServerConnect;
 import com.example.dalekcontroller.R;
 
@@ -14,14 +16,13 @@ import android.widget.Button;
 
 import android.widget.TextView;
 public class UniDirectionalMotor extends MotorDevice {
-	private static final int NUM_DEVICES=1;
-	private int deviceID=-1; public static String deviceID_s="deviceID";
+	private byte deviceID=-1; public static String deviceID_s="deviceID";
 	private boolean enabled=false; private static String enabled_s="enabled";
-	private int power_level; private static String power_level_s="power_level";
+	private float power_level; private static String power_level_s="power_level";
 	
 	private TextView power_level_indicator_v;
 	private Button enable_disable_button;
-	
+	 
 	//Info Objects
 	int current_speed_tv;
 	
@@ -31,7 +32,7 @@ public class UniDirectionalMotor extends MotorDevice {
 
 		// Save the current article selection in case we need to recreate the fragment
 		outState.putInt(deviceID_s, deviceID);
-		outState.putInt(power_level_s, power_level);
+		outState.putFloat(power_level_s, power_level);
 		outState.putBoolean(enabled_s, enabled);
 	}
 	
@@ -42,7 +43,7 @@ public class UniDirectionalMotor extends MotorDevice {
 		Bundle args = getArguments();
 		if (args != null) {
 			// Set article based on argument passed in
-			deviceID=args.getInt(deviceID_s);
+			deviceID=(byte)args.getInt(deviceID_s);
 			
 		} else {
 			throw new ClassCastException("Need Arguements for UniDirectional Motor!");
@@ -53,8 +54,8 @@ public class UniDirectionalMotor extends MotorDevice {
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		 if (savedInstanceState != null) {
-			 deviceID=savedInstanceState.getInt(deviceID_s);
-			power_level=savedInstanceState.getInt(power_level_s);
+			 deviceID=savedInstanceState.getByte(deviceID_s);
+			power_level=savedInstanceState.getFloat(power_level_s);
 			enabled= savedInstanceState.getBoolean(enabled_s);
 		 }
 		 else{
@@ -69,8 +70,8 @@ public class UniDirectionalMotor extends MotorDevice {
 	public void onViewCreated(View view, Bundle savedInstanceState){
 		 
 		if (savedInstanceState != null) {
-			deviceID=savedInstanceState.getInt(deviceID_s);
-			power_level=savedInstanceState.getInt(power_level_s);
+			deviceID=savedInstanceState.getByte(deviceID_s);
+			power_level=savedInstanceState.getFloat(power_level_s);
 			enabled= savedInstanceState.getBoolean(enabled_s);
 		}
 		else{
@@ -127,7 +128,7 @@ public class UniDirectionalMotor extends MotorDevice {
     }
     
     public void speedUpFunc(View view){
-    	power_level=power_level+DUTY_INCREMENT;
+    	power_level= (power_level+DUTY_INCREMENT);
     	
     	if(power_level > MAX_MOTOR_DUTY) 
     		power_level=MAX_MOTOR_DUTY;
@@ -137,7 +138,7 @@ public class UniDirectionalMotor extends MotorDevice {
     }
     
     public void speedDownFunc(View view){
-    	power_level=power_level-DUTY_INCREMENT;
+    	power_level= (power_level-DUTY_INCREMENT);
     	
     	if(power_level <0) 
     		power_level=0;
@@ -148,11 +149,16 @@ public class UniDirectionalMotor extends MotorDevice {
     public void updateMotor(){
     	Log.d("PDS","BiDirectional Motor "+deviceID+"  Power Level["+power_level+"]");
 
-    	//sendCommand('U',left_duty,right_duty);
-    	int[] command={MOTOR_DEVICE,NUM_DEVICES,SPEED_COMMAND,deviceID,power_level};
+    	byte [] command = new byte [6];
+    	ByteBuffer bos = ByteBuffer.wrap(command);
+		bos.put(deviceID);
+		bos.put(SPEED_COMMAND);
+		bos.putFloat(power_level);
+		
     	DalekServerConnect.static_sendCommand(getActivity(),command);
-    	
-    	power_level_indicator_v.setText("Current Speed: "+power_level);
+		
+		power_level_indicator_v.setText("Current Speed: "+power_level);
+		
     }
     
    
@@ -161,13 +167,13 @@ public class UniDirectionalMotor extends MotorDevice {
 		updateMotor();
 		
     	if(enabled){
-    		int[] command={MOTOR_DEVICE,NUM_DEVICES,ENABLE_COMMAND,deviceID,0};
+    		byte[] command={deviceID,ENABLE_COMMAND,0};
     		DalekServerConnect.static_sendCommand(getActivity(),command);
     		
     		enable_disable_button.setText("Enable");
     	}
     	else{
-    		int[] command={MOTOR_DEVICE,NUM_DEVICES,ENABLE_COMMAND,deviceID,1};
+    		byte[] command={deviceID,ENABLE_COMMAND,1};
     		DalekServerConnect.static_sendCommand(getActivity(),command);
     		
     		enable_disable_button.setText("Disable");

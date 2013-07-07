@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 public class ServoPair  extends Servo{
 	//Has an ID
-	private int id_A, id_B; 
-		public final static String id_A_s="idA"; public final static String id_B_s="idB";
+	private byte deviceID;
+		public final static String deviceID_s="deviceID";
 	private int currentAngle_A=0;  private int currentAngle_B=0; 
 		public final static String currentAngleA_s="currentAngleA"; public final static String currentAngle_B_s="currentAngleB";
 	
@@ -29,12 +29,11 @@ public class ServoPair  extends Servo{
 		super.onSaveInstanceState(outState);
 
 		// Save the current article selection in case we need to recreate the fragment
-		outState.putInt(id_A_s, id_A);
+		outState.putByte(deviceID_s, deviceID);
 		outState.putInt(currentAngle_s, currentAngle_A);
 		outState.putInt(maxAngle_A_s, maxAngle_A);
 		outState.putInt(minAngle_A_s, minAngle_A);
 		
-		outState.putInt(id_B_s, id_B);
 		outState.putInt(currentAngle_B_s, currentAngle_B);
 		outState.putInt(maxAngle_B_s, maxAngle_B);
 		outState.putInt(minAngle_B_s, minAngle_B);
@@ -56,12 +55,11 @@ public class ServoPair  extends Servo{
 		Bundle args = getArguments();
 		if (args != null) {
 			// Set article based on argument passed in
-			id_A=args.getInt(id_A_s);
+			deviceID=args.getByte(deviceID_s);
 			currentAngle_A=args.getInt(currentAngle_s, 0);
 			maxAngle_A=args.getInt(maxAngle_A_s,90 );
 			minAngle_A=args.getInt(minAngle_A_s, -90);
 			
-			id_B=args.getInt(id_B_s);
 			currentAngle_B=args.getInt(currentAngle_B_s,0 );
 			maxAngle_B=args.getInt(maxAngle_B_s, 90);
 			minAngle_B=args.getInt(minAngle_B_s, -90);
@@ -81,12 +79,11 @@ public class ServoPair  extends Servo{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		if (savedInstanceState != null) {
-			id_A=savedInstanceState.getInt(id_A_s);
+			deviceID=savedInstanceState.getByte(deviceID_s);
 			currentAngle_A=savedInstanceState.getInt(currentAngle_s, 0);
 			maxAngle_A=savedInstanceState.getInt(maxAngle_A_s,90 );
 			minAngle_A=savedInstanceState.getInt(minAngle_A_s, -90);
 			
-			id_B=savedInstanceState.getInt(id_B_s);
 			currentAngle_B=savedInstanceState.getInt(currentAngle_B_s,0 );
 			maxAngle_B=savedInstanceState.getInt(maxAngle_B_s, 90);
 			minAngle_B=savedInstanceState.getInt(minAngle_B_s, -90);
@@ -103,12 +100,11 @@ public class ServoPair  extends Servo{
 	public void onViewCreated(View view, Bundle savedInstanceState){
 		
 		if (savedInstanceState != null) {
-			id_A=savedInstanceState.getInt(id_A_s);
+			deviceID=savedInstanceState.getByte(deviceID_s);
 			currentAngle_A=savedInstanceState.getInt(currentAngle_s, 0);
 			maxAngle_A=savedInstanceState.getInt(maxAngle_A_s,90 );
 			minAngle_A=savedInstanceState.getInt(minAngle_A_s, -90);
 			
-			id_B=savedInstanceState.getInt(id_B_s);
 			currentAngle_B=savedInstanceState.getInt(currentAngle_B_s,0 );
 			maxAngle_B=savedInstanceState.getInt(maxAngle_B_s, 90);
 			minAngle_B=savedInstanceState.getInt(minAngle_B_s, -90);
@@ -178,7 +174,7 @@ public class ServoPair  extends Servo{
 		currentAngle_t=getAngle(p_x,p_y,	x_B, y_B);
 		currentAngle_B=(int)((currentAngle_t/180.00)*255.00);
 		
-		int[] command={SERVO_DEVICE,2,id_A,currentAngle_A, id_B,currentAngle_B};
+		byte[] command={deviceID,(byte)(currentAngle_A & 0xff),(byte)((currentAngle_A >> 8) & 0xff) ,(byte)(currentAngle_B & 0xff),(byte)((currentAngle_B >> 8) & 0xff) };
 		DalekServerConnect.static_sendCommand(getActivity(),command);
 
 	}

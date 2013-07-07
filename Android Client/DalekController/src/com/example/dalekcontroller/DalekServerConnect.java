@@ -23,7 +23,7 @@ public class DalekServerConnect extends Thread {
 	public ConnectionState state_v=ConnectionState.Uninitiated;
 	public String message="No Error";
 	private final int timeout=10000;
-	private int port =9000;
+	private int port = 50003;
 	private String s_address;
 	private Socket socket;
 	private OutputStream out = null;
@@ -52,9 +52,9 @@ public class DalekServerConnect extends Thread {
 						socket.getInputStream()));
 				
 				
-				out.write(1);
-				String s=in.readLine();
-	  		  	Log.v("DCU_MSG", "Response: "+s);
+			//	out.write(1);
+			//	String s=in.readLine();
+	  		 // 	Log.v("DCU_MSG", "Response: "+s);
 	 
 		  		 state_v=ConnectionState.Connected;
 		  		 message="Succesfully Connected";
@@ -81,7 +81,7 @@ public class DalekServerConnect extends Thread {
         
         
     }
-    public synchronized boolean sendCommand(int [] commands){
+    public synchronized boolean sendCommand(byte [] buffer){
     	
     	if(state_v==ConnectionState.Connecting){
     		Log.e("ConnectionError", "Attempting to send command while still trying to connect");
@@ -108,20 +108,18 @@ public class DalekServerConnect extends Thread {
     		  return false;
 		  }
 
-		  for(int i=0; i<commands.length; i++){
-			  out.write(commands[i]);
-		  }
+		  out.write(buffer);
 		  out.flush();
 		  
-		  int respone=in.read();
-		  Log.v("DCU_MSG", "Response: "+respone);
-		  
-		  if(respone != 1){
-			  Log.e("ConnectionError", "Error Signal returned from control unit.");
-    		  message=("Error Signal returned from control unit.");
-    		  state_v=ConnectionState.Error;
-    		  return false;
-		  }
+//		  int respone=in.read();
+//		  Log.v("DCU_MSG", "Response: "+respone);
+//		  
+//		  if(respone != 1){
+//			  Log.e("ConnectionError", "Error Signal returned from control unit.");
+//    		  message=("Error Signal returned from control unit.");
+//    		  state_v=ConnectionState.Error;
+//    		  return false;
+//		  }
     	} catch(NetworkOnMainThreadException e1){
 			  
     	}  catch (Exception e) {
@@ -148,7 +146,7 @@ public class DalekServerConnect extends Thread {
 		
 	}
 
-	public static void static_sendCommand(Activity activity, int[] commands) {
+	public static void static_sendCommand(Activity activity, byte [] commands) {
 		
 		
 		String log_str="Command Char: ";

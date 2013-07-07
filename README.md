@@ -3,27 +3,48 @@ Robotics-Control-Sceme
 
 Designed for a Dalek, but code for extendability
 
+How to use:
 
-Todos:
-Code a network driver class that functions in the same manner as the serial driver class
-Check Code TOODs
+On the BeagleBoneBlack:
+install:
 
-Generate a setup guide and insturctions
+For PWM/GPIO access
+adafruit-beaglebone-io-python
+	Link: https://github.com/adafruit/adafruit-beaglebone-io-python
+	
+	Instructions:
+		/usr/bin/ntpdate -b -s -u pool.ntp.org
+		opkg update && opkg install python-pip python-setuptools
+		pip install Adafruit_BBIO
+For i2c access:
+	i2c-tools
+	Instructions: opkg install i2c-tools
+	
+Dalek Server:
+Copy The Dalek Server Folder
+Execute: python DalekServer.py
 
 
-Generate XML schemea
+Configuration:
+TODO. eh look at the xml and figure it out :) (I will be making a schema shortly)
 
-Add Stepper Devices Class
-Add Servo Device Class
-Add IC2 interface
-Use Case:  Plan to add an adafruit 16 PWM Expansion on it to control motors.
-    So it should be classified as a ControlUnit and each other control unit should have an IC2 function.
-      
 
-Known Issues:
-Communication with arduino can be come deadlocked, need to ideentify what causes it.
-  Seems the Server is waiting for a message from arduino, but arduino is also waiting...
-  
 
-Good Pinout Pic:
-http://goo.gl/U513Z
+TODOS:
+make any i2c an option for any pam pin
+test/implement i2c everywhere
+Test Servo code
+Implement Stepper code
+make schema for devices, audio,videos
+make XML for control device, such that when connected the xml sends deviceIDS, types, and device names to the control device. Which generates a list of available UI components.
+
+Future Device Interfaces:
+RGB LEDS
+Audio Playback
+
+
+
+Control Device
+	Make a text document describing communication patter
+	
+	Android Tablet. make a it better :)

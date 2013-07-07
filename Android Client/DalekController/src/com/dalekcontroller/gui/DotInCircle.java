@@ -7,6 +7,7 @@
 package com.dalekcontroller.gui;
 
 
+import com.dalekcontroller.gui.CircularSeekBar.OnSeekChangeListener;
 import com.example.dalekcontroller.R;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -24,6 +25,9 @@ import android.view.View;
  */
 public class DotInCircle extends View {
 
+	public double angle;
+	public double distance;
+	
 	/** The context */
 	private Context mContext;
 
@@ -51,7 +55,7 @@ public class DotInCircle extends View {
 	private float innerRadius;
 
 	/** The radius of the outer circle */
-	private float outerRadius;
+	public float outerRadius;
 	
 
 	/** The circle's center X coordinate */
@@ -73,10 +77,10 @@ public class DotInCircle extends View {
 	private float bottom;
 
 	/** The X coordinate for the top left corner of the marking drawable */
-	private float dx;
+	private float dx=-1;
 
 	/** The Y coordinate for the top left corner of the marking drawable */
-	private float dy;
+	private float dy=-1;
 
 
 	/** The progress mark when the view isn't being progress modified */
@@ -127,6 +131,14 @@ public class DotInCircle extends View {
 	public DotInCircle(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		
+		this.setDotChangeListener(new DotChangeListener(){
+			@Override
+			public void onChange() {
+				
+			}
+			
+		});
+		
 		mContext = context;
 		initDrawable();
 	}
@@ -152,9 +164,11 @@ public class DotInCircle extends View {
 	 *            the context
 	 */
 	public DotInCircle(Context context) {
+		
 		super(context);
 		mContext = context;
 		initDrawable();
+		
 	}
 
 	/**
@@ -187,8 +201,8 @@ public class DotInCircle extends View {
 														// height to make a
 														// square
 
-		dx=cx = width / 2; // Center X for circle
-		dy=cy = height / 2; // Center Y for circle
+		cx = width / 2; // Center X for circle
+		cy = height / 2; // Center Y for circle
 		outerRadius = (size / 2) - 15;  // Radius of the outer circle
 
 		innerRadius = outerRadius - barWidth ; // Radius of the inner circle
@@ -224,6 +238,9 @@ public class DotInCircle extends View {
 	 *            the canvas
 	 */
 	public void drawMarkerAtProgress(Canvas canvas) {
+		if(dx == -1) dx=cx;
+		if(dy == -1) dy=cy;
+		
 		int tx=(int)(dx-(progressMark.getWidth()/2.0));
 		int ty=(int)(dy-(progressMark.getHeight()/2.0));
 		if (IS_PRESSED) {
@@ -246,12 +263,14 @@ public class DotInCircle extends View {
 		float ty = event.getY();
 		
 		
-		double distance=Math.sqrt(	Math.pow(	(tx-cx), 2)	+	Math.pow(	(ty-cy), 2)	);
+		distance=Math.sqrt(	Math.pow(	(tx-cx), 2)	+	Math.pow(	(ty-cy), 2)	);
 		
 		if(distance < outerRadius)
 		{
 			dx=tx;
 			dy=ty;
+			angle = Math.toDegrees(Math.atan2(dy - cy, cx - dx))+180;
+			mListener.onChange();
 		}
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
@@ -269,6 +288,27 @@ public class DotInCircle extends View {
 		
 		return true;
 	}
+	
+	private DotChangeListener mListener;
+	public void setDotChangeListener(DotChangeListener listener) {
+		mListener = listener;
+	}
+	
+	public interface DotChangeListener {
+
+		/**
+		 * On progress change.
+		 * 
+		 * @param view
+		 *            the view
+		 * @param newProgress
+		 *            the new progress
+
+		 */
+		
+		public void onChange();
+	}
+
 
 	
 }

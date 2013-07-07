@@ -1,4 +1,0 @@
-INDEX VERSION 1.126+/Users/stevenfeldman/Xcode Projects/DalekController/.metadata/.plugins/org.eclipse.jdt.core
-765453901.index
-174868604.index
-2918326400.index

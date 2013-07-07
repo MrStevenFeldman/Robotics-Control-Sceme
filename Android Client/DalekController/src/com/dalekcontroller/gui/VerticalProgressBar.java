@@ -130,7 +130,7 @@ public class VerticalProgressBar extends View {
             return newBg;
 
         } else if (drawable instanceof StateListDrawable) {
-            StateListDrawable in = (StateListDrawable) drawable;
+           // StateListDrawable in = (StateListDrawable) drawable;
             StateListDrawable out = new StateListDrawable();
             /*int numStates = in.getStateCount();
             for (int i = 0; i < numStates; i++) {

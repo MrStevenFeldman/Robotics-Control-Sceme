@@ -46,43 +46,43 @@ containing a value of this type.
         public static final int seek_thumb_wide=0x7f02000c;
     }
     public static final class id {
-        public static final int bidirectionalContainer=0x7f080001;
-        public static final int bidirectionalpairContainer=0x7f080002;
-        public static final int centerButton=0x7f080022;
-        public static final int centerForwardButton=0x7f080015;
-        public static final int centerReverseButton=0x7f080019;
-        public static final int connectToHost_button=0x7f08000a;
-        public static final int connection_error_field=0x7f080007;
-        public static final int disconnect_but=0x7f08000d;
-        public static final int enable_button=0x7f08001d;
-        public static final int forward_dir_control=0x7f080013;
-        public static final int ipTextArea=0x7f080006;
-        public static final int leftButton=0x7f080021;
-        public static final int leftForwardButton=0x7f080017;
-        public static final int leftReverseButton=0x7f080018;
-        public static final int leftRotateButton=0x7f08001b;
-        public static final int linearLayout1=0x7f08000c;
-        public static final int man_control_button=0x7f080009;
+        public static final int centerButton=0x7f08001f;
+        public static final int centerForwardButton=0x7f080012;
+        public static final int centerReverseButton=0x7f080016;
+        public static final int connectToHost_button=0x7f080007;
+        public static final int connection_error_field=0x7f080004;
+        public static final int disconnect_but=0x7f08000a;
+        public static final int enable_button=0x7f08001a;
+        public static final int forward_dir_control=0x7f080010;
+        public static final int ipTextArea=0x7f080003;
+        public static final int joystick=0x7f080021;
+        public static final int leftButton=0x7f08001e;
+        public static final int leftForwardButton=0x7f080014;
+        public static final int leftReverseButton=0x7f080015;
+        public static final int leftRotateButton=0x7f080018;
+        public static final int linearLayout1=0x7f080009;
+        public static final int man_control_button=0x7f080006;
         public static final int menu_settings=0x7f080024;
-        public static final int motorEnableButton=0x7f08000e;
-        public static final int power_level_indicator=0x7f080012;
-        public static final int relativeLayout1=0x7f08000b;
-        public static final int reverseButton=0x7f08001e;
-        public static final int reverse_dir_control=0x7f080014;
-        public static final int rightButton=0x7f080020;
-        public static final int rightForwardButton=0x7f080016;
-        public static final int rightReverseButton=0x7f08001a;
-        public static final int rightRotateButton=0x7f08001c;
-        public static final int servoArchC=0x7f08001f;
-        public static final int servoCircle=0x7f080023;
-        public static final int servoContainer=0x7f080003;
-        public static final int speedDownButton=0x7f080010;
-        public static final int speedUpButton=0x7f08000f;
-        public static final int stopButton=0x7f080011;
-        public static final int tableRow1=0x7f080004;
-        public static final int textView1=0x7f080005;
-        public static final int textView2=0x7f080008;
-        public static final int unidirectionalContainer=0x7f080000;
+        public static final int motorEnableButton=0x7f08000b;
+        public static final int power_level_indicator=0x7f08000f;
+        public static final int power_level_indicator_left=0x7f080022;
+        public static final int power_level_indicator_right=0x7f080023;
+        public static final int relativeLayout1=0x7f080008;
+        public static final int reverseButton=0x7f08001b;
+        public static final int reverse_dir_control=0x7f080011;
+        public static final int rightButton=0x7f08001d;
+        public static final int rightForwardButton=0x7f080013;
+        public static final int rightReverseButton=0x7f080017;
+        public static final int rightRotateButton=0x7f080019;
+        public static final int servoArchC=0x7f08001c;
+        public static final int servoCircle=0x7f080020;
+        public static final int speedDownButton=0x7f08000d;
+        public static final int speedUpButton=0x7f08000c;
+        public static final int stopButton=0x7f08000e;
+        public static final int tableRow1=0x7f080001;
+        public static final int textView1=0x7f080002;
+        public static final int textView2=0x7f080005;
+        public static final int zpt_container=0x7f080000;
     }
     public static final class layout {
         public static final int activity_control=0x7f030000;
@@ -93,6 +93,7 @@ containing a value of this type.
         public static final int layout_servo=0x7f030005;
         public static final int layout_servopair=0x7f030006;
         public static final int layout_unimotor=0x7f030007;
+        public static final int layout_zptmotorpair=0x7f030008;
     }
     public static final class menu {
         public static final int activity_control=0x7f070000;

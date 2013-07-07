@@ -30,8 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tableRow1"
         android:layout_marginLeft="45dp"
-        android:layout_toRightOf="@+id/tableRow1"
-        android:layout_weight="1"
+        android:layout_toRightOf="@+id/tableRow1" 
         android:ems="10"
         android:inputType="text"
         android:text="@string/ipaddress" />

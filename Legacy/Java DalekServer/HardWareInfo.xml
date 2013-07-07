@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HardWareInfo>	
+	<DeviceList>
+		<Device type="MotorDevice">
+			<Name>leftmotor</Name>
+			<ID>1</ID>
+		
+			<Type>BiDirectional</Type>
+			<PWMA_PIN>P9_14</PWMA_PIN>
+			<PWMB_PIN>P9_16</PWMB_PIN>
+			<ENABLE_PIN>P8_7</ENABLE_PIN>
+			<CURRENTA>P9_39</CURRENTA>
+		</Device>
+	
+		<Device type="MotorDevice">
+			<Name>rightmotor</Name>
+			<ID>2</ID>
+			
+			<Type>BiDirectional</Type>
+			<PWMA_PIN>P8_19</PWMA_PIN>
+			<PWMB_PIN>P8_19</PWMB_PIN>
+			<ENABLE_PIN>P8_7</ENABLE_PIN>
+			<CURRENTA>P9_40</CURRENTA>
+	
+		</Device>
+	
+	</DeviceList>
+	
+	
+</HardWareInfo>
