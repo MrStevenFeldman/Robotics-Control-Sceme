@@ -58,4 +58,13 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
+    <Button
+        android:id="@+id/disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/zpt_container"
+        android:layout_alignParentBottom="true"
+        android:onClick="disconnect_func"
+        android:text="Disconnect" />
+
 </RelativeLayout>

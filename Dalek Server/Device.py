@@ -23,10 +23,10 @@ PCA9685_PRESCALE = 0xFE
 
 #end I2C
 
-pwm_freq = 1000
-SPEED_DELAY = .1
+pwm_freq = 2000
+SPEED_DELAY = .01
 MAX_SPEED = 100
-SPEED_INCREMENT = 1
+SPEED_INCREMENT = 5
 
 SETENABLE = 0
 SETSPEED = 1
@@ -113,22 +113,28 @@ class BiMotor:
         self.targetSpeed = 0
         self.direction = FORWARD
         
+        self.threadStop = 'false'
+        self.thread = threading.Thread()
+        
         GPIO.setup(self.enableA, GPIO.OUT)
         GPIO.output(self.enableA, GPIO.LOW)
         
         #PWM.start(channel, duty, freq=2000)
         #duty values are valid 0-100
-        PWM.start(self.pinA, 0)
-        PWM.start(self.pinB, 0)
+        PWM.start(self.pinA, 100)
+        PWM.start(self.pinB, 100)
         
-        self.threadStop = 'false'
-        self.thread = threading.Thread()
+        PWM.set_frequency(self.pinA, pwm_freq)
+        PWM.set_frequency(self.pinB, pwm_freq)
+         
+        PWM.set_duty_cycle(self.pinB, 100) 
+        PWM.set_duty_cycle(self.pinA, 100) 
+        
+        
         
     def __del__(self):
+        print 'Stoping ', self.deviceId, ' pA', self.pinA, ' pB', self.pinB
         self.reset()
-        PWM.stop(self.pinA)
-        if(self.pinB):
-            PWM.stop(self.pinB)
         PWM.cleanup()
         
         
@@ -138,7 +144,7 @@ class BiMotor:
     def reset(self):
         self.threadStop = 'true'
            
-        while (self.thread and self.thread.isAlive() ):
+        while (self.thread.isAlive() ):
             pass
         self.setEnable(DISABLE)
          
@@ -159,13 +165,16 @@ class BiMotor:
                     self.currentSpeed = self.targetSpeed
                 
             if(self.motor1.currentSpeed >0):
-                PWM.set_duty_cycle(self.pinA, self.currentSpeed)
-                PWM.set_duty_cycle(self.motor1.pinB, 0)
+		print 'PWN:PA',100-self.currentSpeed
+                PWM.set_duty_cycle(self.pinA, 100- self.currentSpeed)
+                if(self.pinB):
+                    PWM.set_duty_cycle(self.pinB, 100- 0)
                 
             else:
                 if(self.pinB):
-                    PWM.set_duty_cycle(self.pinB, -1*self.currentSpeed)
-                    PWM.set_duty_cycle(self.pinA, 0)
+		    print 'PWN:PB',100+self.currentSpeed
+                    PWM.set_duty_cycle(self.pinB, (100+self.currentSpeed))
+                    PWM.set_duty_cycle(self.pinA, 100- 0)
             
             if(self.threadStop == 'true'):
                 return
@@ -176,8 +185,8 @@ class BiMotor:
         self.targetSpeed = 0
         self.currentSpeed = 0
         
-        PWM.set_duty_cycle(self.pinB, 0)
-        PWM.set_duty_cycle(self.pinA, 0)
+        PWM.set_duty_cycle(self.pinB, 100- 0)
+        PWM.set_duty_cycle(self.pinA, 100- 0)
         if(enable != self.enabled):
             self.enabled = enable
             if(enable == ENABLE):
@@ -206,7 +215,6 @@ class MotorPair:
             (command3,) = struct.unpack( "!f", data[4:8] )
             #Send New Task
             self.threadStop = 'true'
-               
             while (self.thread and self.thread.isAlive() ):
                 pass
              
@@ -253,6 +261,15 @@ class MotorPair:
             self.motor1.targetSpeed = MAX_SPEED
         if(self.motor2.targetSpeed > MAX_SPEED):
             self.motor2.targetSpeed = MAX_SPEED
+            
+        if(self.motor1.targetSpeed < -1*MAX_SPEED):
+            self.motor1.targetSpeed = -1*MAX_SPEED
+        if(self.motor2.targetSpeed < -1*MAX_SPEED):
+            self.motor2.targetSpeed = -1*MAX_SPEED
+        
+        # print 'Set Speed: ', speed1, ' and ', speed2
+   #      print 'TS: ', self.motor1.targetSpeed, ' and ',self.motor2.targetSpeed
+   #      print 'C: ', self.motor1.currentSpeed, ' and ',self.motor2.currentSpeed
         
         while (self.motor1.targetSpeed != self.motor1.currentSpeed or 
             self.motor2.targetSpeed != self.motor2.currentSpeed) :
@@ -277,38 +294,39 @@ class MotorPair:
                 
             
             if(self.motor1.currentSpeed >0):
-                PWM.set_duty_cycle(self.motor1.pinA, self.motor1.currentSpeed)
-                PWM.set_duty_cycle(self.motor1.pinB, 0)
+		print 'PWN:M1A',100-self.motor1.currentSpeed
+                PWM.set_duty_cycle(self.motor1.pinA, (100-self.motor1.currentSpeed) )
+                PWM.set_duty_cycle(self.motor1.pinB, 100 )
                 
             else:
-                PWM.set_duty_cycle(self.motor1.pinB, -1*self.motor1.currentSpeed)
-                PWM.set_duty_cycle(self.motor1.pinA, 0)
+		print 'PWN:M1B',100+self.motor1.currentSpeed
+                PWM.set_duty_cycle(self.motor1.pinB, (100+self.motor1.currentSpeed))
+                PWM.set_duty_cycle(self.motor1.pinA, 100 )
                 
             if(self.motor2.currentSpeed >0):
-                PWM.set_duty_cycle(self.motor2.pinA, self.motor2.currentSpeed)
-                PWM.set_duty_cycle(self.motor2.pinB, 0)
+		print 'PWN:M2A',100-self.motor2.currentSpeed
+                PWM.set_duty_cycle(self.motor2.pinA, (100-self.motor2.currentSpeed))
+                PWM.set_duty_cycle(self.motor2.pinB, 100)
             else:
-                PWM.set_duty_cycle(self.motor2.pinB, -1*self.motor2.currentSpeed)
-                PWM.set_duty_cycle(self.motor2.pinA, 0)
+		print 'PWN:M2B',100+self.motor2.currentSpeed
+                PWM.set_duty_cycle(self.motor2.pinB, (100+self.motor2.currentSpeed) )
+                PWM.set_duty_cycle(self.motor2.pinA, 100 )
                 
             
-            if(self.threadStop):
+            if(self.threadStop == 'true'):
               #  print "I yeiled"
                 break
             time.sleep(SPEED_DELAY)
-            
-      #  print 'targetSpeed', self.motor1.targetSpeed, ' and ', self.motor2.targetSpeed
-      #  print 'targetSpeed', self.motor1.currentSpeed, ' and ', self.motor2.currentSpeed
-            
+        
     def setEnable(self, enable):
         self.motor1.targetSpeed = 0
         self.motor2.targetSpeed = 0
         self.motor1.currentSpeed = 0
         self.motor2.currentSpeed = 0
-        PWM.set_duty_cycle(self.motor1.pinB, 0)
-        PWM.set_duty_cycle(self.motor1.pinA, 0)
-        PWM.set_duty_cycle(self.motor2.pinA, 0)
-        PWM.set_duty_cycle(self.motor2.pinB, 0)
+        PWM.set_duty_cycle(self.motor1.pinB, 100- 0)
+        PWM.set_duty_cycle(self.motor1.pinA, 100- 0)
+        PWM.set_duty_cycle(self.motor2.pinA, 100- 0)
+        PWM.set_duty_cycle(self.motor2.pinB, 100- 0)
         if(self.motor1.enabled != enable or self.motor2.enabled != enable):       
             self.motor1.setEnableNoStop(enable)
             self.motor2.setEnableNoStop(enable)
@@ -416,8 +434,6 @@ class Servo:
         self.cv = threading.Lock()
         
         
-    def __del__(self):
-        PWM.stop(self.pwm)
         
     def setAngle(self, angle):
         #Source http://forums.adafruit.com/viewtopic.php?f=8&t=41040

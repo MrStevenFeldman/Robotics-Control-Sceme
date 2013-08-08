@@ -65,6 +65,9 @@ public class MainActivity extends FragmentActivity  {
     		}
     		else if(state_v == ConnectionState.Connected){
     			man_control_button.setEnabled(true);
+    			
+    			Intent intent = new Intent(this, ControlActivity.class);
+    			startActivity(intent);
     			break;
     		}
     		else if(state_v == ConnectionState.Disconnected){

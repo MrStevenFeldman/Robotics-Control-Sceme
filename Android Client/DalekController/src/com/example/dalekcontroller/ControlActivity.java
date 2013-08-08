@@ -54,7 +54,7 @@ public class ControlActivity extends FragmentActivity  {
     public void disconnect_func(View view){
     	//TODO: Stop all Motors
     	//TODO: Disconnect from DCU
-    	
+    	DalekServerConnect.live_connect.close_connection();
     	Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 		

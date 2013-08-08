@@ -136,10 +136,10 @@ public class DalekServerConnect extends Thread {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			Log.e("ConnectionError", "Failed to close socket."+e.getMessage());
-  		  message=("Failed to close socket"+e.getMessage());
-  		  state_v=ConnectionState.Error;
-  		  e.printStackTrace();
+			Log.w("ConnectionError", "Failed to close socket."+e.getMessage());
+  		 /// message=("Failed to close socket"+e.getMessage());
+  		 // state_v=ConnectionState.Error;
+  		  //e.printStackTrace();
 		}
 		
 		live_connect=null;
