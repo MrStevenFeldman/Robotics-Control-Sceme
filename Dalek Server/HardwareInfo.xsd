@@ -112,6 +112,51 @@
 	</xs:complexType>
 </xs:element>
 
+
+
+<xs:element name="Stepper">
+	<xs:complexType>
+	<xs:sequence>
+		<xs:element ref="NAME"/>
+		<xs:element name="DIR_PIN" type="xs:string" />
+		<xs:element name="PINS" type="xs:string" />
+		<xs:element name="PIN1" type="xs:string" />
+		<xs:element name="PIN2" type="xs:string" />
+		<xs:element name="PIN3" type="xs:string" />
+		<xs:element name="PIN4" type="xs:string" />
+		<xs:element name="EnablePin" type="xs:string" />
+		<xs:element name="MAX_SPEED" >
+			<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+		<xs:element name="ACCELERATION" >
+			<xs:simpleType><xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+		
+		<xs:element name="MIN_POS" >
+			<xs:simpleType><xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+		<xs:element name="MAX_POS" >
+			<xs:simpleType><xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+		
+		<xs:element name="INIT_POS" >
+			<xs:simpleType><xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+	</xs:sequence>
+	</xs:complexType>	
+</xs:element>
+
 <xs:element name="HardwareInfo">
 	<xs:complexType>
 		<xs:sequence>
@@ -122,6 +167,7 @@
 						<xs:element ref="ServoPair" maxOccurs="unbounded" minOccurs="0"/>
 						<xs:element ref="Motor" maxOccurs="unbounded" minOccurs="0"/>
 						<xs:element ref="MotorPair" maxOccurs="unbounded" minOccurs="0"/>
+						<xs:element ref="Stepper" maxOccurs="unbounded" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

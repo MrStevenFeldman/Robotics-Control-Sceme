@@ -194,7 +194,23 @@ def loadXML(fname):
             
             device = ServoPair(dId, name, servo1, servo2)
         elif (dType == 'Stepper'):
-            pass
+            #(self, deviceId, name,maxSpeed, acceleration,enablePin,minWidth, pins, pin1, pin2, pin3, pin4):
+            stepperOp = s.getElementsByTagName('StepperObj')[0]
+            maxSpeed = stepperOp.getElementsByTagName("maxSpeed").item(0).firstChild.nodeValue
+            acceleration = stepperOp.getElementsByTagName("acceleration").item(0).firstChild.nodeValue
+            enablePin = stepperOp.getElementsByTagName("enablePin").item(0).firstChild.nodeValue
+            minWidth = stepperOp.getElementsByTagName("minWidth").item(0).firstChild.nodeValue
+            pins = stepperOp.getElementsByTagName("pins").item(0).firstChild.nodeValue
+            pin1 = stepperOp.getElementsByTagName("pin1").item(0).firstChild.nodeValue
+            pin2 = stepperOp.getElementsByTagName("pin2").item(0).firstChild.nodeValue
+            pin3 = stepperOp.getElementsByTagName("pin3").item(0).firstChild.nodeValue
+            pin4 = stepperOp.getElementsByTagName("pin4").item(0).firstChild.nodeValue            
+            name = stepperOp.getElementsByTagName('NAME').item(0).firstChild.nodeValue
+            initPos = stepperOp.getElementsByTagName('INIT_POS').item(0).firstChild.nodeValue
+            minPos = stepperOp.getElementsByTagName('MAX_POS').item(0).firstChild.nodeValue
+            maxPos = stepperOp.getElementsByTagName('MIN_POS').item(0).firstChild.nodeValue
+            
+            device=Stepper(dId, name,maxSpeed, initPos,maxPos, minPos, acceleration,enablePin,minWidth, pins, pin1, pin2, pin3, pin4) 
         
         else:
             print 'Unknown device type: ', dType

@@ -6,7 +6,7 @@
     #code: locks, threads
 i2cMap={}
 from functools import partial
-    
+from AccelStepper import AccelStepper
 import time
 import socket
 import sys
@@ -529,7 +529,7 @@ class ServoPair:
     def command(self, sock):
         data = sock.recv(2)
         command1 = int(ord(data[0]))
-        command2 = int(ord(data[2]))
+        command2 = int(ord(data[1]))
       
         print 'ServoPair: Set Angle to',command1,' and ',command2,'.'
         
@@ -567,3 +567,63 @@ class ServoPair:
     def toString(self):
         return 'Servo: Id[%s] Name: %s\n\tServo1: %s\n\tServo2: %s' %(self.deviceId, self.name,self.servo1.toString(), self.servo2.toString())
 
+class Stepper:
+    def getType():
+        return "Stepper"
+    
+    def command(self, sock):
+        data = sock.recv(1)
+        command1 = int(ord(data[0]))
+        
+        print 'Stepper: Take ',command1,' Steps.'
+        
+        #First Stop any thread not disabling the motor
+        self.threadStop = True
+        #Wait for it to finish
+        self.cv.acquire()
+        self.threadStop = False
+       
+        #Send New Task
+        self.thread = threading.Thread(target=self.threadStart, args=(command1))
+
+    def threadStart(self, command1):
+        #print self.toString()
+        if(command1 >= self.maxPos):
+            command1=self.maxPos
+        elif(command1 <= self.minPos):
+            command1=self.minPos
+
+        self.stepper.setCurrentPosition(command1)
+        self.stepper.run()
+        #print self.toString()
+        self.cv.release()
+
+         
+        
+    def __init__(self, deviceId, name,maxSpeed, initPos,maxPos, minPos, acceleration,enablePin,minWidth, pins, pin1, pin2, pin3, pin4):
+        self.name = name
+        self.maxPos=maxPos
+        self.minPos=minPos
+        self.initPos=initPos
+        
+        self.acceleration=acceleration
+        self.enablePin=enablePin
+        self.minWidth=minWidth
+        
+        self.deviceId = deviceId
+        self.stepper= AccelStepper(pins,pin1,pin2, pin3, pin4)
+        self.stepper.setMaxSpeed(maxSpeed)
+        self.stepper.setAcceleeration(acceleration)
+#        self.stepper.setEnablePin(enablePin)
+        self.stepper.setMinPulseWidth(minWidth)
+        
+        self.cv = threading.Lock()
+        
+        self.stepper.setCurrentPosition(self.initPos)
+        
+    def reset(self):
+        self.stepper.setCurrentPosition(self.initPos)
+        
+    def toString(self):
+        return 'Stepper: Id[%s] Name: %s\n' %(self.deviceId, self.name)
+    
