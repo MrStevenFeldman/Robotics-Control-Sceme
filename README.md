@@ -20,31 +20,40 @@ For i2c access:
 	i2c-tools
 	Instructions: opkg install i2c-tools
 	
-Dalek Server:
-Copy The Dalek Server Folder
-Execute: python DalekServer.py
+Dalek Server Setup:
+	Copy The Dalek Server Folder
+	Execute: python DalekServer.py
 
 
 Configuration:
-TODO. eh look at the xml and figure it out :) (I will be making a schema shortly)
+	Two XMLS:
+		DalekServer.xml (TODO)
+			Contains Server Initlization values
+		HardwareInfo.xml
+			Containts to List:
+				List of Controllable Devices
+				List of Sensor Devices
+			See Schemea for values.
+			Pins are in the Following form:
+			I2C: I_(address)_(channel)
+			BBB: P(side)_(pinID)
 
-
+Controlable Devices:
+	Bi-Directional Motors, Stepper, Servo, Motor Pair, Servo Pair
+	
+Future Controlable Devices:
+	LED, RGB LEDs, Audio Out, Solenoid, Video Out
+	
+Sensor Devices:
+	None
+Future Sesonor Devices:
+	Sonar, Motor Current Sense, Speed, Cardinal Direction, Battery Level, Battery Current, WIFI signal, internal temperature
 
 TODOS:
-make any i2c an option for any pam pin
-test/implement i2c everywhere
-Test Servo code
-Implement Stepper code
-make schema for devices, audio,videos
-make XML for control device, such that when connected the xml sends deviceIDS, types, and device names to the control device. Which generates a list of available UI components.
-
-Future Device Interfaces:
-RGB LEDS
-Audio Playback
+Extensive Testing
+Add Default/Required attributes to XML scheme
+Add more robust connection detection
 
 
-
-Control Device
-	Make a text document describing communication patter
-	
-	Android Tablet. make a it better :)
+Communication Pattern:
+	Command: [device ID] + [op code] + [operand]
