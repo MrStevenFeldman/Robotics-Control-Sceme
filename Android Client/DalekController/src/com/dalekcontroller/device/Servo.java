@@ -18,7 +18,7 @@ import android.widget.ImageButton;
 public class Servo  extends Fragment{
 	protected static final int SERVO_DEVICE=2;
 	//Has an ID
-	private byte id; public final static String id_s="id";
+	private byte id; public final static String deviceID_s="deviceID";
 	private float currentAngle=0; public final static String currentAngle_s="currentAngle";
 	private int maxAngle=90; public final static String maxAngle_s="maxAngle";
 	private int minAngle=-90; public final static String minAngle_s="minAngle";
@@ -31,7 +31,7 @@ public class Servo  extends Fragment{
 		super.onSaveInstanceState(outState);
 
 		// Save the current article selection in case we need to recreate the fragment
-		outState.putInt(id_s, id);
+		outState.putInt(deviceID_s, id);
 		outState.putFloat(currentAngle_s, currentAngle);
 		outState.putInt(maxAngle_s, maxAngle);
 		outState.putInt(minAngle_s, minAngle);
@@ -49,7 +49,7 @@ public class Servo  extends Fragment{
 		Bundle args = getArguments();
 		if (args != null) {
 			// Set article based on argument passed in
-			id=args.getByte(id_s);
+			id=args.getByte(deviceID_s);
 			currentAngle=args.getFloat(currentAngle_s, 0);
 			maxAngle=args.getInt(maxAngle_s, 90);
 			minAngle=args.getInt(minAngle_s, -90);
@@ -77,7 +77,7 @@ public class Servo  extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			id=savedInstanceState.getByte(id_s);
+			id=savedInstanceState.getByte(deviceID_s);
 			currentAngle=savedInstanceState.getFloat(currentAngle_s, (short)0);
 			maxAngle=savedInstanceState.getInt(maxAngle_s, 90);
 			minAngle=savedInstanceState.getInt(minAngle_s, -90);
@@ -94,7 +94,7 @@ public class Servo  extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState){
 		
 		if (savedInstanceState != null) {
-			id=savedInstanceState.getByte(id_s);
+			id=savedInstanceState.getByte(deviceID_s);
 			currentAngle=savedInstanceState.getFloat(currentAngle_s, (short)0);
 			maxAngle=savedInstanceState.getInt(maxAngle_s, 90);
 			minAngle=savedInstanceState.getInt(minAngle_s, -90);
@@ -122,7 +122,7 @@ try{
 		centerButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View view){	
-				servoArch.updateAngle(0);
+				servoArch.updateAngle(270);
 			}
 		});
 		
@@ -130,7 +130,7 @@ try{
 		leftButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View view){	
-				servoArch.updateAngle(270);
+				servoArch.updateAngle(180);
 			}
 		});
 		
@@ -138,7 +138,7 @@ try{
 		rightButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View view){	
-				servoArch.updateAngle(90);
+				servoArch.updateAngle(0);
 			}
 		});
 		

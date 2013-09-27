@@ -1,5 +1,9 @@
 package com.example.dalekcontroller;
 
+import com.dalekcontroller.device.DomeControlls;
+import com.dalekcontroller.device.Servo;
+import com.dalekcontroller.device.ServoPair;
+import com.dalekcontroller.device.motor.BiDirectionalMotor;
 import com.dalekcontroller.device.motor.ZPTMotorPair;
 
 import android.content.Intent;
@@ -22,23 +26,56 @@ public class ControlActivity extends FragmentActivity  {
             return;
         }
 		
-		if (findViewById(R.id.zpt_container) != null) {
+		//TODO get all info from config file
+		
+		
+		ZPTMotorPair zpt = new ZPTMotorPair();
+        Bundle bundle1=new Bundle();
+		bundle1.putByte(ZPTMotorPair.deviceID_s, (byte) 1);
+		zpt.setArguments(bundle1);
+		getSupportFragmentManager().beginTransaction()
+			.add(R.id.zpt_container, zpt).commit();
+		
+		ServoPair gunPair = new ServoPair();
+		Bundle bundle2=new Bundle();
+		bundle2.putByte(ServoPair.deviceID_s, (byte) 2);
+		gunPair.setArguments(bundle2);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.gun_container, gunPair).commit();
+	
+		ServoPair plungerPair = new ServoPair();
+		Bundle bundle3=new Bundle();
+		bundle3.putByte(ServoPair.deviceID_s, (byte) 3);
+		plungerPair.setArguments(bundle3);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.plunger_container, plungerPair).commit();
+		
+		
+		DomeControlls domeTest = new DomeControlls();
+		Bundle outState=new Bundle();
+		//Dome
+				outState.putByte(DomeControlls.dome_id_s, (byte)-1);
+				outState.putInt(DomeControlls.maxSteps_s, -1);
+				outState.putInt(DomeControlls.minSteps_s, -1);
+				
+				//Eye Stalk Servo	
+				outState.putByte(DomeControlls.stalk_id_s, (byte)-1);
+				outState.putInt(DomeControlls.maxAngle_s, 270);
+				outState.putInt(DomeControlls.minAngle_s, 180);
+				
+				
+				//Eye Iris
+				outState.putByte(DomeControlls.iris_id_s, (byte)-1);
 
-            ZPTMotorPair zpt = new ZPTMotorPair();
-            Bundle bundle1=new Bundle();
-			bundle1.putByte(ZPTMotorPair.deviceID_s, (byte) 1);
-			zpt.setArguments(bundle1);
-			getSupportFragmentManager().beginTransaction()
-				.add(R.id.zpt_container, zpt).commit();
-		}
-			
-//            BiDirectionalMotor biMoto = new BiDirectionalMotor();
-//			Bundle bundle1=new Bundle();
-//			bundle1.putInt(BiDirectionalMotor.deviceID_s, 1);
-//            biMoto.setArguments(bundle1);
-//
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.bidirectionalContainer, biMoto).commit();
+				//Eye Led
+				outState.putByte(DomeControlls.led_id_s, (byte)-1);
+				
+
+		domeTest.setArguments(outState);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.dome_container, domeTest).commit();
+	
+		
             
 	
 	}
@@ -52,8 +89,6 @@ public class ControlActivity extends FragmentActivity  {
 
 
     public void disconnect_func(View view){
-    	//TODO: Stop all Motors
-    	//TODO: Disconnect from DCU
     	DalekServerConnect.live_connect.close_connection();
     	Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);

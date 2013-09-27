@@ -2,29 +2,30 @@ package com.dalekcontroller.device.motor;
 
 import java.nio.ByteBuffer;
 
-import com.dalekcontroller.gui.CircularSeekBar;
 import com.dalekcontroller.gui.DotInCircle;
-import com.dalekcontroller.gui.CircularSeekBar.OnSeekChangeListener;
 import com.dalekcontroller.gui.DotInCircle.DotChangeListener;
 import com.example.dalekcontroller.DalekServerConnect;
 import com.example.dalekcontroller.R;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class ZPTMotorPair extends MotorDevice {
+
+	public ZPTMotorPair(){};
 	
-	public ZPTMotorPair(){}
+	
 	
 
-	private byte deviceID=-1; public final static String deviceID_s="deviceID";
+	private byte deviceID=-1; 
+	public final static String deviceID_s="deviceID";
 	private boolean both_enabled=false; public final static String both_enabled_s="both_enabled";
 	
 	private short power_levelr=0; public final static String power_levelr_s="power_levelr";
@@ -40,7 +41,7 @@ public class ZPTMotorPair extends MotorDevice {
 		super.onSaveInstanceState(outState);
 
 		// Save the current article selection in case we need to recreate the fragment
-		outState.putInt(deviceID_s, deviceID);
+		outState.putByte(deviceID_s, deviceID);
 		outState.putInt(power_levelr_s, power_levelr);
 		outState.putInt(power_levell_s, power_levell);
 
@@ -49,23 +50,18 @@ public class ZPTMotorPair extends MotorDevice {
 	
 	@Override
 	public void onStart() {
-		super.onStart();
-
-		// During startup, check if there are arguments passed to the fragment.
-		// onStart is a good place to do this because the layout has already been
-		// applied to the fragment at this point so we can safely call the method
-		// below that sets the article text.
+		super.onStart();		
+		
 		Bundle args = getArguments();
 		if (args != null) {
 			// Set article based on argument passed in
 			deviceID=args.getByte(deviceID_s);
-			
+						
 		} 
 		else {
-			throw new ClassCastException("Need Arguements for BiDirectional Motor Pair!");
+			throw new ClassCastException("Need Arguements for ZPT Motor Pair!");
 
 		}
-		
 		
 	}
 
@@ -77,6 +73,7 @@ public class ZPTMotorPair extends MotorDevice {
 			power_levell=savedInstanceState.getShort(power_levell_s);
 			power_levelr=savedInstanceState.getShort(power_levelr_s);
 			both_enabled= savedInstanceState.getBoolean(both_enabled_s);
+			
 		}
 		else{
 			
@@ -167,6 +164,8 @@ public class ZPTMotorPair extends MotorDevice {
 			
 			enable_disable_button.setText("Disable");
 		}
+		joystick.resetDot();
+
 		both_enabled=!both_enabled;
 		
 		Log.i("ZPT", "ENABLE/DISABLE FUNCTION");

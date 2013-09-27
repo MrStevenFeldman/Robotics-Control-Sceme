@@ -1,34 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<HardWareInfo>	
+<HardwareInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="HardwareInfo.xsd">
 	<DeviceList>
 		
 	 
-		<Device type="MotorPair">
+		<MotorPair>
 			<NAME>DriveMotors</NAME>
 			<ID>1</ID>
 			
-			<Motor1>
+			<MotorObj>
 				<NAME>leftmotor</NAME>
 		
 				<PWMA_PIN>P9_14</PWMA_PIN>
 				<PWMB_PIN>P9_16</PWMB_PIN>
 				<ENABLE_PIN>P8_9</ENABLE_PIN>
-				<CURRENTA>P9_39</CURRENTA>
-			</Motor1>
+				<CURRENT_PIN>P9_39</CURRENT_PIN>
+			</MotorObj>
 	
-			<Motor2>
+			<MotorObj>
 				<NAME>rightmotor</NAME>
 			
 				<PWMA_PIN>P8_19</PWMA_PIN>
 				<PWMB_PIN>P8_13</PWMB_PIN>
 				<ENABLE_PIN>P8_7</ENABLE_PIN>
-				<CURRENTA>P9_40</CURRENTA>
+				<CURRENT_PIN>P9_40</CURRENT_PIN>
 	
-			</Motor2>
+			</MotorObj>
 			
-		</Device>
+		</MotorPair>
+		<Motor>
+			<ID>2</ID>
+			<MotorObj>
+				<NAME>random</NAME>
+				<PWMA_PIN>P8_1</PWMA_PIN>
+				<PWMB_PIN>P8_3</PWMB_PIN>
+				<ENABLE_PIN>P8_17</ENABLE_PIN>
+				<CURRENT_PIN>P9_240</CURRENT_PIN>
+	
+			</MotorObj>
+		</Motor>
+		
+		<Servo>
+			<ID>3</ID>
+			<ServoObj>
+				<NAME>EyeStalk</NAME>
+				<PWM_PIN>0</PWM_PIN>
+				<PWM_MAX>100</PWM_MAX>
+				<PWM_MIN>0</PWM_MIN>
+				<ANGLE_INIT>0</ANGLE_INIT>
+				<ANGLE_MIN>0</ANGLE_MIN>
+				<ANGLE_MAX>360</ANGLE_MAX>
+				
+			</ServoObj>
+		</Servo>
+		<ServoPair>
+			<ID>3</ID>
+			<NAME>PlungerBox</NAME>
+			<ServoObj>
+				<NAME>Left</NAME>
+				<PWM_PIN>0</PWM_PIN>
+				<PWM_MAX>100</PWM_MAX>
+				<PWM_MIN>0</PWM_MIN>
+				<ANGLE_INIT>0</ANGLE_INIT>
+				<ANGLE_MIN>0</ANGLE_MIN>
+				<ANGLE_MAX>360</ANGLE_MAX>
+			</ServoObj>
+			<ServoObj>
+				<NAME>Right</NAME>
+				<PWM_PIN>TBD</PWM_PIN>
+				<PWM_MAX>100</PWM_MAX>
+				<PWM_MIN>0</PWM_MIN>
+				<ANGLE_INIT>0</ANGLE_INIT>
+				<ANGLE_MIN>0</ANGLE_MIN>
+				<ANGLE_MAX>360</ANGLE_MAX>
+			</ServoObj>
+		</ServoPair>
+		<ServoPair>
+			<ID>3</ID>
+			<NAME>GunBox</NAME>
+			<ServoObj>
+				<NAME>Left</NAME>
+				<PWM_PIN>0</PWM_PIN>
+				<PWM_MAX>100</PWM_MAX>
+				<PWM_MIN>0</PWM_MIN>
+				<ANGLE_INIT>0</ANGLE_INIT>
+				<ANGLE_MIN>0</ANGLE_MIN>
+				<ANGLE_MAX>360</ANGLE_MAX>
+				
+			</ServoObj>
+			<ServoObj>
+				<NAME>Right</NAME>
+				<PWM_PIN>0</PWM_PIN>
+				<PWM_MAX>100</PWM_MAX>
+				<PWM_MIN>0</PWM_MIN>
+				<ANGLE_INIT>0</ANGLE_INIT>
+				<ANGLE_MIN>0</ANGLE_MIN>
+				<ANGLE_MAX>360</ANGLE_MAX>
+			</ServoObj>
+		</ServoPair>
 		
 	</DeviceList>
 	
 	
-</HardWareInfo>
+</HardwareInfo>

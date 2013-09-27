@@ -18,7 +18,9 @@
             android:layout_height="275dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="25dp"
-            app:usehalfcircle="true" />
+            app:pathstartangle="270"
+            app:circlestartangle="180"
+            app:circlesweepangle="180"  />
 
         <TextView
             android:id="@+id/power_level_indicator_left"

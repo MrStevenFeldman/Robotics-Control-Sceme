@@ -74,7 +74,9 @@
 			android:layout_alignParentTop="true"
 			android:layout_marginTop="25dp"
 			app:pathdirection="SHORTEST"
-			app:usehalfcircle="true" />
+			app:pathstartangle="270"
+            app:circlestartangle="180"
+            app:circlesweepangle="180"  />
 	
 		<com.dalekcontroller.gui.CircularSeekBar
 			android:id="@+id/reverse_dir_control"
@@ -82,9 +84,10 @@
 			android:layout_height="275dp"
 			android:layout_alignParentBottom="true"
 			android:layout_marginBottom="25dp"
-			android:rotation="180"
 			app:pathdirection="SHORTEST"
-			app:usehalfcircle="true" />
+			app:pathstartangle="90"
+            app:circlestartangle="0"
+            app:circlesweepangle="180"  />
 	
 		<requestFocus />
 		

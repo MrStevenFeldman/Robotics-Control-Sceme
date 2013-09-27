@@ -1,14 +1,17 @@
 package com.dalekcontroller.device;
 
+import com.dalekcontroller.gui.DotInCircle;
+import com.dalekcontroller.gui.DotInCircle.DotChangeListener;
 import com.example.dalekcontroller.DalekServerConnect;
 import com.example.dalekcontroller.R;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ServoPair  extends Servo{
+public class ServoPair extends Fragment{
 	//Has an ID
 	private byte deviceID;
 		public final static String deviceID_s="deviceID";
@@ -24,13 +27,14 @@ public class ServoPair  extends Servo{
 	private int x_A, y_A, x_B, y_B;//Location on the circle where the steppers are
 	private int Y_min, Y_max, X_min, X_max;
 	
+	private DotInCircle joystick;
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		// Save the current article selection in case we need to recreate the fragment
 		outState.putByte(deviceID_s, deviceID);
-		outState.putInt(currentAngle_s, currentAngle_A);
+		outState.putInt(currentAngleA_s, currentAngle_A);
 		outState.putInt(maxAngle_A_s, maxAngle_A);
 		outState.putInt(minAngle_A_s, minAngle_A);
 		
@@ -39,6 +43,7 @@ public class ServoPair  extends Servo{
 		outState.putInt(minAngle_B_s, minAngle_B);
 
 	}
+	
 	
 	@Override
 	public void onStart() {
@@ -56,7 +61,7 @@ public class ServoPair  extends Servo{
 		if (args != null) {
 			// Set article based on argument passed in
 			deviceID=args.getByte(deviceID_s);
-			currentAngle_A=args.getInt(currentAngle_s, 0);
+			currentAngle_A=args.getInt(currentAngleA_s, 0);
 			maxAngle_A=args.getInt(maxAngle_A_s,90 );
 			minAngle_A=args.getInt(minAngle_A_s, -90);
 			
@@ -70,17 +75,17 @@ public class ServoPair  extends Servo{
 
 		}
 		
-		//TODO GUI Part
 		
 	}
 
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		if (savedInstanceState != null) {
 			deviceID=savedInstanceState.getByte(deviceID_s);
-			currentAngle_A=savedInstanceState.getInt(currentAngle_s, 0);
+			currentAngle_A=savedInstanceState.getInt(currentAngleA_s, 0);
 			maxAngle_A=savedInstanceState.getInt(maxAngle_A_s,90 );
 			minAngle_A=savedInstanceState.getInt(minAngle_A_s, -90);
 			
@@ -96,12 +101,13 @@ public class ServoPair  extends Servo{
 		
 	}
 	
+	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState){
 		
 		if (savedInstanceState != null) {
 			deviceID=savedInstanceState.getByte(deviceID_s);
-			currentAngle_A=savedInstanceState.getInt(currentAngle_s, 0);
+			currentAngle_A=savedInstanceState.getInt(currentAngleA_s, 0);
 			maxAngle_A=savedInstanceState.getInt(maxAngle_A_s,90 );
 			minAngle_A=savedInstanceState.getInt(minAngle_A_s, -90);
 			
@@ -114,13 +120,20 @@ public class ServoPair  extends Servo{
 		}
 		
 		
-		//TODO Gui componet
 		
+		joystick = (DotInCircle)getView().findViewById(R.id.servoCircle);
+		joystick.setDotChangeListener(new DotChangeListener(){
+			@Override
+			public void onChange() {
+				updateServo((int)joystick.getDotX(), (int)joystick.getDotY());
+				
+			}
+			
+		});		
 	}
 	
 
 	public void centerStick(){
-		updateServo(0, 0);
 		updateServo(0, 0);
 	}
 	public void shakeVertical(){

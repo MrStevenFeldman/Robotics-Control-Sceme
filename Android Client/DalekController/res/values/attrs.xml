@@ -3,7 +3,10 @@
     <declare-styleable name="CircularSeekBar">
         <attr name="android:text"/>
         <attr name="android:textColor"/> 
-        <attr name="usehalfcircle" format="boolean" />
+        
+        <attr name="pathstartangle" format="integer" />
+        <attr name="circlestartangle" format="integer" />
+        <attr name="circlesweepangle" format="integer" />
         <attr name="pathdirection" format="string" />            
     </declare-styleable>
     

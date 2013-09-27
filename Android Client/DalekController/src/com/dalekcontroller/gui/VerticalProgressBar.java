@@ -1,6 +1,7 @@
 package com.dalekcontroller.gui;
 
 import com.example.dalekcontroller.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -242,7 +243,8 @@ public class VerticalProgressBar extends View {
             mFromUser = fromUser;
         }
 
-        public void run() {
+        @Override
+		public void run() {
             doRefreshProgress(mId, mProgress, mFromUser);
             // Put ourselves back in the cache when we are done
             mRefreshProgressRunnable = this;
@@ -544,11 +546,13 @@ public class VerticalProgressBar extends View {
 
         public static final Parcelable.Creator<SavedState> CREATOR
                 = new Parcelable.Creator<SavedState>() {
-            public SavedState createFromParcel(Parcel in) {
+            @Override
+			public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
 
-            public SavedState[] newArray(int size) {
+            @Override
+			public SavedState[] newArray(int size) {
                 return new SavedState[size];
             }
         };

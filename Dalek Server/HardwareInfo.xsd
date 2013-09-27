@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="NAME" type="xs:string"/>
+<xs:element name="ID">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="MotorObj">
+	<xs:complexType>
+	<xs:sequence>
+		<xs:element ref="NAME"/>
+		<xs:element name="PWMA_PIN" type="xs:string" />
+		<xs:element name="PWMB_PIN" type="xs:string" />
+		<xs:element name="ENABLE_PIN" type="xs:string" />
+		<xs:element name="CURRENT_PIN" type="xs:string" />
+		<xs:element name="PWM_MIN" >
+			<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="1"/>
+				<xs:maxInclusive value="100"/>
+			</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		
+	</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="Motor" >
+	<xs:complexType>
+	<xs:sequence>
+		<xs:element ref="ID"/>
+		<xs:element ref="MotorObj"/>
+	</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="MotorPair" >
+	<xs:complexType>
+	<xs:sequence>
+		<xs:element ref="NAME"/>
+		<xs:element ref="ID"/>
+		<xs:element ref="MotorObj"/>
+		<xs:element ref="MotorObj"/>
+	</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="ServoObj">
+	<xs:complexType>
+	<xs:sequence>
+		<xs:element ref="NAME"/>
+		<xs:element name="PWM_PIN" type="xs:string" />
+		
+		<xs:element name="ANGLE_INIT" >
+			<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="360"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+		<xs:element name="ANGLE_MAX" >
+			<xs:simpleType><xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="360"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+		<xs:element name="ANGLE_MIN" >
+			<xs:simpleType><xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="360"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+		<xs:element name="PWM_MAX" >
+			<xs:simpleType><xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="100"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+		<xs:element name="PWM_MIN" >
+			<xs:simpleType><xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="100"/>
+			</xs:restriction></xs:simpleType>
+		</xs:element>
+	</xs:sequence>
+	</xs:complexType>	
+</xs:element>
+
+<xs:element name="Servo" >
+	<xs:complexType>
+	<xs:sequence>
+		<xs:element ref="ID"/>
+		<xs:element ref="ServoObj"/>
+	</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="ServoPair" >
+	<xs:complexType>
+	<xs:sequence>
+		<xs:element ref="NAME"/>
+		<xs:element ref="ID"/>
+		<xs:element ref="ServoObj"/>
+		<xs:element ref="ServoObj"/>
+	</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="HardwareInfo">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="DeviceList">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Servo" maxOccurs="unbounded" minOccurs="0"/>
+						<xs:element ref="ServoPair" maxOccurs="unbounded" minOccurs="0"/>
+						<xs:element ref="Motor" maxOccurs="unbounded" minOccurs="0"/>
+						<xs:element ref="MotorPair" maxOccurs="unbounded" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+</xs:schema>
+

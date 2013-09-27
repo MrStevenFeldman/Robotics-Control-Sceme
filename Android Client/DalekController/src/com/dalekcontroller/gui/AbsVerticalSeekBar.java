@@ -78,7 +78,7 @@ public class AbsVerticalSeekBar extends VerticalProgressBar{
             // Assuming the thumb drawable is symmetric, set the thumb offset
             // such that the thumb will hang halfway off either edge of the
             // progress bar.
-            mThumbOffset = (int)thumb.getIntrinsicHeight() / 2;
+            mThumbOffset = thumb.getIntrinsicHeight() / 2;
         }
         mThumb = thumb;
         invalidate();

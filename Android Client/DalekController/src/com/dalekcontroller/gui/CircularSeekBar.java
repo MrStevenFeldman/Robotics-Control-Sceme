@@ -15,6 +15,7 @@ package com.dalekcontroller.gui;
 
 
 import com.example.dalekcontroller.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -24,6 +25,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+//import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -31,27 +33,36 @@ import android.view.View;
  * The Class CircularSeekBar.
  */
 public class CircularSeekBar extends View {
-	enum PATH_OPS{
+	enum PATH_OPS{ 
 		SHORTEST, CLOCKWISE, COUNTERCLOCKWISE;
 	}
+	
 	PATH_OPS path= PATH_OPS.SHORTEST;
 	//final boolean SHORTEST_PATH=true;
 
-	boolean USE_HALF_CIRCLE;
+	int sweepAngle;
+	int circleStartAngle;
+	int pathStartAngle;
 	
 	public void init(AttributeSet attrs) { 
 	    TypedArray a=getContext().obtainStyledAttributes( attrs,  R.styleable.CircularSeekBar);
-	   
-	    USE_HALF_CIRCLE	=a.getBoolean(R.styleable.CircularSeekBar_usehalfcircle, false);
+	    
+	    sweepAngle	=a.getInt(R.styleable.CircularSeekBar_circlesweepangle, 360);
+	    circleStartAngle	=a.getInt(R.styleable.CircularSeekBar_circlestartangle, 0);
+	    pathStartAngle  =a.getInt(R.styleable.CircularSeekBar_pathstartangle, (sweepAngle)/2 + circleStartAngle );
+	    
 	    String res		=a.getString (R.styleable.CircularSeekBar_pathdirection);
 	    if(res.equalsIgnoreCase("SHORTEST")){
 	    	path= PATH_OPS.SHORTEST;
+	    	
 	    }
 	    else if(res.equalsIgnoreCase("COUNTERCLOCKWISE")){
 	    	path= PATH_OPS.COUNTERCLOCKWISE;
+	    	if(sweepAngle<360) path= PATH_OPS.SHORTEST;
 	    }
 	    else{
 	    	path= PATH_OPS.CLOCKWISE;
+	    	if(sweepAngle<360) path= PATH_OPS.SHORTEST;
 	    }
 	    
 	    a.recycle();
@@ -79,16 +90,10 @@ public class CircularSeekBar extends View {
 	/** The start angle (12 O'clock */
 	
 	
-	private int startAngle = 270;
 
 	/** The width of the progress ring */
-	private int barWidth = 10;
+	private int barWidth = 5;
 
-	/** The width of the view */
-	private int width;
-
-	/** The height of the view */
-	private int height;
 
 	/** The maximum progress amount */
 	private float maxProgress = 100;
@@ -103,7 +108,7 @@ public class CircularSeekBar extends View {
 	private float innerRadius;
 
 	/** The radius of the outer circle */
-	private float outerRadius;
+	private float outerRadius, centerRadius;
 
 	/** The circle's center X coordinate */
 	private float cx;
@@ -129,11 +134,6 @@ public class CircularSeekBar extends View {
 	/** The Y coordinate for the top left corner of the marking drawable */
 	private float dy;
 
-	/** The X coordinate for 12 O'Clock */
-	private float startPointX;
-
-	/** The Y coordinate for 12 O'Clock */
-	private float startPointY;
 
 	/**
 	 * The X coordinate for the current position of the marker, pre adjustment
@@ -152,7 +152,7 @@ public class CircularSeekBar extends View {
 	 * both sides of the progress bar, allowing touch events to be processed
 	 * more user friendlily (yes, I know that's not a word)
 	 */
-	private float adjustmentFactor = 5;
+	private float adjustmentFactor = 10;
 
 	/** The progress mark when the view isn't being progress modified */
 	private Bitmap progressMark;
@@ -197,9 +197,9 @@ public class CircularSeekBar extends View {
 		innerColor.setAntiAlias(true);
 		circleRing.setAntiAlias(true);
 
-		circleColor.setStrokeWidth(5);
-		innerColor.setStrokeWidth(5);
-		circleRing.setStrokeWidth(5);
+		circleColor.setStrokeWidth(barWidth);
+		innerColor.setStrokeWidth(barWidth);
+		circleRing.setStrokeWidth(barWidth);
 
 		circleRing.setStyle(Paint.Style.STROKE);
 		circleColor.setStyle(Paint.Style.STROKE);
@@ -268,59 +268,52 @@ public class CircularSeekBar extends View {
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-		width = getWidth()-barWidth; // Get View Width
-		height = getHeight()-barWidth;// Get View Height
+		int width = getWidth()-barWidth; // Get View Width
+		int height = getHeight()-barWidth;// Get View Height
 
 		int size = (width > height) ? height : width ; // Choose the smaller
 														// between width and
 														// height to make a
 														// square
-
-		cx = width / 2; // Center X for circle
-		cy = height / 2; // Center Y for circle
-		outerRadius = (size / 2) - 15;  // Radius of the outer circle
-
-		innerRadius = outerRadius - barWidth ; // Radius of the inner circle
-
-		left = cx - outerRadius; // Calculate left bound of our rect
-		right = cx + outerRadius;// Calculate right bound of our rect
-		top = cy - outerRadius;// Calculate top bound of our rect
-		bottom = cy + outerRadius;// Calculate bottom bound of our rect
-
-		
-		
-		if(USE_HALF_CIRCLE){
-			switch(path){
-			case SHORTEST:
-				startPointX = cx; // 12 O'clock X coordinate
-				startPointY = cy - outerRadius;// 12 O'clock Y coordinate
-				startAngle = 270;
-				break;
-			case CLOCKWISE:
-				startPointX = cx  - outerRadius; // 12 O'clock X coordinate
-				startPointY = cy;// 12 O'clock Y coordinate
-				startAngle = 180;
-				angle=270;
-				break;
-				
-			case COUNTERCLOCKWISE:
-				startPointX = cx  + outerRadius; // 12 O'clock X coordinate
-				startPointY = cy;// 12 O'clock Y coordinate
-				startAngle = 0;
-				angle=90;
-				break;
+		final int lessSize=15;
+		if(sweepAngle == 90  && circleStartAngle==180){
 			
+			cx = size ; // Center X for circle
+			cy = size ; // Center Y for circle
+			outerRadius = size-lessSize;  // Radius of the outer circle
+	
+			innerRadius = outerRadius - barWidth ; // Radius of the inner circle
+			centerRadius = outerRadius - barWidth/2;
 			
-			}
+			left = cx - outerRadius; // Calculate left bound of our rect
+			right = cx+outerRadius ;// Calculate right bound of our rect
+			top = cy - outerRadius;// Calculate top bound of our rect
+			bottom = cy+outerRadius ;// Calculate bottom bound of our rect
+			
 		}
 		else{
-			startPointX = cx; // 12 O'clock X coordinate
-			startPointY = cy - outerRadius;// 12 O'clock Y coordinate
-			startAngle = 270;
-
+			
+	
+			cx = width / 2; // Center X for circle
+			cy = height / 2; // Center Y for circle
+			outerRadius = (size / 2)-lessSize;  // Radius of the outer circle
+	
+			innerRadius = outerRadius - barWidth ; // Radius of the inner circle
+			centerRadius = outerRadius - barWidth/2;
+			
+			left = cx - outerRadius; // Calculate left bound of our rect
+			right = cx + outerRadius;// Calculate right bound of our rect
+			top = cy - outerRadius;// Calculate top bound of our rect
+			bottom = cy + outerRadius;// Calculate bottom bound of our rect
+			
+			
 		}
-		markPointX = startPointX;// Initial locatino of the marker X coordinate
-		markPointY = startPointY;// Initial locatino of the marker Y coordinate
+
+		markPointX = (float) (centerRadius*Math.cos(Math.toRadians(pathStartAngle)) + cx); // Initial locatino of the marker X coordinate
+		markPointY = (float) (centerRadius*Math.sin(Math.toRadians(pathStartAngle)) + cy); // Initial locatino of the marker Y coordinate
+		
+		
+		angle=pathStartAngle;
 
 		rect.set(left, top, right, bottom); // assign size to rect
 	}
@@ -340,70 +333,111 @@ public class CircularSeekBar extends View {
 		//
 		//final boolean DONT_USE_UPPER_HALF=false;
 		//final boolean DONT_USE_LOWER_HALF=true;
+		canvas.drawArc(rect, circleStartAngle, sweepAngle, false, circleRing);
+		float toSweepAngle=-1;
 		
-		if(USE_HALF_CIRCLE){
-			canvas.drawArc(rect, 180, 180, false, circleRing);
-		
+		if(sweepAngle >= 360){
 			switch(path){
 				case SHORTEST:
-					if(angle<=180){
-						canvas.drawArc(rect, startAngle, angle, false, circleColor);
+					if(angle < pathStartAngle){
+						toSweepAngle= pathStartAngle -angle;
+						
+						if(toSweepAngle < 180){
+							canvas.drawArc(rect, angle, toSweepAngle, false, circleColor);
+
+						}
+						else{
+							canvas.drawArc(rect, pathStartAngle, 360-toSweepAngle, false, circleColor);
+
+						}
 					}
 					else{
-						canvas.drawArc(rect, startAngle, angle-360, false, circleColor);
+						toSweepAngle= angle-pathStartAngle;
+						
+						if(toSweepAngle < 180){
+							canvas.drawArc(rect, pathStartAngle, toSweepAngle, false, circleColor);
+
+						}
+						else{
+							canvas.drawArc(rect, angle, 360-toSweepAngle, false, circleColor);
+
+						}
 					}
 					
+//					//path 1 pathStartAngle-angle
+//					//path 2 pathStartAngle-angle-360
+//					toSweepAngle=Math.abs(pathStartAngle -angle);
+//					if(toSweepAngle > 180){
+//						toSweepAngle=toSweepAngle-360;
+//					}
+//					canvas.drawArc(rect, pathStartAngle, toSweepAngle, false, circleColor);
 					break;
 				case CLOCKWISE:
-					if(angle<=180){
-						canvas.drawArc(rect, startAngle, angle+90, false, circleColor);
-					}
-					else{
-						canvas.drawArc(rect, startAngle, angle-270, false, circleColor);
+					toSweepAngle=(angle-pathStartAngle);
+					if(toSweepAngle <0 ){
+						toSweepAngle=360+toSweepAngle;
 					}
 					
+					canvas.drawArc(rect, pathStartAngle, toSweepAngle, false, circleColor);
+
 					break;
 				case COUNTERCLOCKWISE:
-					
-					if(angle<=180){
-						canvas.drawArc(rect, startAngle, angle-90, false, circleColor);
+					toSweepAngle=(pathStartAngle -angle);
+					if(toSweepAngle <0 ){
+						toSweepAngle=360+toSweepAngle;
 					}
-					else{
-						canvas.drawArc(rect, startAngle, -450+angle, false, circleColor);
-					}
-					
+					canvas.drawArc(rect, angle, toSweepAngle, false, circleColor);
 					break;
 			
 			}
+	//		Log.v("CircleSeekBar", " circleStartAngle:"+circleStartAngle+" sweepAngle:"+sweepAngle+" pathStartAngle:"+pathStartAngle+" toSweepAngle:"+toSweepAngle+" angle:"+angle);
+
 		}
 		else{
-			canvas.drawArc(rect, 0, 360, false, circleRing);
+			float toSweepAngle1 = Math.abs(angle-pathStartAngle);
+			float toSweepAngle2 = 360F - toSweepAngle1;
 			
-			switch(path){
-				case SHORTEST:
-					if(angle<=180){
-						canvas.drawArc(rect, startAngle, angle, false, circleColor);
-					}
-					else{
-						canvas.drawArc(rect, startAngle, angle-360, false, circleColor);
-					}
-					
-					break;
-				case CLOCKWISE:
-					canvas.drawArc(rect, startAngle, angle, false, circleColor);
-					
-					break;
-				case COUNTERCLOCKWISE:
-					
-					canvas.drawArc(rect, startAngle, angle-360, false, circleColor);
-					
-					break;
-		
+			
+			
+			if(angle < pathStartAngle){
+				//Try to sweep from end to start
+				float distance1=circleStartAngle-angle;
+				if(distance1 <=0) distance1=distance1+360;
+				
+				float distance2=((circleStartAngle+sweepAngle)%360F)-angle;
+				if(distance2 <=0) distance2=distance2+360;
+				
+				
+				if(toSweepAngle1 < distance1 && toSweepAngle1 < distance2 )
+				{	canvas.drawArc(rect, angle, toSweepAngle1, false, circleColor);
+				
+				}
+				else{
+					canvas.drawArc(rect, pathStartAngle, toSweepAngle2, false, circleColor);
+				}
+			//	Log.v("CircleSeekBar", " circleStartAngle:"+circleStartAngle+" sweepAngle:"+sweepAngle+" pathStartAngle:"+pathStartAngle+" toSweepAngle1:"+toSweepAngle1+" toSweepAngle2:"+toSweepAngle2+" distance1:"+distance1+" distance2:"+distance2+" angle:"+angle);
+
+				
 			}
-			
+			else{
+				float distance1=circleStartAngle-pathStartAngle;
+				if(distance1 <=0) distance1=distance1+360;
+				
+				float distance2=((circleStartAngle+sweepAngle)%360F)-pathStartAngle;
+				if(distance2 <=0) distance2=distance2+360;
+				
+				if(toSweepAngle1 < distance1 && toSweepAngle1 < distance2 ){
+					canvas.drawArc(rect, pathStartAngle, toSweepAngle1, false, circleColor);
+				}
+				else{
+					canvas.drawArc(rect, angle, toSweepAngle2, false, circleColor);
+				}
+			//	Log.v("CircleSeekBar", " circleStartAngle:"+circleStartAngle+" sweepAngle:"+sweepAngle+" pathStartAngle:"+pathStartAngle+" toSweepAngle1:"+toSweepAngle1+" toSweepAngle2:"+toSweepAngle2+" distance1:"+distance1+" distance2:"+distance2+" angle:"+angle);
+
+			}
+
 		}
-		
-		
+
 		
 		
 		
@@ -472,7 +506,7 @@ public class CircularSeekBar extends View {
 	 */
 	public void setAngle(float angle) {
 		this.angle = angle;
-		float donePercent = (((float) this.angle) / 360) * 100;
+		float donePercent = ((this.angle) / 360) * 100;
 		float progress = (donePercent / 100) * getMaxProgress();
 		setProgressPercent(Math.round(donePercent));
 		CALLED_FROM_ANGLE = true;
@@ -480,8 +514,8 @@ public class CircularSeekBar extends View {
 	}
 	
 	public void updateAngle(float a){
-		float x =  (cx + innerRadius * (float)Math.cos((a-90)* Math.PI / 180F));
-		float y =  (cy + innerRadius * (float)Math.sin((a-90)* Math.PI / 180F));
+		float x =  (cx + outerRadius * (float)Math.cos(Math.toRadians(a)));
+		float y =  (cy + outerRadius * (float)Math.sin(Math.toRadians(a)));
 		markPointX = x;
 		markPointY = y;
 		setAngle(a);
@@ -660,9 +694,7 @@ public class CircularSeekBar extends View {
 		float x = event.getX();
 		float y = event.getY();
 		
-		if(USE_HALF_CIRCLE && y > cy){
-			y=cy;
-		}
+		//TODO Fix, out of bound touch
 		
 		boolean up = false;
 		switch (event.getAction()) {
@@ -696,17 +728,23 @@ public class CircularSeekBar extends View {
 		if (distance < outerRadius + adjustmentFactor && distance > innerRadius - adjustmentFactor && !up) {
 			IS_PRESSED = true;
 
-			markPointX = x;
-			markPointY = y;
-			
-			float degrees = (float) ((float) ((Math.toDegrees(Math.atan2(x - cx, cy - y)) + 360.0)) % 360.0);
-			// and to make it count 0-360
-			if (degrees < 0) {
-				degrees += 2 * Math.PI;
+			double radians=	Math.atan2(y-cy , x - cx);
+			float degrees1 = (float) Math.toDegrees(radians);
+			//float degrees1=Math.abs(degrees+180F);
+//			degrees=degrees%360F;
+			if(degrees1 <0)
+				degrees1=degrees1+360;
+			if((circleStartAngle==((circleStartAngle+sweepAngle)%360F))||(degrees1 >= circleStartAngle && degrees1 <= ((circleStartAngle+sweepAngle)%360F))){
+				markPointX = (float) (outerRadius*Math.cos(radians) + cx); //  locatino of the marker X coordinate
+				markPointY = (float) (outerRadius*Math.sin(radians) + cy); //  locatino of the marker Y coordinate
+				
+				setAngle(degrees1);
+				invalidate();
 			}
-
-			setAngle(degrees);
-			invalidate();
+			else{
+				x=x;
+			}
+			
 
 		} else {
 			IS_PRESSED = false;

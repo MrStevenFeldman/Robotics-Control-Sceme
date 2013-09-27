@@ -16,7 +16,6 @@ import android.widget.TextView;
 public class BiDirectionalMotor extends MotorDevice {
 	private byte deviceID=-1; public static String deviceID_s="deviceID";
 	private boolean enabled=false; public static String enabled_s="enabled";
-	private int motorDirection=FORWARD;  public static String motorDirection_s="motorDirection";
 	private float power_level; public static String power_level_s="power_level";
 	
 
@@ -31,7 +30,6 @@ public class BiDirectionalMotor extends MotorDevice {
 
 		// Save the current article selection in case we need to recreate the fragment
 		outState.putInt(deviceID_s, deviceID);
-		outState.putInt(motorDirection_s, motorDirection);
 		outState.putFloat(power_level_s, power_level);
 		outState.putBoolean(enabled_s, enabled);
 	}
@@ -59,7 +57,6 @@ public class BiDirectionalMotor extends MotorDevice {
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		 if (savedInstanceState != null) {
 			 deviceID=savedInstanceState.getByte(deviceID_s);
-				motorDirection=savedInstanceState.getInt(motorDirection_s);
 				power_level=savedInstanceState.getFloat(power_level_s);
 				enabled= savedInstanceState.getBoolean(enabled_s);
 		 }
@@ -76,7 +73,6 @@ public class BiDirectionalMotor extends MotorDevice {
 		 
 		if (savedInstanceState != null) {
 			deviceID=savedInstanceState.getByte(deviceID_s);
-			motorDirection=savedInstanceState.getInt(motorDirection_s);
 			power_level=savedInstanceState.getFloat(power_level_s);
 			enabled= savedInstanceState.getBoolean(enabled_s);
 		}
@@ -104,14 +100,6 @@ public class BiDirectionalMotor extends MotorDevice {
 			@Override
 			public void onClick(View view){
 				stopFunc(view);
-			}
-		});
-		
-		Button reverse=(Button)view.findViewById(R.id.reverseButton);
-		reverse.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View view){
-				directionToggle(view);
 			}
 		});
 		
@@ -158,8 +146,8 @@ public class BiDirectionalMotor extends MotorDevice {
     public void speedDownFunc(View view){
     	power_level= (power_level-DUTY_INCREMENT);
     	
-    	if(power_level <0) 
-    		power_level=0;
+    	if(power_level < -MAX_MOTOR_DUTY) 
+    		power_level= -MAX_MOTOR_DUTY;
     	
     	updateMotor();
     }
@@ -198,26 +186,6 @@ public class BiDirectionalMotor extends MotorDevice {
     	}
     	enabled=!enabled;
     }
-    
-   
-    
-    public void directionToggle(View view){
-    	power_level=0;
-		updateMotor();
-		
-    	if(motorDirection==FORWARD){
-    		byte[] command={deviceID,DIRECTION_COMMAND,REVERSE};
-			DalekServerConnect.static_sendCommand(getActivity(),command);
-    		motorDirection=REVERSE;
-    	}
-    	else{
-    		byte[] command={deviceID,DIRECTION_COMMAND,FORWARD};
-			DalekServerConnect.static_sendCommand(getActivity(),command);
-    		motorDirection=FORWARD;
-    	}
-    }
-
-   
-    
+       
  
 }

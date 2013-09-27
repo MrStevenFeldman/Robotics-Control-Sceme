@@ -4,6 +4,8 @@
     #Code Audio Device
     #Code RGB light PWM Class
     #code: locks, threads
+i2cMap={}
+from functools import partial
     
 import time
 import socket
@@ -23,7 +25,7 @@ PCA9685_PRESCALE = 0xFE
 
 #end I2C
 
-pwm_freq = 2000
+pwm_freq = 2000 #Todo calibrarte to motors
 SPEED_DELAY = .01
 MAX_SPEED = 100
 SPEED_INCREMENT = 5
@@ -72,7 +74,9 @@ def setI2CDutyCycle(channel, cycle):
 	i2c.writeList(0x06+(4*channel), bytes)
     
 
-class BiMotor:
+class Motor:
+    def getType():
+        return "Motor"
     def command(self, sock):
         data = sock.recv(1)
         command1 = int(ord(data[0]))
@@ -98,14 +102,14 @@ class BiMotor:
         
         return
         
-    def __init__(self, deviceId, name, pinA, pinB, enableA, currentSenseA):
+    def __init__(self, deviceId, name, pinA, pinB, enable, currentSenseA):
         self.deviceId = deviceId
         self.name = name
-         #pins
+        #pins
         self.pinA = pinA
         self.currentSenseA = currentSenseA
         self.pinB = pinB
-        self.enableA = enableA
+        self.enable = enable
         
         
         self.enabled = DISABLE
@@ -116,30 +120,66 @@ class BiMotor:
         self.threadStop = 'false'
         self.thread = threading.Thread()
         
-        GPIO.setup(self.enableA, GPIO.OUT)
-        GPIO.output(self.enableA, GPIO.LOW)
         
         #PWM.start(channel, duty, freq=2000)
         #duty values are valid 0-100
-        PWM.start(self.pinA, 100)
-        PWM.start(self.pinB, 100)
+        if (not __debug__):
+            GPIO.setup(self.enable, GPIO.OUT)
+            GPIO.output(self.enable, GPIO.LOW)
+            if (self.pinA[0] == 'P'):
+            
+                PWM.start(self.pinA, 0)
+                PWM.start(self.pinB, 0)
         
-        PWM.set_frequency(self.pinA, pwm_freq)
-        PWM.set_frequency(self.pinB, pwm_freq)
+                PWM.set_frequency(self.pinA, pwm_freq)
+                PWM.set_frequency(self.pinB, pwm_freq)
+
+                self.pwmfunA=partial(PWM.set_duty_cycle,self.pinA)
+                self.pwmfunB=partial(PWM.set_duty_cycle,self.pinB)
+            
+            elif (self.pinA[0] == 'I'):
+                #todo i2c
+                #map address, i2c objects
+                l=self.pinA.rsplit("_")
+                if ( l[2] in i2cMap):
+                    i2c=i2cMap[l[2]]
+                else:
+                    i2c=Adafruit_I2C(l[2])
+                    i2cMap[l[2]]=i2c
+                
+                self.pwmfunA=partial(i2c.setDutyCycle,l[3])
+                # self.i2c.setDutyCycle(self.channel, servopos)
+
+                l=self.pinB.rsplit("_")
+                if ( l[2] in i2cMap):
+                    i2c=i2cMap[l[2]]
+                else:
+                    i2c=Adafruit_I2C(l[2])
+                    i2cMap[l[2]]=i2c
+           
+            
+                self.pwmfunB=partial(i2c.setDutyCycle,l[3])
+            else:
+                print "Unknown pin ID: %d Pin: %s, %s" %{deviceId, pinA, pinB}
+                exit()
+        else:
+            def newfunc(v):
+                   return 0
+            self.pwmfunA=partial(newfunc)
+            self.pwmfunB=partial(newfunc)
+            
          
-        PWM.set_duty_cycle(self.pinB, 100) 
-        PWM.set_duty_cycle(self.pinA, 100) 
-        
+        self.pwmfunA(0)
+        self.pwmfunB(0)
         
         
     def __del__(self):
-        print 'Stoping ', self.deviceId, ' pA', self.pinA, ' pB', self.pinB
+        print 'Stoping Motor ', self.deviceId, ' pA', self.pinA, ' pB', self.pinB
         self.reset()
-        PWM.cleanup()
         
         
     def toString(self):
-        return 'BiMotor: Id: [%(self.deviceId)s] pinA: %(self.pinA)s pinB: %(self.pinB)s currentSenseA: %(self.currentSenseA)s enabled: %(self.enabled)s Current Direction: %(self.direction)s currentSpeed: %(self.currentSpeed)s targetSpeed: %(self.targetSpeed)s' %{'self.deviceId': self.deviceId,'self.pinA':self.pinA,'self.pinB':self.pinB,'self.currentSenseA':self.currentSenseA, 'self.enabled':self.enabled, 'self.direction':self.direction, 'self.currentSpeed':self.currentSpeed, 'self.targetSpeed':self.targetSpeed }
+        return 'Motor: Id: [%(self.deviceId)s] pinA: %(self.pinA)s pinB: %(self.pinB)s currentSenseA: %(self.currentSenseA)s enabled: %(self.enabled)s Current Direction: %(self.direction)s currentSpeed: %(self.currentSpeed)s targetSpeed: %(self.targetSpeed)s' %{'self.deviceId': self.deviceId,'self.pinA':self.pinA,'self.pinB':self.pinB,'self.currentSenseA':self.currentSenseA, 'self.enabled':self.enabled, 'self.direction':self.direction, 'self.currentSpeed':self.currentSpeed, 'self.targetSpeed':self.targetSpeed }
     
     def reset(self):
         self.threadStop = 'true'
@@ -165,16 +205,21 @@ class BiMotor:
                     self.currentSpeed = self.targetSpeed
                 
             if(self.motor1.currentSpeed >0):
-		print 'PWN:PA',100-self.currentSpeed
-                PWM.set_duty_cycle(self.pinA, 100- self.currentSpeed)
-                if(self.pinB):
-                    PWM.set_duty_cycle(self.pinB, 100- 0)
+                print 'PWN:PA',self.currentSpeed
+               # PWM.set_duty_cycle(self.pinA,  self.currentSpeed)
+                self.pwmfunA(self.currentSpeed)
+                if(self.pwmfunB):
+                    #PWM.set_duty_cycle(self.pinB, 0)
+                    self.pwmfunB(0)
+                    
                 
             else:
                 if(self.pinB):
-		    print 'PWN:PB',100+self.currentSpeed
-                    PWM.set_duty_cycle(self.pinB, (100+self.currentSpeed))
-                    PWM.set_duty_cycle(self.pinA, 100- 0)
+                    print 'PWN:PB',-1*self.currentSpeed
+                    #PWM.set_duty_cycle(self.pinB, (-1*self.currentSpeed))
+                    #PWM.set_duty_cycle(self.pinA, 0)
+                    self.pwmfunA(0)
+                    self.pwmfunB(-1*self.currentSpeed)
             
             if(self.threadStop == 'true'):
                 return
@@ -185,26 +230,29 @@ class BiMotor:
         self.targetSpeed = 0
         self.currentSpeed = 0
         
-        PWM.set_duty_cycle(self.pinB, 100- 0)
-        PWM.set_duty_cycle(self.pinA, 100- 0)
+        #PWM.set_duty_cycle(self.pinB, 0)
+        #PWM.set_duty_cycle(self.pinA, 0)
+        self.pwmfunA(0)
+        self.pwmfunB(0)
         if(enable != self.enabled):
             self.enabled = enable
             if(enable == ENABLE):
-                GPIO.output(self.enableA, GPIO.HIGH)
+                GPIO.output(self.enable, GPIO.HIGH)
             else:
-                GPIO.output(self.enableA, GPIO.LOW)
+                GPIO.output(self.enable, GPIO.LOW)
         
     def setEnableNoStop(self, enable): 
         if(enable != self.enabled):
             self.enabled = enable
             if(enable == ENABLE):
-                GPIO.output(self.enableA, GPIO.HIGH)
+                GPIO.output(self.enable, GPIO.HIGH)
             else:
-                GPIO.output(self.enableA, GPIO.LOW)
+                GPIO.output(self.enable, GPIO.LOW)
 
 
 class MotorPair:
-    
+    def getType():
+        return "MotorPair"
     def command(self, sock):
         data = sock.recv(1)
         command1 = int(ord(data[0]))
@@ -294,23 +342,31 @@ class MotorPair:
                 
             
             if(self.motor1.currentSpeed >0):
-		print 'PWN:M1A',100-self.motor1.currentSpeed
-                PWM.set_duty_cycle(self.motor1.pinA, (100-self.motor1.currentSpeed) )
-                PWM.set_duty_cycle(self.motor1.pinB, 100 )
+                print 'PWN:M1A',self.motor1.currentSpeed
+                #PWM.set_duty_cycle(self.motor1.pinA, (self.motor1.currentSpeed) )
+                #PWM.set_duty_cycle(self.motor1.pinB, 0 )
+                self.motor1.pwmfunA(self.motor1.currentSpeed)
+                self.motor1.pwmfunB(0)
                 
             else:
-		print 'PWN:M1B',100+self.motor1.currentSpeed
-                PWM.set_duty_cycle(self.motor1.pinB, (100+self.motor1.currentSpeed))
-                PWM.set_duty_cycle(self.motor1.pinA, 100 )
+                print 'PWN:M1B',-1*self.motor1.currentSpeed
+                #PWM.set_duty_cycle(self.motor1.pinB, (-1*self.motor1.currentSpeed))
+                #PWM.set_duty_cycle(self.motor1.pinA, 0 )
+                self.motor1.pwmfunB(-1*self.motor1.currentSpeed)
+                self.motor1.pwmfunA(0)
                 
             if(self.motor2.currentSpeed >0):
-		print 'PWN:M2A',100-self.motor2.currentSpeed
-                PWM.set_duty_cycle(self.motor2.pinA, (100-self.motor2.currentSpeed))
-                PWM.set_duty_cycle(self.motor2.pinB, 100)
+                print 'PWN:M2A',self.motor2.currentSpeed
+               # PWM.set_duty_cycle(self.motor2.pinA, (self.motor2.currentSpeed))
+               # PWM.set_duty_cycle(self.motor2.pinB, 0)
+                self.motor2.pwmfunA(self.motor2.currentSpeed)
+                self.motor2.pwmfunB(0)
             else:
-		print 'PWN:M2B',100+self.motor2.currentSpeed
-                PWM.set_duty_cycle(self.motor2.pinB, (100+self.motor2.currentSpeed) )
-                PWM.set_duty_cycle(self.motor2.pinA, 100 )
+                print 'PWN:M2B',-1*self.motor2.currentSpeed
+                #PWM.set_duty_cycle(self.motor2.pinB, (-1*self.motor2.currentSpeed) )
+                #PWM.set_duty_cycle(self.motor2.pinA, 0 )
+                self.motor2.pwmfunB(-1*self.motor2.currentSpeed)
+                self.motor2.pwmfunA(0)
                 
             
             if(self.threadStop == 'true'):
@@ -323,16 +379,25 @@ class MotorPair:
         self.motor2.targetSpeed = 0
         self.motor1.currentSpeed = 0
         self.motor2.currentSpeed = 0
-        PWM.set_duty_cycle(self.motor1.pinB, 100- 0)
-        PWM.set_duty_cycle(self.motor1.pinA, 100- 0)
-        PWM.set_duty_cycle(self.motor2.pinA, 100- 0)
-        PWM.set_duty_cycle(self.motor2.pinB, 100- 0)
+        #PWM.set_duty_cycle(self.motor1.pinB, 0)
+        #PWM.set_duty_cycle(self.motor1.pinA, 0)
+        #PWM.set_duty_cycle(self.motor2.pinA, 0)
+        #PWM.set_duty_cycle(self.motor2.pinB, 0)
+        
+        self.motor1.pwmfunA(0)
+        self.motor1.pwmfunB(0)
+        self.motor2.pwmfunA(0)
+        self.motor2.pwmfunB(0)
+        
         if(self.motor1.enabled != enable or self.motor2.enabled != enable):       
             self.motor1.setEnableNoStop(enable)
             self.motor2.setEnableNoStop(enable)
 
             
 class Stepper:
+    def getType():
+        return "Stepper"
+        
     def command(self, sock):
         data = sock.recv(2)
         command1 = int(ord(data[0]))
@@ -346,6 +411,8 @@ class Stepper:
         self.name = name
         self.deviceId = deviceId
         self.pwm = pwm
+        
+        
         self.dirPin = dirPin
         self.nSteps = nSteps
         
@@ -365,33 +432,11 @@ class Stepper:
         return 'Stepper: Id[%(id)s] Name: %(name)s Pwm: %(pwm)s dirPin: %(dirPin)s ' %{'id':self.deviceId,'name':self.name,'pwm':self.pwm, 'dirPin':self.dirPin}
 
 
-class StepperI2C:
-
-    def __init__(self, deviceId, name, i2c, ch, dirPin):
-        self.name = name
-        self.deviceId = deviceId
-        
-        self.ch = ch
-        self.dirPin = dirPin
-        self.i2c = i2c
-        
-        self.cv = threading.Lock()
-        
-        
-    def setSpeed(self, rpm):
-       print "Set speed not implemented"
-        
-    def takeSteps(self, steps):
-        self.setSpeed(0)
-        #TODO
-    def reset(self):
-        self.setSpeed(0)
-        
-    def toString(self):
-        return 'Stepper: Id[%(id)s] Name: %(name)s I2c: %s(i2c)s Ch: %(ch)s dirPin: %(dirPin)s ' %{'id':self.deviceId,'name':self.name,'i2c':self.i2c,'ch':self.ch, 'dirPin':self.dirPin }
-    
     
 class Servo:
+    def getType():
+        return "Servo"
+        
     def command(self, sock):
         data = sock.recv(1)
         command1 = int(ord(data[0]))
@@ -405,9 +450,9 @@ class Servo:
         self.threadStop = False
        
         #Send New Task
-        self.thread = threading.Thread(target=self.threadStart, args=(command1, command2, command3))
+        self.thread = threading.Thread(target=self.threadStart, args=(command1))
        
-    def threadStart(self, command1, command2, command3):
+    def threadStart(self, command1):
         #print self.toString()
 
         self.setAngle(command1)
@@ -417,70 +462,108 @@ class Servo:
 
          
         
-    def __init__(self, deviceId, name, pwm, pwmMin, pwmMax, angleMin, angleMax, angle):
+    def __init__(self, deviceId, name, pwm, angleMin, angleMax, angle, pwmMin, pwmMax):
         self.name = name
         self.deviceId = deviceId
         self.pwm = pwm
         self.angle = angle
         self.dangle = angle
-        self.pwmMin = pwmMin
-        self.pwmMax = pwmMax
         self.angleMin = angleMin
         self.angleMax = angleMax 
+        self.pwmMin = pwmMin
+        self.pwmMax = pwmMax
         
-        PWM.start(self.pwm, 0)
+        
+        if (not __debug__):
+            if (self.pwm == 'P'):
+                PWM.start(self.pwm, 0)
+                PWM.set_frequency(self.pwm, pwm_freq)
+                self.pwmfun=partial(PWM.set_duty_cycle,self.pwm)
+            
+            elif (self.pwm == 'I'):
+                #todo i2c
+                #map address, i2c objects
+                l=self.pwm.rsplit("_")
+                if ( l[2] in i2cMap):
+                    i2c=i2cMap[l[2]]
+                else:
+                    i2c=Adafruit_I2C(l[2])
+                    i2cMap[l[2]]=i2c
+                
+                self.pwmfun=partial(i2c.setDutyCycle,l[3])
+            else:
+                print "Error: Malformed PWM PIN: ID %d PIN %s" %{deviceID, pwm}
+        else:
+             def newfunc(v):
+                    return 0
+             self.pwmfun=partial(newfunc)
+            
         self.setAngle(self.angle)
-        
         self.cv = threading.Lock()
         
         
         
     def setAngle(self, angle):
         #Source http://forums.adafruit.com/viewtopic.php?f=8&t=41040
-        servopos = map(angle, self.angleMin, self.angleMax, self.pwmMin, self.pwmMax)
-        PWM.set_duty_cycle(self.pwm, servopos)
+        #https://mail.python.org/pipermail/tutor/2013-August/097291.html
+        def arduino_map(x, in_min, in_max, out_min, out_max):
+            return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
+            
+        servopos = arduino_map(int(angle), int(self.angleMin), int(self.angleMax), int(self.pwmMin), int(self.pwmMax))
+        #PWM.set_duty_cycle(self.pwm, servopos)
+        self.pwmfun(servopos)
         self.angle = angle
         
     def reset(self):
         self.setAngle(self.dangle)
         
     def toString(self):
-        return 'Servo: Id[%(id)s] Name: %(name)s Pwm: %(pwm1)s Angle: %(angle)s' %{'id':self.deviceId,'name':self.name,'pwm':self.pwm, 'angle':self.angle }
-        
-class ServoI2C (Servo): 
+        return 'Servo: Id[%(id)s] Name: %(name)s Pwm: %(pwm)s Angle: %(angle)s Minpwm: %(mpwm)s Maxpwm: %(mxpwm)s' %{'id':self.deviceId,'name':self.name,'pwm':self.pwm, 'angle':self.angle, 'mpwm':self.pwmMin, 'mxpwm':self.pwmMax }
+
+
     
-    def __init__(self, deviceId, name, pwm,pwmMin, pwmMax, angleMin, angleMax,  angle, i2c, channel):
+class ServoPair:
+    def getType():
+        return "ServoPair"
+        
+    def command(self, sock):
+        data = sock.recv(2)
+        command1 = int(ord(data[0]))
+        command2 = int(ord(data[2]))
+      
+        print 'ServoPair: Set Angle to',command1,' and ',command2,'.'
+        
+        #First Stop any thread not disabling the motor
+        self.threadStop = True
+        #Wait for it to finish
+        self.cv.acquire()
+        self.threadStop = False
+       
+        #Send New Task
+        self.thread = threading.Thread(target=self.threadStart, args=(command1, command2))
+       
+    def threadStart(self, command1, command2):
+        #print self.toString()
+
+        self.servo1.setAngle(command1)
+        self.servo2.setAngle(command1)
+        #print self.toString()
+        self.cv.release()
+
+         
+        
+    def __init__(self, deviceId, name,s1, s2):
         self.name = name
         self.deviceId = deviceId
-        self.pwm = pwm
-        self.pwmMin = pwmMin
-        self.pwmMax = pwmMax
-        self.angleMin = angleMin
-        self.angleMax = angleMax
-        
-        self.angle = angle
-        self.dangle = angle
-        self.i2c = i2c
-        self.channel = channel
-        self.setAngle(self.angle)
-        
+        self.servo1 = s1
+        self.servo2 = s2
         
         self.cv = threading.Lock()
         
-        
-    def __del__(self):
-        self.reset()
-        
-    def setAngle(self, angle):
-        servopos = map(angle, self.angleMin, self.angleMax, self.pwmMin, self.pwmMax)
-        self.i2c.setDutyCycle(self.channel, servopos)
-        self.angle = angle
-        
-        
     def reset(self):
-        self.setAngle(self.dangle)
+        self.servo1.setAngle(self.dangle)
+        self.servo2.setAngle(self.dangle)
         
     def toString(self):
-        return 'Servo: Id[%(id)s] Name: %(name)s I2C: %(i2c)s Channel: %(chan)s Angle: %(angle)s' %{'id':self.deviceId,'name':self.name,'i2c':self.i2c, 'chan':self.channel, 'angle':self.angle }
-       
-        
+        return 'Servo: Id[%s] Name: %s\n\tServo1: %s\n\tServo2: %s' %(self.deviceId, self.name,self.servo1.toString(), self.servo2.toString())
+

@@ -7,8 +7,8 @@
 package com.dalekcontroller.gui;
 
 
-import com.dalekcontroller.gui.CircularSeekBar.OnSeekChangeListener;
 import com.example.dalekcontroller.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -81,7 +81,8 @@ public class DotInCircle extends View {
 
 	/** The Y coordinate for the top left corner of the marking drawable */
 	private float dy=-1;
-
+	public float getDotX(){return dx;};
+	public float getDotY(){return dy;};
 
 	/** The progress mark when the view isn't being progress modified */
 	private Bitmap progressMark;
@@ -288,7 +289,14 @@ public class DotInCircle extends View {
 		
 		return true;
 	}
-	
+	public void resetDot(){
+		dx=cx;
+		dy=cy;
+		angle = Math.toDegrees(Math.atan2(dy - cy, cx - dx))+180;
+		invalidate();
+
+		
+	}
 	private DotChangeListener mListener;
 	public void setDotChangeListener(DotChangeListener listener) {
 		mListener = listener;
