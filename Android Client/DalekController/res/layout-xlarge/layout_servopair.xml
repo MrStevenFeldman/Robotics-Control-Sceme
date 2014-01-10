@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/linearLayout1"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentBottom="true"
+	android:layout_alignParentRight="true"
+	android:gravity="bottom|left" android:baselineAligned="false" xmlns:app="http://schemas.android.com/apk/res/com.example.dalekcontroller">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageButton
+            android:id="@+id/rightTopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+        <ImageButton
+            android:id="@+id/leftTopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+        <ImageButton
+            android:id="@+id/leftBottomButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+        <ImageButton
+            android:id="@+id/leftMiddleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+        <ImageButton
+            android:id="@+id/rightMiddleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/leftMiddleButton"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+        <ImageButton
+            android:id="@+id/rightBottomButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+        <com.dalekcontroller.gui.DotInCircle
+            android:id="@+id/servoCircle"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            app:circlestartangle="180"
+            app:circlesweepangle="180"
+            app:pathdirection="SHORTEST"
+            app:pathstartangle="270" />
+
+    </RelativeLayout>
+     
+	</LinearLayout>
+    

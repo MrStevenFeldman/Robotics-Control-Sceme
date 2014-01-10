@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ControlActivity" 
+    android:id="@+id/largeControlLayout">
+
+   
+ 	<!-- <fragment android:name="com.dalekcontroller.device.motor.BIDirectionalMotorPair"
+              android:id="@+id/biMotorFragment" 
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" /> -->
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/zpt_container"
+        android:layout_marginBottom="226dp"
+        android:layout_marginLeft="61dp"
+        android:layout_toRightOf="@+id/zpt_container" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/zpt_container"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="185dp"
+        android:layout_marginRight="101dp" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="43dp"
+        android:layout_toRightOf="@+id/zpt_container" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/zpt_container"
+        android:layout_marginLeft="57dp"
+        android:layout_marginTop="61dp"
+        android:layout_toRightOf="@+id/zpt_container" />
+
+    <Button
+        android:id="@+id/disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:onClick="disconnect_func"
+        android:text="Disconnect"
+        tools:ignore="HardcodedText" />
+
+    <FrameLayout
+        android:id="@+id/zpt_container"
+        android:layout_width="550dp"
+        android:layout_height="650dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/gold" >
+
+    </FrameLayout>
+    
+    <FrameLayout
+        android:id="@+id/plunger_container"
+        android:layout_width="400dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/zpt_container"
+        android:background="@color/lightgold" >
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/gun_container"
+        android:layout_width="400dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/zpt_container"
+        android:background="@color/lightgold" >
+
+    </FrameLayout>
+
+     <FrameLayout
+         android:id="@+id/dome_container"
+         android:layout_width="400dp"
+         android:layout_height="3500dp"
+         android:layout_above="@+id/plunger_container"
+         android:layout_alignParentTop="true"
+         android:layout_toRightOf="@+id/zpt_container"
+         android:background="@color/lightgold" >
+
+     </FrameLayout>
+
+</RelativeLayout>

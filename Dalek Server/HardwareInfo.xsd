@@ -118,7 +118,6 @@
 	<xs:complexType>
 	<xs:sequence>
 		<xs:element ref="NAME"/>
-		<xs:element name="DIR_PIN" type="xs:string" />
 		<xs:element name="PINS" type="xs:string" />
 		<xs:element name="PIN1" type="xs:string" />
 		<xs:element name="PIN2" type="xs:string" />

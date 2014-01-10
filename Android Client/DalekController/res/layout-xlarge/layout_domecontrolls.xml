@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.example.dalekcontroller"
+    android:id="@+id/lineaerLAyout2"
+    android:layout_width="400dp"
+    android:layout_height="350dp"
+    android:baselineAligned="false"
+    android:gravity="bottom|left" 
+	android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+    <com.dalekcontroller.gui.CircularSeekBar
+        android:id="@+id/servoDome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:circlestartangle="0"
+        app:circlesweepangle="360"
+        app:pathdirection="SHORTEST"
+        app:pathstartangle="270" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout100"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" 
+        android:paddingBottom="10dp">
+
+        <com.dalekcontroller.gui.CircularSeekBar
+            android:id="@+id/servoEyeStalk"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="10dp"
+            android:scaleType="center"
+            app:circlestartangle="180"
+            app:circlesweepangle="90"
+            app:pathdirection="COUNTERCLOCKWISE"
+            app:pathstartangle="180" />
+
+        <SeekBar
+            android:id="@+id/eyeLED"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/button_s"
+            android:max="100"
+            android:progress="0" />
+
+        <SeekBar
+            android:id="@+id/eyeIRIS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/eyeLED"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/button_s"
+            android:max="100"
+            android:progress="0"
+            android:src="@drawable/bluebutton" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

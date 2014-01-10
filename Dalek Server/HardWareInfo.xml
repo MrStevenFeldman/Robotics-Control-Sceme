@@ -14,7 +14,7 @@
 		
 				<PWMA_PIN>P9_14</PWMA_PIN>
 				<PWMB_PIN>P9_16</PWMB_PIN>
-				<ENABLE_PIN>P8_9</ENABLE_PIN>
+				<ENABLE_PIN>P8_7</ENABLE_PIN>
 				<CURRENT_PIN>P9_39</CURRENT_PIN>
 			</MotorObj>
 	
@@ -29,28 +29,17 @@
 			</MotorObj>
 			
 		</MotorPair>
-		<Motor>
-			<ID>2</ID>
-			<MotorObj>
-				<NAME>random</NAME>
-				<PWMA_PIN>P8_1</PWMA_PIN>
-				<PWMB_PIN>P8_3</PWMB_PIN>
-				<ENABLE_PIN>P8_17</ENABLE_PIN>
-				<CURRENT_PIN>P9_240</CURRENT_PIN>
-	
-			</MotorObj>
-		</Motor>
-		
+
 		<Servo>
-			<ID>3</ID>
+			<ID>2</ID>
 			<ServoObj>
 				<NAME>EyeStalk</NAME>
-				<PWM_PIN>0</PWM_PIN>
+				<PWM_PIN>I_0x70_4</PWM_PIN>
 				<PWM_MAX>100</PWM_MAX>
 				<PWM_MIN>0</PWM_MIN>
 				<ANGLE_INIT>0</ANGLE_INIT>
 				<ANGLE_MIN>0</ANGLE_MIN>
-				<ANGLE_MAX>360</ANGLE_MAX>
+				<ANGLE_MAX>90</ANGLE_MAX>
 				
 			</ServoObj>
 		</Servo>
@@ -59,7 +48,7 @@
 			<NAME>PlungerBox</NAME>
 			<ServoObj>
 				<NAME>Left</NAME>
-				<PWM_PIN>0</PWM_PIN>
+				<PWM_PIN>I_0x70_2</PWM_PIN>
 				<PWM_MAX>100</PWM_MAX>
 				<PWM_MIN>0</PWM_MIN>
 				<ANGLE_INIT>0</ANGLE_INIT>
@@ -68,7 +57,7 @@
 			</ServoObj>
 			<ServoObj>
 				<NAME>Right</NAME>
-				<PWM_PIN>TBD</PWM_PIN>
+				<PWM_PIN>I_0x70_3</PWM_PIN>
 				<PWM_MAX>100</PWM_MAX>
 				<PWM_MIN>0</PWM_MIN>
 				<ANGLE_INIT>0</ANGLE_INIT>
@@ -77,11 +66,11 @@
 			</ServoObj>
 		</ServoPair>
 		<ServoPair>
-			<ID>3</ID>
+			<ID>4</ID>
 			<NAME>GunBox</NAME>
 			<ServoObj>
 				<NAME>Left</NAME>
-				<PWM_PIN>0</PWM_PIN>
+				<PWM_PIN>I_0x70_0</PWM_PIN>
 				<PWM_MAX>100</PWM_MAX>
 				<PWM_MIN>0</PWM_MIN>
 				<ANGLE_INIT>0</ANGLE_INIT>
@@ -91,7 +80,7 @@
 			</ServoObj>
 			<ServoObj>
 				<NAME>Right</NAME>
-				<PWM_PIN>0</PWM_PIN>
+				<PWM_PIN>I_0x70_1</PWM_PIN>
 				<PWM_MAX>100</PWM_MAX>
 				<PWM_MIN>0</PWM_MIN>
 				<ANGLE_INIT>0</ANGLE_INIT>
@@ -99,6 +88,61 @@
 				<ANGLE_MAX>360</ANGLE_MAX>
 			</ServoObj>
 		</ServoPair>
+		
+		<Servo>
+			<ID>5</ID>
+			<ServoObj>
+				<NAME>IrisDiaphraph</NAME>
+				<PWM_PIN>I_0x70_5</PWM_PIN>
+				<PWM_MAX>100</PWM_MAX>
+				<PWM_MIN>0</PWM_MIN>
+				<ANGLE_INIT>0</ANGLE_INIT>
+				<ANGLE_MIN>0</ANGLE_MIN>
+				<ANGLE_MAX>90</ANGLE_MAX>
+				
+			</ServoObj>
+		</Servo>
+		<!--<RGBLED>
+			<ID>6</ID>
+			<NAME>EyeLED</NAME>
+			<PWM_PIN>I_0x70_6</PWM_PIN>
+			<PWM_MAX>100</PWM_MAX>
+			<PWM_MIN>0</PWM_MIN>
+			<PWM_INIT>0</PWM_INIT>
+		</RGBLED>
+		<RGBLED>
+			<ID>7</ID>
+			<NAME>FenderLed</NAME>
+			<PWM_PIN>I_0x70_7</PWM_PIN>
+			<PWM_MAX>100</PWM_MAX>
+			<PWM_MIN>0</PWM_MIN>
+			<PWM_INIT>0</PWM_INIT>
+		</RGBLED> -->
+		
+		<Stepper>
+			<ID>8</ID>
+			<NAME>Dome</NAME>
+			<PINS>2</PINS>
+			<PIN1>15</PIN1>
+			<PIN2>45</PIN2>
+			<MAX_SPEED></MAX_SPEED>
+			<ACCELERATION></ACCELERATION>
+			<INIT_POS></INIT_POS>
+			<MAX_POS></MAX_POS>
+			<MIN_POS></MIN_POS>
+		</Stepper>
+		<Stepper>
+			<ID>9</ID>
+			<NAME>Shoulder</NAME>
+			<PINS>2</PINS>
+			<PIN1>14</PIN1>
+			<PIN2>44</PIN2>
+			<MAX_SPEED></MAX_SPEED>
+			<ACCELERATION></ACCELERATION>
+			<INIT_POS></INIT_POS>
+			<MAX_POS></MAX_POS>
+			<MIN_POS></MIN_POS>
+		</Stepper>
 		
 	</DeviceList>
 	

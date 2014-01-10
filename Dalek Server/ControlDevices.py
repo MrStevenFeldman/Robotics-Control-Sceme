@@ -4,7 +4,8 @@
     #Code Audio Device
     #Code RGB light PWM Class
     #code: locks, threads
-i2cMap={}
+
+from DalekUtilities import *
 from functools import partial
 from AccelStepper import AccelStepper
 import time
@@ -13,19 +14,6 @@ import sys
 import threading
 import struct
 
-import Adafruit_BBIO.GPIO as GPIO
-import Adafruit_BBIO.ADC as ADC
-import Adafruit_BBIO.PWM as PWM
-
-#I2C
-import Adafruit_I2C  as I2C
-
-PCA9685_MODE1 = 0x0
-PCA9685_PRESCALE = 0xFE
-
-#end I2C
-
-pwm_freq = 2000 #Todo calibrarte to motors
 SPEED_DELAY = .01
 MAX_SPEED = 100
 SPEED_INCREMENT = 5
@@ -42,37 +30,15 @@ DISABLE = 0
 def initilize_device():
     ADC.setup()
     #Adafruit_I2C(module address, i2c busnum, debug=[true |false]}
-    i2c =  Adafruit_I2C(0x70, 1 , False)
-    i2c.write8(PCA9685_MODE1, 0x01)  
-    time.sleep(0.05)
+    #i2c =  Adafruit_I2C(0x70, 1 , False)
+    #i2c.write8(PCA9685_MODE1, 0x01)  
+    #time.sleep(0.05)
     
     
 def destroy_devices():
     PWM.cleanup()
     setI2CFrequency(100)
-    
-def setI2CFrequency(freq):
-		prescaleval = 25000000
-		prescaleval /= 4096
-		prescaleval /= float(freq)
-		prescaleval -= 1
-		prescale = int(prescaleval + 0.5)
 
-		oldmode = i2c.readU8(PCA9685_MODE1)
-		newmode = (oldmode&0x7F) | 0x10
-		i2c.write8(PCA9685_MODE1, newmode)  
-		i2c.write8(PCA9685_PRESCALE, prescale)
-		i2c.write8(PCA9685_MODE1, oldmode)
-		time.sleep(0.05)
-		i2c.write8(PCA9685_MODE1, oldmode | 0xA1)
-
-
-def setI2CDutyCycle(channel, cycle):
-	off = min(1, cycle)
-	off = int(cycle*4095)
-	bytes = [0x00, 0x00, off & 0xFF, off >> 8]
-	i2c.writeList(0x06+(4*channel), bytes)
-    
 
 class Motor:
     def getType():
@@ -86,12 +52,12 @@ class Motor:
             (command2,) = struct.unpack( "!f", data[0:4] )
             #Send New Task
                
-            self.threadStop = 'true'
+            self.threadStop = True
                
             while (self.thread and self.thread.isAlive() ):
                 pass
              
-            self.threadStop = 'false'
+            self.threadStop = False
             self.thread = threading.Thread(target=self.updateSpeed, args=(command2))
             
             self.thread.start()
@@ -117,57 +83,19 @@ class Motor:
         self.targetSpeed = 0
         self.direction = FORWARD
         
-        self.threadStop = 'false'
+        self.threadStop = False
         self.thread = threading.Thread()
         
         
         #PWM.start(channel, duty, freq=2000)
         #duty values are valid 0-100
-        if (not __debug__):
-            GPIO.setup(self.enable, GPIO.OUT)
-            GPIO.output(self.enable, GPIO.LOW)
-            if (self.pinA[0] == 'P'):
-            
-                PWM.start(self.pinA, 0)
-                PWM.start(self.pinB, 0)
+       
+        self.enableFun=getGPIOWriteFun(self.enable)
+        self.enableFun(GPIO.LOW)
         
-                PWM.set_frequency(self.pinA, pwm_freq)
-                PWM.set_frequency(self.pinB, pwm_freq)
+        self.pwmfunA=getPWMWriteFun(self.pinA)
+        self.pwmfunB=getPWMWriteFun(self.pinB)
 
-                self.pwmfunA=partial(PWM.set_duty_cycle,self.pinA)
-                self.pwmfunB=partial(PWM.set_duty_cycle,self.pinB)
-            
-            elif (self.pinA[0] == 'I'):
-                #todo i2c
-                #map address, i2c objects
-                l=self.pinA.rsplit("_")
-                if ( l[2] in i2cMap):
-                    i2c=i2cMap[l[2]]
-                else:
-                    i2c=Adafruit_I2C(l[2])
-                    i2cMap[l[2]]=i2c
-                
-                self.pwmfunA=partial(i2c.setDutyCycle,l[3])
-                # self.i2c.setDutyCycle(self.channel, servopos)
-
-                l=self.pinB.rsplit("_")
-                if ( l[2] in i2cMap):
-                    i2c=i2cMap[l[2]]
-                else:
-                    i2c=Adafruit_I2C(l[2])
-                    i2cMap[l[2]]=i2c
-           
-            
-                self.pwmfunB=partial(i2c.setDutyCycle,l[3])
-            else:
-                print "Unknown pin ID: %d Pin: %s, %s" %{deviceId, pinA, pinB}
-                exit()
-        else:
-            def newfunc(v):
-                   return 0
-            self.pwmfunA=partial(newfunc)
-            self.pwmfunB=partial(newfunc)
-            
          
         self.pwmfunA(0)
         self.pwmfunB(0)
@@ -237,17 +165,17 @@ class Motor:
         if(enable != self.enabled):
             self.enabled = enable
             if(enable == ENABLE):
-                GPIO.output(self.enable, GPIO.HIGH)
+                self.enabledFun(GPIO.HIGH)
             else:
-                GPIO.output(self.enable, GPIO.LOW)
+                self.enabledFun(GPIO.LOW)
         
     def setEnableNoStop(self, enable): 
         if(enable != self.enabled):
             self.enabled = enable
             if(enable == ENABLE):
-                GPIO.output(self.enable, GPIO.HIGH)
+                self.enabledFun(GPIO.HIGH)
             else:
-                GPIO.output(self.enable, GPIO.LOW)
+                self.enabledFun(GPIO.LOW)
 
 
 class MotorPair:
@@ -473,31 +401,7 @@ class Servo:
         self.pwmMin = pwmMin
         self.pwmMax = pwmMax
         
-        
-        if (not __debug__):
-            if (self.pwm == 'P'):
-                PWM.start(self.pwm, 0)
-                PWM.set_frequency(self.pwm, pwm_freq)
-                self.pwmfun=partial(PWM.set_duty_cycle,self.pwm)
-            
-            elif (self.pwm == 'I'):
-                #todo i2c
-                #map address, i2c objects
-                l=self.pwm.rsplit("_")
-                if ( l[2] in i2cMap):
-                    i2c=i2cMap[l[2]]
-                else:
-                    i2c=Adafruit_I2C(l[2])
-                    i2cMap[l[2]]=i2c
-                
-                self.pwmfun=partial(i2c.setDutyCycle,l[3])
-            else:
-                print "Error: Malformed PWM PIN: ID %d PIN %s" %{deviceID, pwm}
-        else:
-             def newfunc(v):
-                    return 0
-             self.pwmfun=partial(newfunc)
-            
+        self.pwmfun=getPWMWriteFun(self.pwm)
         self.setAngle(self.angle)
         self.cv = threading.Lock()
         
@@ -593,7 +497,7 @@ class Stepper:
         elif(command1 <= self.minPos):
             command1=self.minPos
 
-        self.stepper.setCurrentPosition(command1)
+        self.stepper.moveTo(command1)
         self.stepper.run()
         #print self.toString()
         self.cv.release()
@@ -602,6 +506,7 @@ class Stepper:
         
     def __init__(self, deviceId, name,maxSpeed, initPos,maxPos, minPos, acceleration,enablePin,minWidth, pins, pin1, pin2, pin3, pin4):
         self.name = name
+        self.deviceId=deviceId
         self.maxPos=maxPos
         self.minPos=minPos
         self.initPos=initPos
@@ -619,11 +524,57 @@ class Stepper:
         
         self.cv = threading.Lock()
         
-        self.stepper.setCurrentPosition(self.initPos)
+        self.stepper.moveTo(self.initPos)
         
     def reset(self):
-        self.stepper.setCurrentPosition(self.initPos)
+        self.stepper.moveTo(self.initPos)
         
     def toString(self):
         return 'Stepper: Id[%s] Name: %s\n' %(self.deviceId, self.name)
+
+import pygame
+from os import listdir
+from os.path import isfile, join
+
+class Audio:
+    def getType():
+        return "Audio"
+    def __init__(self, deviceId, name, folderName):
+        self.deviceId = deviceId
+        self.name = name
+        self.folderName = folderName
+        self.audioFiles = [ f for f in listdir(self.folderName) if isfile(join(self.folderName,f)) ]
+        pygame.mixer.init()
+        
+        self.thread = threading.Thread()
+        self.cv = threading.Lock()
+        
+    def __del__(self):
+        pass
+        
+    def command(self, sock):
+        data = sock.recv(1)
+        command1 = int(ord(data[0]))
+        
+        print 'Audio: Does ',command1
+        
+        #Wait for it to finish
+        self.cv.acquire()
+       
+        #Send New Task
+        self.thread = threading.Thread(target=self.threadStart, args=(command1))
+
+    def threadStart(self, command1):
+        #print self.toString()
+        if(command1  == -1):
+           pygame.mixer.stop() 
+        else:
+            pygame.mixer.music.load(self.audioFiles[command1])
+            pygame.mixer.music.play()
+            
+            
+        self.cv.release()
+    
+    def toString(self):
+        return 'Audio[%d][%s]: Files Loaded from %s\n' %(self.deviceId, self.name, self.folderName)
     

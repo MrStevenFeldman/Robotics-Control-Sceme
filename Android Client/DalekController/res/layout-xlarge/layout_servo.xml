@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/linearLayout1"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentBottom="true"
+	android:layout_alignParentRight="true"
+	android:gravity="bottom|left" android:baselineAligned="false" xmlns:app="http://schemas.android.com/apk/res/com.example.dalekcontroller">
+
+    <RelativeLayout
+        android:layout_width="298dp"
+        android:layout_height="212dp"
+        android:background="@color/gold" >
+
+        <com.dalekcontroller.gui.CircularSeekBar
+            android:id="@+id/servoArchC"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="25dp"
+            app:pathdirection="CLOCKWISE"
+            app:pathstartangle="270"
+            app:circlestartangle="90"
+            app:circlesweepangle="360"  />
+
+        <ImageButton
+            android:id="@+id/rightButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/leftButton"
+            android:layout_marginLeft="33dp"
+            android:layout_toRightOf="@+id/centerButton"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+        <ImageButton
+            android:id="@+id/leftButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/centerButton"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="26dp"
+            android:layout_toLeftOf="@+id/centerButton"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+        <ImageButton
+            android:id="@+id/centerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/servoArchC"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="42dp"
+            android:contentDescription="@string/button_s"
+            android:src="@drawable/bluebutton" />
+
+    </RelativeLayout>
+     
+	</LinearLayout>
+    

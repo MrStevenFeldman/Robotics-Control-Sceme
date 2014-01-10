@@ -1,7 +1,4 @@
-import Adafruit_BBIO.GPIO as GPIO
-import Adafruit_BBIO.ADC as ADC
-import Adafruit_BBIO.PWM as PWM
-
+from DalekUtilities import *
 
 class AccelStepper:
     
@@ -321,27 +318,22 @@ class AccelStepper:
         if (not self.pins):
 	        return
     
-        GPIO.setup(self.pin1, GPIO.OUT)
-        self.pin1Write=partial(GPIO.output(),self.pin1)
+        self.pin1Write=getGPIOWriteFun(self.pin1)
         self.pin1Write(GPIO.LOW)
         
-        GPIO.setup(self.pin2, GPIO.OUT)
-        self.pin2Write=partial(GPIO.output(),self.pin2)
+        self.pin2Write=getGPIOWriteFun(self.pin2)
         self.pin2Write(GPIO.LOW)
         
         if (self.pins == 4 or self.pins == 8):
         
-            GPIO.setup(self.pin3, GPIO.OUT)
-            self.pin3Write=partial(GPIO.output(),self.pin3)
+            self.pin3Write=getGPIOWriteFun(self.pin3)
             self.pin3Write(GPIO.LOW)
         
-            GPIO.setup(self.pin4, GPIO.OUT)
-            self.pin4Write=partial(GPIO.output(),self.pin4)
+            self.pin4Write=getGPIOWriteFun(self.pin4)
             self.pin4Write(GPIO.LOW)
         
     	if (self.enablePin != 0xff):
-            GPIO.setup(self.enablePin, GPIO.OUT)
-            self.enablePinWrite=partial(GPIO.output(),self.enablePin)
+            self.enablePinWrite=getGPIOWriteFun(self.enablePin)
             self.enablePinWrite(GPIO.HIGH ^ _enableInverted)
     
     def setMinPulseWidth(self, minWidth):
@@ -351,8 +343,7 @@ class AccelStepper:
         self.enablePin = enablePin
         # This happens after construction, so init pin now.
         if (self.enablePin != 0xff):
-            GPIO.setup(self.enablePin, GPIO.OUT)
-            self.enablePinWrite=partial(GPIO.output(),self.enablePin)
+            self.enablePinWrite=getGPIOWriteFun(enablePin)
             self.enablePinWrite(GPIO.HIGH ^ _enableInverted)
             
 
